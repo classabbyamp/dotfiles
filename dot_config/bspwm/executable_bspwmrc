@@ -1,0 +1,38 @@
+#! /bin/sh
+
+sxhkd &
+lxqt-policykit-agent &
+setxkbmap -layout ca -model pc105 -option caps:swapescape &
+$HOME/.screenlayout/default.sh &
+$HOME/.config/polybar/launch.sh &
+xsetroot -cursor_name left_ptr &
+
+nitrogen --restore &
+dropbox start &
+dunst &
+pasystray &
+syncthing-gtk &
+
+bspc monitor DisplayPort-1 -d 1 2 3
+bspc monitor DisplayPort-2 -d 4 5 6 7
+bspc monitor DisplayPort-0 -d 8 9 10
+
+bspc rule --add vivaldi-stable --one-shot desktop=^4
+vivaldi-stable &
+bspc rule --add spotify --one-shot desktop=^8
+spotify &
+bspc rule --add discord --one-shot desktop=^9
+discord &
+bspc rule --add telegram-desktop --one-shot desktop=^9
+telegram-desktop &
+
+bspc config focus_follows_pointer true
+
+bspc config border_width         2
+bspc config window_gap           10
+
+bspc config split_ratio          0.5
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+xsetwacom set "Wacom Intuos BT M Pen stylus" MapToOutput DisplayPort-2 &
