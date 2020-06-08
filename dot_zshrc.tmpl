@@ -67,3 +67,18 @@ if which gs > /dev/null; then
         gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=$@ ;
     }
 fi
+
+venv() {
+    if [[ ! -v VIRTUAL_ENV ]] ; then
+        if [[ ! -z "$1" ]] ; then
+            echo "Activating $1..."
+            source ./$1/bin/activate
+        else
+            echo "No venv specified"
+            return 1
+        fi
+    elif [[ -v VIRTUAL_ENV ]] ; then
+        echo "Deactivating..."
+        deactivate
+    fi
+}
