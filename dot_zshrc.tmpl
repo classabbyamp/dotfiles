@@ -1,10 +1,18 @@
 # vim: set ft=zsh:
 
+#===========#
+# VARIABLES #
+#===========#
 export PATH=$HOME/gems/bin:$HOME/bin:/usr/local/bin:$HOME/.gem/ruby/2.7.0/bin:$PATH
 export ZSH=$HOME/.oh-my-zsh
 export GEM_HOME=$HOME/gems
+export LANG=en_US.UTF-8
+export EDITOR='nvim'
+export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 
-# Prompt theme
+#========#
+# PROMPT #
+#========#
 {{- if eq .chezmoi.hostname "feoh" }}
 ZSH_THEME="feoh"
 DEFAULT_USER="abi"
@@ -14,22 +22,21 @@ ZSH_THEME="gay"
 DEFAULT_USER="abby"
 {{- end }}
 
+#=========#
+# OHMYZSH #
+#=========#
 CASE_SENSITIVE="false"
 HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_UPDATE="false"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-plugins=(git colored-man-pages)
+plugins=(git colored-man-pages virtualenv)
 if which docker > /dev/null; then
     plugins+=docker
 fi
 
 source $ZSH/oh-my-zsh.sh
-
-export LANG=en_US.UTF-8
-export EDITOR='nvim'
-export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 
 #=========#
 # ALIASES #
