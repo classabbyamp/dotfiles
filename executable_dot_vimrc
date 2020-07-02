@@ -27,6 +27,7 @@ set conceallevel=0
 set laststatus=2
 
 set incsearch
+set inccommand=nosplit
 
 " Tab colors
 hi TabLineSel ctermbg=0
