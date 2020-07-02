@@ -37,6 +37,7 @@ else
     Plug 'vim-pandoc/vim-pandoc', {'for': 'pandoc'}
     Plug 'vim-pandoc/vim-pandoc-syntax', {'for': 'pandoc'}
     Plug 'chrisbra/csv.vim', {'for': ['csv', 'tsv']}
+    Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
     " completion/lsp
     Plug 'ncm2/ncm2'
     Plug 'roxma/nvim-yarp'
@@ -106,6 +107,9 @@ else
         set termguicolors
     endif
 
+    " python
+    let g:python3_host_prog = "/home/abby/.nvimenv/bin/python"
+
     " lightline
     let g:lightline = {
     \     'colorscheme': 'challenger_deep',
@@ -132,7 +136,7 @@ else
     \         'right': [
     \             [],
     \             [],
-    \             ['fileformat', 'fileencoding', 'filetype', 'gitstatus', 'lineinfo'],
+    \             ['fileformat', 'fileencoding', 'filetype', 'venv', 'gitstatus', 'lineinfo'],
     \         ],
     \     },
     \     'inactive': {
@@ -155,11 +159,12 @@ else
     \         'lineinfo': '%p%% %l:%v',
     \     },
     \     'component_function': {
-    \          'gitstatus': 'LightlineGitStatus',
-    \          'relativepath': 'LightlineRelPath',
-    \          'fileformat': 'LightlineFileformat',
-    \          'filetype': 'LightlineFiletype',
-    \          'fileencoding': 'LightlineFileencoding',
+    \         'gitstatus': 'LightlineGitStatus',
+    \         'relativepath': 'LightlineRelPath',
+    \         'fileformat': 'LightlineFileformat',
+    \         'filetype': 'LightlineFiletype',
+    \         'fileencoding': 'LightlineFileencoding',
+    \         'venv': 'LightlineVenv'
     \     },
     \ }
 
@@ -176,10 +181,21 @@ else
             let branch = FugitiveHead()
             if branch !=? ''
                 let [a,m,r] = GitGutterGetHunkSummary()
-                return printf('[%s] +%d ~%d -%d', branch, a, m, r)
+                return printf('<%s> +%d ~%d -%d', branch, a, m, r)
             endif
         endif
         return ''
+    endfunction
+
+    function! LightlineVenv()
+        if &ft ==? 'python'
+python3 << EOF
+import sys
+v = ".".join([str(x) for x in sys.version_info[0:3]])
+vim.command("let pyversion = '%s'" % v)
+EOF
+            return pyversion . '/' . virtualenv#statusline()
+        endif
     endfunction
 
     function! LightlineFileformat()
@@ -243,7 +259,4 @@ else
     let g:LanguageClient_settingsPath = ".vim/settings.json"
     let g:LanguageClient_loadSettings = 1
     nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-
-    " python
-    let g:python3_host_prog = "/home/abby/.nvimenv/bin/python"
 endif
