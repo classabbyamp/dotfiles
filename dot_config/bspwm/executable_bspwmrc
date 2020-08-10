@@ -11,6 +11,7 @@ nitrogen --restore &
 dropbox start &
 dunst &
 pasystray &
+syncthing-gtk &
 
 bspc monitor DisplayPort-1 -d 1 2 3
 bspc monitor DisplayPort-2 -d 4 5 6 7
