@@ -1,0 +1,46 @@
+{
+    "keyboard.dispatch": "keyCode",
+    "vscode-neovim.neovimInitPath": "/home/abby/.config/nvim/init.vim",
+    "vscode-neovim.neovimPath": "/sbin/nvim",
+    "workbench.iconTheme": "simple-icons",
+    "workbench.colorTheme": "One Dark Theme",
+    "python.jediEnabled": false,
+    "editor.fontLigatures": true,
+    "editor.renderIndentGuides": false,
+    "latex-preview.command": "xelatex",
+    "todo-tree.filtering.ignoreGitSubmodules": true,
+    "todo-tree.tree.showCountsInTree": true,
+    "todo-tree.highlights.defaultHighlight": {
+        "icon": "check",
+        "iconColour": "orange",
+        "rulerColour": "orange",
+        "background": "editor.background",
+        "fontStyle": "italic"
+    },
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.bibtex-format.tab": "4 spaces",
+    "latex-workshop.latex.magic.args": [
+        "-xelatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+    ],
+    "latex-workshop.latex.tools": [
+    {
+        "name": "latexmk",
+        "command": "latexmk",
+        "args": [
+            "-xelatex",
+            "-synctex=1",
+            "-interaction=nonstopmode",
+            "-file-line-error",
+            "%DOC%"
+        ]
+    }
+],
+"restructuredtext.experimental": true,
+"explorer.confirmDelete": false,
+"python.showStartPage": false,
+"editor.fontFamily": "'Input Mono'",
+}
