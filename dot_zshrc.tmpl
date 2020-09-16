@@ -17,6 +17,10 @@ export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 ZSH_THEME="feoh"
 DEFAULT_USER="abi"
 {{- end }}
+{{- if eq .chezmoi.hostname "apollo" }}
+ZSH_THEME="apollo"
+DEFAULT_USER="abi"
+{{- end }}
 {{- if eq .chezmoi.hostname "prometheus" }}
 ZSH_THEME="gay"
 DEFAULT_USER="abby"

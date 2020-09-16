@@ -21,8 +21,8 @@ bspc rule --add vivaldi-stable --one-shot desktop=^4
 vivaldi-stable &
 bspc rule --add spotify --one-shot desktop=^8
 spotify &
-bspc rule --add discord-ptb --one-shot desktop=^9
-discord-ptb &
+bspc rule --add discord --one-shot desktop=^9
+discord &
 bspc rule --add telegram-desktop --one-shot desktop=^9
 telegram-desktop &
 
