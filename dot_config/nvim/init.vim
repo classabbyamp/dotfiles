@@ -18,7 +18,7 @@ if exists('g:vscode')
     autocmd BufWinLeave * call clearmatches()
 
     " python
-    let g:python3_host_prog = "/home/abby/.nvimenv/bin/python"
+    let g:python3_host_prog = "~/.nvimenv/bin/python"
 else
     call plug#begin()
     " looks
@@ -108,7 +108,7 @@ else
     endif
 
     " python
-    let g:python3_host_prog = "/home/abby/.nvimenv/bin/python"
+    let g:python3_host_prog = "~/.nvimenv/bin/python"
 
     " lightline
     let g:lightline = {
