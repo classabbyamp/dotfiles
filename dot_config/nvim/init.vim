@@ -1,6 +1,7 @@
 if exists('g:vscode')
     call plug#begin()
     Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-surround'
     call plug#end()
 
     set clipboard=unnamedplus
@@ -34,8 +35,8 @@ else
     " filetypes
     Plug 'plasticboy/vim-markdown', {'for': 'md'}
     Plug 'lervag/vimtex', {'for': 'latex'}
-    Plug 'vim-pandoc/vim-pandoc', {'for': 'pandoc'}
-    Plug 'vim-pandoc/vim-pandoc-syntax', {'for': 'pandoc'}
+    " Plug 'vim-pandoc/vim-pandoc', {'for': 'pandoc'}
+    " Plug 'vim-pandoc/vim-pandoc-syntax', {'for': 'pandoc'}
     Plug 'chrisbra/csv.vim', {'for': ['csv', 'tsv']}
     Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
     " completion/lsp
@@ -92,12 +93,25 @@ else
     endif
 
     " Mappings
-    map ; <leader>
+    map <space> <leader>
     map <F1> <nop>
     map <c-j> <c-w>j
     map <c-k> <c-w>k
     map <c-h> <c-w>h
     map <c-l> <c-w>l
+    " system clipboard
+    nnoremap <leader>d "+d
+    xnoremap <leader>d "+d
+    nnoremap <leader>D "+D
+    xnoremap <leader>D "+D
+    nnoremap <leader>y "+y
+    xnoremap <leader>y "+y
+    nnoremap <leader>Y "+Y
+    xnoremap <leader>Y "+Y
+    nnoremap <leader>p "+p
+    xnoremap <leader>p "+p
+    nnoremap <leader>P "+P
+    xnoremap <leader>P "+P
     " exit terminal mode with shift+escape
     tnoremap <Esc> <C-\><C-n>
     com Wsudo w !sudo tee %
@@ -229,20 +243,20 @@ EOF
     let g:tex_conceal = 'abdmgs'
     let g:vimtex_compiler_tectonic = { 'backend' : 'nvim' }
 
-    " Pandoc
-    let g:pandoc#command#custom_open = 'MyPandocOpen'
-    function! MyPandocOpen(file)
-        return 'zathura ' . shellescape(expand(a:file,':p'))
-    endfunction
-    com PandocInsModeline :normal Go[modeline]: # ( vim: set ft=pandoc: )<ESC>
+    " " Pandoc
+    " let g:pandoc#command#custom_open = 'MyPandocOpen'
+    " function! MyPandocOpen(file)
+    "     return 'zathura ' . shellescape(expand(a:file,':p'))
+    " endfunction
+    " com PandocInsModeline :normal Go[modeline]: # ( vim: set ft=pandoc: )<ESC>
 
-    let g:pandoc#biblio#sources = "bcg"
-    let g:pandoc#filetypes#handled = ["pandoc"]
-    let g:pandoc#filetypes#pandoc_markdown = 0
-    let g:pandoc#formatting#mode = 'hA'
-    let g:pandoc#command#autoexec_on_writes = 1
-    let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
-    com PandocOpen Pandoc! pdf -s
+    " let g:pandoc#biblio#sources = "bcg"
+    " let g:pandoc#filetypes#handled = ["pandoc"]
+    " let g:pandoc#filetypes#pandoc_markdown = 0
+    " let g:pandoc#formatting#mode = 'sA'
+    " let g:pandoc#command#autoexec_on_writes = 1
+    " let g:pandoc#command#autoexec_command = 'Pandoc pdf -s'
+    " com PandocOpen Pandoc! pdf -s
 
     " ncm2
     autocmd BufEnter * call ncm2#enable_for_buffer()
