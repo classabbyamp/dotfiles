@@ -28,6 +28,8 @@ local user_host="%B%F{$user_colour}%}%n%b%F{6}@%m%f"
 
 local current_dir="%F{4}%(4~|%-1~/…/%2~|%3~)%f"
 
+local shell_level="%(2L.%F{13}[%L]%f .)"
+
 function precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 zstyle ':vcs_info:*' enable git
@@ -52,6 +54,6 @@ function venv_prompt_info() {
 }
 
 PROMPT="${return_code}${user_host} ${current_dir}\$(venv_prompt_info)\$vcs_info_msg_0_
-%B${user_symbol}%b "
+${shell_level}%B${user_symbol}%b "
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
