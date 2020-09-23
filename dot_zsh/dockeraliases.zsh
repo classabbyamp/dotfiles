@@ -1,12 +1,11 @@
-# Add your own custom plugins in the custom/plugins directory. Plugins placed
-# here will override ones with the same name in the main plugins directory.
+# docker aliases for zsh
 
 alias d='docker'
 
 alias dat='docker attach'
 alias db='docker build'
 alias dbt='docker build . -t'
-alias dexec='docker exec'
+alias dex='docker exec'
 alias dk='docker kill'
 alias dl='docker logs'
 alias dlf='docker logs -f'
@@ -25,7 +24,7 @@ alias dtop='docker top'
 alias dupd='docker update'
 
 
-alias dc='docker-compose'
+alias dco='docker-compose'
 
 alias dcb='docker-compose build'
 alias dcdn='docker-compose down'
@@ -47,3 +46,4 @@ alias dcst='docker-compose start'
 alias dctop='docker-compose top'
 alias dcunp='docker-compose unpause'
 alias dcup='docker-compose up'
+
