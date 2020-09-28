@@ -2,7 +2,7 @@
 
 if which gs > /dev/null; then
     function pdfmerge() {
-        if [[ "$#" -lt 2 || "$1" -eq "-h" || "$1" -eq "--help" ]]; then
+        if [[ $# -lt 2 || "$1" = "-h" || "$1" = "--help" ]]; then
             echo "Usage: pdfmerge [output file] [input files...]"
         else
             gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=$@ ;
@@ -10,9 +10,19 @@ if which gs > /dev/null; then
     }
 fi
 
+if which qpdf > /dev/null; then
+    function pdfsplit() {
+        if [[ $# -lt 3 || "$1" = "-h" || "$1" = "--help" ]]; then
+            echo "Usage: pdfsplit [input file] [ranges] [output files]"
+        else
+            qpdf $1 --pages . $2 -- $3
+        fi
+    }
+fi
+
 if which python3 > /dev/null; then
     function venv() {
-        if [[ "$1" -eq "-h" || "$1" -eq "--help" ]]; then
+        if [[ $# -lt 1 && ! -v VIRTUAL_ENV || "$1" = "-h" || "$1" = "--help" ]]; then
             echo "Usage:"
             echo "  Activate: venv [venv to activate]"
             echo "  Deactivate: venv"

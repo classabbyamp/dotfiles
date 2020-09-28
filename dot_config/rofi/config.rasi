@@ -12,7 +12,7 @@ configuration {
 	display-window:  "Window";
 	show-icons:      true;
 	sidebar-mode:    true;
-	font: "Fira Code 12";
+	font: "Input Mono 12";
     terminal: "kitty";
     matching: "glob";
 }
