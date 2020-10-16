@@ -9,9 +9,10 @@ xsetroot -cursor_name left_ptr &
 
 nitrogen --restore &
 dropbox start &
-dunst &
+/usr/lib/xfce4/notifyd/xfce4-notifyd &
 pasystray &
 syncthing-gtk &
+redshift-gtk &
 
 bspc monitor DisplayPort-1 -d 1 2 3
 bspc monitor DisplayPort-2 -d 4 5 6 7

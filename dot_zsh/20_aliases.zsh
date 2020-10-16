@@ -16,6 +16,10 @@ alias py="python"
 alias woman="man"
 alias chm="chezmoi"
 
+if which nc > /dev/null; then
+    alias pastebin="nc termbin.com 9999"
+fi
+
 if which thefuck > /dev/null; then
     eval $(thefuck --alias)
 fi

@@ -9,6 +9,7 @@ local user_colour user_symbol
 typeset -A symbols
 symbols=( \
         'apollo' '☉' \
+        'daedelus' '↬' \
         'feoh' 'ᚠ' \
         'prometheus' '⚢' \
         )
@@ -24,7 +25,7 @@ else
     user_symbol='$'
 fi
 
-local user_host="%B%F{$user_colour}%}%n%b%F{6}@%m%f"
+local user_host="%B%F{$user_colour}%n%b%F{6}@%m%f"
 
 local current_dir="%F{4}%(4~|%-1~/…/%2~|%3~)%f"
 
