@@ -15,6 +15,8 @@ alias :q="exit"
 alias py="python"
 alias woman="man"
 alias chm="chezmoi"
+alias icat="kitty icat --align=left"
+alias isvg="rsvg-convert -az 1.5 | convert -trim -channel RGB -negate - - | icat"
 
 if which nc > /dev/null; then
     alias pastebin="nc termbin.com 9999"
