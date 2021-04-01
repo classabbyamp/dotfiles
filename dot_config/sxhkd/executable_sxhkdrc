@@ -35,14 +35,14 @@ alt + shift + super + r
 	nitrogen --restore
 
 # screenshot
-alt + F6
+Print
 	maim -su | xclip -selection clipboard -t image/png
-alt + Print
-	maim -su | xclip -selection clipboard -t image/png
+# super + Print
+# 	deepin-screen-recorder -s /tmp
 
 # lock session
 super + l
-	systemctl suspend
+	sudo systemctl suspend
 
 # volume and music controls
 XF86Audio{Mute,LowerVolume,RaiseVolume}
