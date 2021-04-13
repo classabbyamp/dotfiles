@@ -5,11 +5,10 @@
  */
 
 configuration {
-    modi: "run,drun,window,ssh,emoji,combi";
-    combi-modi: "window,drun";
+    modi: "run,drun,ssh,emoji,combi";
+    combi-modi: "drun";
 	display-drun:    "Drun";
 	display-run:     "Run";
-	display-window:  "Window";
 	show-icons:      true;
 	sidebar-mode:    true;
 	font: "Input Mono 12";

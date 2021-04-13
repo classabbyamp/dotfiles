@@ -3,8 +3,11 @@ local pathadds
 
 # history
 HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=1000000000
+SAVEHIST=1000000000
+setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt SHARE_HISTORY
 
 # ruby
 path=("$HOME/gems/bin" "$HOME/.gem/ruby/2.7.0/bin" $path)
