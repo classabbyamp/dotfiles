@@ -6,18 +6,6 @@ if exists('g:vscode')
 
     set clipboard=unnamedplus
 
-    " Tab colors
-    hi TabLineSel ctermbg=0
-
-    " Highlight unnecessary whitespace
-    set list listchars=tab:›\ ,extends:»,precedes:«,nbsp:␣,trail:·
-    highlight ExtraWhitespace ctermbg=0
-    match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
-
     " python
     let g:python3_host_prog = "~/.nvimenv/bin/python"
 else

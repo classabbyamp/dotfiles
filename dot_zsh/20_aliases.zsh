@@ -15,6 +15,8 @@ alias :q="exit"
 alias py="python"
 alias woman="man"
 alias chm="chezmoi"
+alias grep="rg"
+
 alias icat="kitty icat --align=left"
 alias isvg="rsvg-convert -az 1.5 | convert -trim -channel RGB -negate - - | icat"
 alias xevsxhkd="xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'"
