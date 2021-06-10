@@ -43,7 +43,7 @@ font-1 = Input Mono:pixelsize=12;2
 font-2 = Twemoji:scale=6
 font-3 = DejaVu Sans:pixelsize=12;2
 
-modules-left = music
+modules-left = eth pkg
 modules-center = bspwm
 modules-right = date localtime utctime
 
@@ -75,7 +75,7 @@ font-1 = Input Mono:pixelsize=12;2
 font-2 = Twemoji:scale=6
 font-3 = DejaVu Sans:pixelsize=12;2
 
-modules-left = eth pkg
+modules-left = music
 modules-center = bspwm
 modules-right = date localtime utctime
 
@@ -339,6 +339,7 @@ format-prefix-foreground = ${colors.foreground-alt}
 [module/volume]
 type = internal/pulseaudio
 
+click-middle = pavucontrol &
 format-volume = <label-volume> <bar-volume>
 label-volume = "  "
 label-volume-foreground = ${colors.foreground}

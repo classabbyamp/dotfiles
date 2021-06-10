@@ -54,7 +54,49 @@ function venv_prompt_info() {
     [[ -n "$VIRTUAL_ENV" ]] && echo " %F{2}v:${VIRTUAL_ENV##*/}%f"
 }
 
-PROMPT="${return_code}${user_host} ${current_dir}\$(venv_prompt_info)\$vcs_info_msg_0_
+function precmd_cmd_time() {
+    if [ $timer ]; then
+        timer_show=$(($SECONDS - $timer))
+        if [ -n "$TTY" ] && [ $timer_show -ge ${ZSH_COMMAND_TIME_MIN:-3} ]; then
+            hours=$(($timer_show/3600))
+            mins=$(($timer_show%3600/60))
+            secs=$(($timer_show%60))
+            if [ "$hours" -gt 0 ]; then
+                export ZSH_COMMAND_TIME=$(printf '%dh%02dm%02ds' $hours $mins $secs)
+            elif [ "$mins" -gt 0 ]; then
+                export ZSH_COMMAND_TIME=$(printf '%dm%02ds' $mins $secs)
+            else
+                export ZSH_COMMAND_TIME=$(printf '%ds' $secs)
+            fi
+
+        fi
+        unset timer
+    fi
+}
+
+function preexec_cmd_time() {
+    # check excluded
+    if [ -n "$ZSH_COMMAND_TIME_EXCLUDE" ]; then
+        cmd="$1"
+        for exc ($ZSH_COMMAND_TIME_EXCLUDE) do;
+            if [ "$(echo $cmd | grep -c "$exc")" -gt 0 ]; then
+                return
+            fi
+        done
+    fi
+
+    timer=${timer:-$SECONDS}
+    export ZSH_COMMAND_TIME=""
+}
+
+function cmd_time() {
+    [[ -n "$ZSH_COMMAND_TIME" ]] && echo "%F{10}${ZSH_COMMAND_TIME}%f "
+}
+
+precmd_functions+=( precmd_cmd_time )
+preexec_functions+=( preexec_cmd_time )
+
+PROMPT="\$(cmd_time)${return_code}${user_host} ${current_dir}\$(venv_prompt_info)\$vcs_info_msg_0_
 ${shell_level}%B${user_symbol}%b "
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
