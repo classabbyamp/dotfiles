@@ -40,7 +40,7 @@ module-margin-right = 2
 
 font-0 = FontAwesome:pixelsize=12;2
 font-1 = Input Mono:pixelsize=12;2
-font-2 = Twemoji:scale=6
+font-2 = Noto Color Emoji:scale=8
 font-3 = DejaVu Sans:pixelsize=12;2
 
 modules-left = eth pkg
@@ -72,7 +72,7 @@ module-margin-right = 2
 
 font-0 = FontAwesome:pixelsize=12;2
 font-1 = Input Mono:pixelsize=12;2
-font-2 = Twemoji:scale=6
+font-2 = Noto Color Emoji:scale=8
 font-3 = DejaVu Sans:pixelsize=12;2
 
 modules-left = music
@@ -104,7 +104,7 @@ module-margin-right = 2
 
 font-0 = FontAwesome:pixelsize=12;2
 font-1 = Input Mono:pixelsize=12;2
-font-2 = Twemoji:scale=6
+font-2 = Noto Color Emoji:scale=8
 font-3 = DejaVu Sans:pixelsize=12;2
 
 modules-left = cpu memory pulseaudio wttr
@@ -399,7 +399,7 @@ label-volume = %percentage%%
 ; Available tokens:
 ;   %percentage% (default)
 ;   %decibels% (unreleased)
-label-muted = 🔇
+label-muted = 
 
 label-volume-foreground = ${colors.foreground}
 format-volume-foreground = ${colors.foreground}
@@ -407,9 +407,9 @@ label-muted-foreground = ${colors.foreground}
 format-muted-foreground = ${colors.foreground}
 
 ; Only applies if <ramp-volume> is used
-ramp-volume-0 = 🔈
-ramp-volume-1 = 🔉
-ramp-volume-2 = 🔊
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 click-right = pavucontrol &
 

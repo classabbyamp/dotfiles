@@ -5,7 +5,7 @@
  */
 
 configuration {
-    modi: "run,drun,ssh,emoji,combi";
+    modi: "drun,emoji,combi";
     combi-modi: "drun";
 	display-drun:    "Drun";
 	display-run:     "Run";

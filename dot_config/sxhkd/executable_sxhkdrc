@@ -42,7 +42,8 @@ Print
 
 # lock session
 super + l
-	sudo systemctl suspend
+    sudo zzz
+	# sudo systemctl suspend
 
 # volume and music controls
 XF86Audio{Mute,LowerVolume,RaiseVolume}

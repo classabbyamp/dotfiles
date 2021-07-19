@@ -1,7 +1,0 @@
-// Place your key bindings in this file to override the defaults
-[
-{
-    "key": "escape",
-    "command": "vscode-neovim.escape",
-    "when": "editorTextFocus && neovim.mode == insert"
-}]

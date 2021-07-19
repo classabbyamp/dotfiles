@@ -18,7 +18,6 @@ path=("$HOME/.local/share/gem/ruby/3.0.0/bin" $path)
 export GEM_HOME=$HOME/gems
 
 # other
-export SSH_KEY_PATH=$HOME/.ssh/id_rsa
 export LANG=en_US.UTF-8
 export EDITOR='nvim'
 
@@ -28,4 +27,7 @@ path=("$HOME/.cargo/bin" $path)
 # path
 path=("$HOME/bin" '/usr/local/bin' $path)
 export PATH
+
+# ssh/gpg
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 
