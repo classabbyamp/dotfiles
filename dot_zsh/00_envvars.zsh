@@ -24,6 +24,9 @@ export EDITOR='nvim'
 # rust
 path=("$HOME/.cargo/bin" $path)
 
+# postgresql
+path=("/usr/lib/psql13/bin" $path)
+
 # path
 path=("$HOME/bin" '/usr/local/bin' $path)
 export PATH
@@ -31,3 +34,4 @@ export PATH
 # ssh/gpg
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 
+export XBPS_MAKEJOBS=12
