@@ -75,7 +75,7 @@ font-1 = Input Mono:pixelsize=12;2
 font-2 = Noto Color Emoji:scale=8
 font-3 = DejaVu Sans:pixelsize=12;2
 
-modules-left = music
+modules-left = 
 modules-center = bspwm
 modules-right = date localtime utctime
 

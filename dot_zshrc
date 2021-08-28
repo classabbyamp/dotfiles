@@ -5,7 +5,7 @@ unsetopt beep nomatch notify
 
 # load all the sub-configs from the ZSH_CONFIGS and ZSH_CONFIGS_LOCAL directories
 export ZSH_CONFIGS="$HOME/.zsh"
-export ZSH_CONFIGS_LOCAL="$HOME/local/share/zsh"
+export ZSH_CONFIGS_LOCAL="$HOME/.local/share/zsh"
 
 for fn in $ZSH_CONFIGS/*.zsh(.N); source $fn
 for fn in $ZSH_CONFIGS_LOCAL/*.zsh(.N); source $fn

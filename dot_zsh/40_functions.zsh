@@ -1,6 +1,6 @@
 # functions for zsh
 
-if which gs > /dev/null; then
+if command -v gs &> /dev/null; then
     function pdfmerge() {
         if [[ $# -lt 2 || "$1" = "-h" || "$1" = "--help" ]]; then
             echo "Usage: pdfmerge [output file] [input files...]"
@@ -10,7 +10,7 @@ if which gs > /dev/null; then
     }
 fi
 
-if which qpdf > /dev/null; then
+if command -v qpdf &> /dev/null; then
     function pdfsplit() {
         if [[ $# -lt 3 || "$1" = "-h" || "$1" = "--help" ]]; then
             echo "Usage: pdfsplit [input file] [ranges] [output files]"
@@ -20,7 +20,7 @@ if which qpdf > /dev/null; then
     }
 fi
 
-if which python3 > /dev/null; then
+if command -v python3 &> /dev/null; then
     function venv() {
         if [[ $# -lt 1 && ! -v VIRTUAL_ENV || "$1" = "-h" || "$1" = "--help" ]]; then
             echo "Usage:"
