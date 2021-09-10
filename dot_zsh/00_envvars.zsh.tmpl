@@ -28,7 +28,7 @@ path=("$HOME/.cargo/bin" $path)
 path=("$HOME/bin" '/usr/local/bin' $path)
 export PATH
 
-{{ if eq .chezmoi.hostname "prometheus.qrm.cat" }}
+{{ if eq .chezmoi.hostname "prometheus" }}
 # postgresql
 path=("/usr/lib/psql13/bin" $path)
 
