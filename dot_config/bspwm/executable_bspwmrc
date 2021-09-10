@@ -13,6 +13,7 @@ nitrogen --restore &
 syncthing-gtk -m &
 redshift -l 40.8:-74.4 &
 kdeconnect-indicator &
+$HOME/.local/bin/KopiaUI-0.8.4.AppImage &
 
 bspc monitor DisplayPort-1 -d 1 2 3 4 5
 bspc monitor DisplayPort-0 -d 6 7 8 9 10
