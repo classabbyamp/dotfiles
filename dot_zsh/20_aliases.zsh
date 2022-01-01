@@ -1,11 +1,12 @@
 # aliases for zsh
 
 alias void="neofetch"
+alias xrm="sudo xbps-remove"
 alias ping="ping -c 3"
 alias pingg="ping www.google.com"
 alias ping8="ping 8.8.8.8"
 alias c="clear"
-alias ssh="TERM=xterm ssh"
+alias ssh="TERM=xterm-256color ssh"
 if command -v nvim &>/dev/null; then
     alias vim="nvim"
     alias vi="nvim"
@@ -32,7 +33,6 @@ if [[ "$TERM" == "xterm-kitty" ]]; then
     alias isvg="rsvg-convert -az 1.5 | convert -trim -channel RGB -negate - - | icat"
     alias idot="dot -Tsvg -Efontname=InputMono -Efontcolor='#ffffff' -Ecolor='#ffffff' -Nfontcolor='#ffffff' -Ncolor='#ffffff' -Gbgcolor='#1e1c31' | rsvg-convert -az 1.1 | convert -trim -channel RGB - - | icat"
 fi
-alias xevsxhkd="xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'"
 
 if command -v nc &>/dev/null; then
     alias pastebin="nc termbin.com 9999"

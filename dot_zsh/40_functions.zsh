@@ -1,5 +1,15 @@
 # functions for zsh
 
+if command -v xev &>/dev/null; then
+    function xevsxhkd() {
+        xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
+    }
+fi
+
+function lnsv() {
+    ln -s /etc/sv/$1 /var/service
+}
+
 if command -v gs &> /dev/null; then
     function pdfmerge() {
         if [[ $# -lt 2 || "$1" = "-h" || "$1" = "--help" ]]; then
