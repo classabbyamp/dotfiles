@@ -1,17 +1,6 @@
-;=====================================================
-;
-;   To learn more about how to configure Polybar
-;   go to https://github.com/jaagr/polybar
-;
-;   The README contains alot of information
-;
-;=====================================================
-
 [colors]
 background = #000000
-; background = #1b182c
 background-alt = #000000
-; background-alt = #1b182c
 foreground = #cbe3e7
 foreground-alt = #cbe3e7
 primary = #906cff
@@ -19,8 +8,8 @@ secondary = #cbe3e7
 green = #62d196
 alert = #ff5458
 
-[bar/dp2]
-monitor = ${env:MONITOR:DisplayPort-2}
+[bar/dp1]
+monitor = ${env:MONITOR:DisplayPort-1}
 width = 100%
 height = 30
 bottom = true
@@ -51,8 +40,8 @@ scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 wm-restack = bspwm
 
-[bar/dp1]
-monitor = ${env:MONITOR:DisplayPort-1}
+[bar/dp2]
+monitor = ${env:MONITOR:DisplayPort-2}
 width = 100%
 height = 30
 bottom = true
@@ -79,6 +68,10 @@ modules-left =
 modules-center = bspwm
 modules-right = date localtime utctime
 
+tray-position = left
+tray-padding = 2
+tray-detached = true
+
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 wm-restack = bspwm
@@ -96,7 +89,7 @@ foreground = ${colors.foreground}
 line-size = 2
 line-color = #eff1f5
 
-padding-left = 45
+padding-left = 2
 padding-right = 2
 
 module-margin-left = 1
@@ -107,13 +100,9 @@ font-1 = Input Mono:pixelsize=12;2
 font-2 = Noto Color Emoji:scale=8
 font-3 = DejaVu Sans:pixelsize=12;2
 
-modules-left = cpu memory pulseaudio wttr
+modules-left = cpu memory pulseaudio wttr wttr2
 modules-center = bspwm
 modules-right = root home date localtime utctime
-
-tray-position = left
-tray-padding = 2
-tray-detached = true
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
@@ -367,50 +356,21 @@ bar-volume-empty-foreground = ${colors.secondary}
 
 [module/pulseaudio]
 type = internal/pulseaudio
-
-; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
-; If not, uses default sink
-; sink = alsa_output.pci-0000_12_00.3.analog-stereo
-
-; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
-; Default: true
 use-ui-max = false
-
-; Interval for volume increase/decrease (in percent points)
-; Default: 5
 interval = 5
-; Available tags:
-;   <label-volume> (default)
-;   <ramp-volume>
-;   <bar-volume>
 format-volume = <ramp-volume> <label-volume>
-
-; Available tags:
-;   <label-muted> (default)
-;   <ramp-volume>
-;   <bar-volume>
-;format-muted = <label-muted>
-
-; Available tokens:
-;   %percentage% (default)
-;   %decibels% (unreleased)
 label-volume = %percentage%%
-
-; Available tokens:
-;   %percentage% (default)
-;   %decibels% (unreleased)
 label-muted = 
-
 label-volume-foreground = ${colors.foreground}
 format-volume-foreground = ${colors.foreground}
 label-muted-foreground = ${colors.foreground}
 format-muted-foreground = ${colors.foreground}
 
-; Only applies if <ramp-volume> is used
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
 
+click-middle = $HOME/scripts/switch-audio-sink.sh &
 click-right = pavucontrol &
 
 [module/temperature]
@@ -435,73 +395,23 @@ screenchange-reload = true
 margin-top = 5
 margin-bottom = 5
 
-[module/music]
-type = custom/script
-exec = ~/.config/polybar/mpris.sh
-interval = 3
-click-left = playerctl -i chromium play-pause &
-click-middle = playerctl -i chromium previous &
-click-right = playerctl -i chromium next &
-label-maxlen = 50
-
 [module/pkg]
 type = custom/script
-interval = 600
-exec = .config/polybar/pkg.sh 2> /dev/null
-click-middle = kitty -e yay
-
-[module/battery]
-type = internal/battery
-
-; This is useful in case the battery never reports 100% charge
-full-at = 95
-
-; Use the following command to list batteries and adapters:
-; $ ls -1 /sys/class/power_supply/
-battery = BAT0
-adapter = AC
-
-poll-interval = 5
-
-time-format = %H:%M
-format-charging = <ramp-capacity> <label-charging>
-format-discharging = <ramp-capacity> <label-discharging>
-format-full = <ramp-capacity> <label-full>
-label-charging =  %percentage%%
-label-discharging = %percentage%%
-label-full = 
-
-; Only applies if <ramp-capacity> is used
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-
-; Only applies if <bar-capacity> is used
-bar-capacity-width = 10
-
-; Only applies if <animation-charging> is used
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-; Framerate in milliseconds
-animation-charging-framerate = 750
-
-; Only applies if <animation-discharging> is used
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-3 = 
-animation-discharging-4 = 
-; Framerate in milliseconds
-animation-discharging-framerate = 500
+interval = 7200
+format-prefix = " "
+exec = xi -uMn 2> /dev/null | wc -l
+click-middle = kitty -e xi -u &
 
 [module/wttr]
 type = custom/script
-exec = curl -s 'wttr.in/MMU?m&format=1'
+exec = echo M: `curl -s 'wttr.in/YUL?m&format=1'`
+click-left = xdg-open https://openweathermap.org/city/6077243 &
+interval = 600
+
+[module/wttr2]
+type = custom/script
+exec = echo S: `curl -s 'wttr.in/YSC?m&format=1'`
+click-left = xdg-open https://openweathermap.org/city/6146143 &
 interval = 600
 
 ; vim:ft=dosini
