@@ -13,11 +13,13 @@ nitrogen --restore &
 syncthing-gtk -m &
 redshift -l 40.8:-74.4 &
 kdeconnect-indicator &
-$HOME/.local/bin/KopiaUI-0.8.4.AppImage &
+nm-tray &
+$HOME/.local/bin/KopiaUI-0.9.4.AppImage &
+$HOME/.local/bin/Notion-Enhanced-2.0.16-5.AppImage &
 
-bspc monitor DisplayPort-1 -d 1 2 3 4 5
+bspc monitor DisplayPort-2 -d 1 2 3 4 5
 bspc monitor DisplayPort-0 -d 6 7 8 9 10
-bspc monitor DisplayPort-2 -d 11 12 13 14 15
+bspc monitor DisplayPort-1 -d 11 12 13 14 15
 
 bspc rule --add discord desktop=^11
 bspc rule --add discord-ptb desktop=^12
