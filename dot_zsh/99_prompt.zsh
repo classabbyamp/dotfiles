@@ -11,7 +11,7 @@ symbols=( \
         'apollo' '☉' \
         'daedelus' '↬' \
         'feoh' 'ᚠ' \
-        'prometheus' '⚢' \
+        'prometheus' '🐾' \
         )
 
 if [[ $UID -eq 0 ]]; then
