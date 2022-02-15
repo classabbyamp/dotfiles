@@ -26,7 +26,13 @@ if command -v fd &>/dev/null; then
 fi
 alias gpg="gpg2"
 
-alias vsrcupdate="git pull --rebase upstream master; ./xbps-src bootstrap-update"
+function vsrcupdate() {
+    git checkout master
+    git pull --rebase upstream master
+    for md in masterdir*; do
+        ./xbps-src -m $md bootstrap-update
+    done
+}
 
 if [[ "$TERM" == "xterm-kitty" ]]; then
     alias icat="kitty icat --align=left"

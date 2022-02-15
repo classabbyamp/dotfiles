@@ -112,6 +112,9 @@ else
     " python
     let g:python3_host_prog = "~/.nvimenv/bin/python"
 
+    " xbps-src templates
+    autocmd BufNewFile,BufRead template :set ft=sh
+
     " lightline
     let g:lightline = {
     \     'colorscheme': 'challenger_deep',
