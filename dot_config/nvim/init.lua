@@ -1,6 +1,10 @@
 -- vim:foldmethod=marker
 
-vim.cmd([[
+local o = vim.o
+local g = vim.g
+local cmd = vim.cmd
+
+cmd([[
     if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
         silent execute '!curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
         autocmd VimEnter * PlugInstall --sync
@@ -15,7 +19,7 @@ vim.call('plug#begin')
     Plug 'itchyny/lightline.vim'
     -- utilities
     Plug 'tanvirtin/vgit.nvim'
-        Plug 'nvim-lua/plenary.nvim' -- required by vgit
+        Plug 'nvim-lua/plenary.nvim' -- required by vgit and cmp-git
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'Raimondi/delimitMate'
@@ -30,42 +34,46 @@ vim.call('plug#begin')
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
+    Plug 'petertriho/cmp-git'
     Plug 'hrsh7th/nvim-cmp'
     -- other
     Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
     Plug 'p00f/nvim-ts-rainbow'
 vim.call('plug#end')
 
-vim.cmd([[syntax on]])
-vim.o.number = true
-vim.o.encoding = 'utf-8'
-vim.o.hidden = true
-vim.o.autowrite = true
-vim.o.modeline = true
-vim.o.modelines = 5
-vim.o.cursorline = true
+o.syntax = 'on'
+o.number = true
+o.encoding = 'utf-8'
+o.hidden = true
+o.autowrite = true
+o.modeline = true
+o.modelines = 5
+o.cursorline = true
 
-vim.o.tw = 120
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.expandtab = true
-vim.o.conceallevel = 0
+o.tw = 120
+o.tabstop = 4
+o.shiftwidth = 4
+o.expandtab = true
+o.conceallevel = 0
 
-vim.o.laststatus = 2
-vim.o.showmode = false
-vim.o.incsearch = true
-vim.o.inccommand = 'nosplit'
+o.laststatus = 2
+o.showmode = false
+o.incsearch = true
+o.inccommand = 'nosplit'
 
-vim.g.python3_host_prog = '/usr/bin/python'
+-- Highlight unnecessary whitespace
+o.list = true
+o.listchars = 'tab:› ,extends:»,precedes:«,nbsp:␣,trail:·'
 
-vim.cmd([[
-    let g:python3_host_prog = "/usr/bin/python"
+-- Undo
+if vim.fn.has("persistent_undo") == 1 then
+    o.undofile = true
+end
 
+cmd([[
     " Tab colors
     hi TabLineSel ctermbg=0
 
-    " Highlight unnecessary whitespace
-    set list listchars=tab:›\ ,extends:»,precedes:«,nbsp:␣,trail:·
     highlight ExtraWhitespace ctermbg=0
     match ExtraWhitespace /\s\+$/
     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -75,11 +83,6 @@ vim.cmd([[
 
     " Highlight TODO, FIXME
     syn match myTodo contained "\<\(TODO\|FIXME\|NOTE\|OPTIMIZE\)"
-
-    " Undo
-    if has("persistent_undo")
-        set undofile
-    endif
 
     " Mappings
     map <space> <leader>
@@ -104,86 +107,90 @@ vim.cmd([[
     " exit terminal mode with shift+escape
     tnoremap <Esc> <C-\><C-n>
     com Wsudo w !sudo tee %
-
-    let g:onedark_config = {
-    \    'style': 'darker',
-    \    'transparent': v:true,
-    \}
-    colorscheme onedark
-    set termguicolors
-
-    " xbps-src templates
-    autocmd BufNewFile,BufRead template :set ft=sh
-
-    " delimitMate
-    let delimitMate_expand_cr = 1
-
-    " Markdown
-    au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><CR>
-    let g:vim_markdown_folding_disabled = 1
-    let g:vim_markdown_conceal = 0
-    let g:vim_markdown_frontmatter = 1
 ]])
 
--- lightline {{{
-vim.cmd([[
-    let g:lightline = {
-    \     'colorscheme': 'one',
-    \     'mode_map': {
-    \         '__' : '-',
-    \         'n'  : 'N',
-    \         'i'  : 'I',
-    \         'R'  : 'R',
-    \         'c'  : 'C',
-    \         'v'  : 'V',
-    \         'V'  : 'V-L',
-    \         '' : 'V-B',
-    \         's'  : 'S',
-    \         'S'  : 'S-L',
-    \         '' : 'S-B',
-    \         't'  : 'T',
-    \     },
-    \     'active': {
-    \         'left': [
-    \             ['mode', 'paste'],
-    \             [],
-    \             ['relativepath'],
-    \         ],
-    \         'right': [
-    \             [],
-    \             [],
-    \             ['fileformat', 'fileencoding', 'filetype', 'venv', 'gitstatus', 'lineinfo'],
-    \         ],
-    \     },
-    \     'inactive': {
-    \         'left': [
-    \             ['filename'],
-    \         ],
-    \         'right': [
-    \             ['lineinfo'],
-    \         ],
-    \     },
-    \     'tabline': {
-    \         'left': [
-    \             ['tabs'],
-    \         ],
-    \         'right': [
-    \             [],
-    \         ],
-    \     },
-    \     'component': {
-    \         'lineinfo': '%p%% %l:%v',
-    \     },
-    \     'component_function': {
-    \         'gitstatus': 'LightlineGitStatus',
-    \         'relativepath': 'LightlineRelPath',
-    \         'fileformat': 'LightlineFileformat',
-    \         'filetype': 'LightlineFiletype',
-    \         'fileencoding': 'LightlineFileencoding',
-    \         'venv': 'LightlineVenv'
-    \     },
-    \ }
+-- colourscheme
+g.onedark_config = {
+    style = 'darker',
+    transparent = true,
+}
+cmd('colorscheme onedark')
+o.termguicolors = true
 
+-- xbps-src templates
+cmd('autocmd BufNewFile,BufRead template :set ft=sh')
+
+-- python
+g.python3_host_prog = '/usr/bin/python'
+
+-- delimitMate
+g.delimitMate_expand_cr = 1
+
+-- Markdown
+cmd('au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><CR>')
+g.vim_markdown_folding_disabled = 1
+g.vim_markdown_conceal = 0
+g.vim_markdown_frontmatter = 1
+
+-- lightline {{{
+g.lightline = {
+    colorscheme = 'one',
+    mode_map = {
+        ['__'] = '-',
+        ['n']  = 'N',
+        ['i']  = 'I',
+        ['R']  = 'R',
+        ['c']  = 'C',
+        ['v']  = 'V',
+        ['V']  = 'V-L',
+        [''] = 'V-B',
+        ['s']  = 'S',
+        ['S']  = 'S-L',
+        [''] = 'S-B',
+        ['t']  = 'T',
+    },
+    active = {
+        left = {
+            {'mode', 'paste'},
+            {},
+            {'relativepath'},
+        },
+        right = {
+            {},
+            {},
+            {'fileformat', 'fileencoding', 'filetype', 'venv', 'gitstatus', 'lineinfo'},
+        },
+    },
+    inactive = {
+        left = {
+            {'filename'},
+        },
+        right = {
+            {'lineinfo'},
+        },
+    },
+    tabline = {
+        left = {
+            {'tabs'},
+        },
+        right = {
+            {},
+        },
+    },
+    component = {
+        lineinfo = '%p%% %l:%v',
+    },
+    component_function = {
+        gitstatus = 'LightlineGitStatus',
+        relativepath = 'LightlineRelPath',
+        fileformat = 'LightlineFileformat',
+        filetype = 'LightlineFiletype',
+        fileencoding = 'LightlineFileencoding',
+        venv = 'LightlineVenv'
+    },
+}
+
+cmd([[
     function! LightlineRelPath()
         let relpath = expand('%:f') !=# '' ? expand('%:f') : '[No Name]'
         let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
@@ -205,9 +212,9 @@ vim.cmd([[
 
     function! LightlineVenv()
         if &ft ==? 'python'
-python3 << EOF
+python3 <<EOF
 import sys
-v = ".".join([ str(x) for x in sys.version_info[0:3] ])
+v = sys.version.split()[0]
 vim.command("let pyversion = '%s'" % v)
 EOF
             return pyversion . '/' . virtualenv#statusline()
@@ -230,65 +237,64 @@ EOF
 -- end lightline }}}
 
 -- vgit {{{
-vim.o.updatetime = 300
+o.updatetime = 300
 
 require('vgit').setup({
-  settings = {
-    live_gutter = {
-        enabled = true,
-    },
-    live_blame = {
-      enabled = true,
-      format = function(blame, git_config)
-        local config_author = git_config['user.name']
-        local author = blame.author
-        if config_author == author then
-          author = 'You'
-        end
-        local time = os.difftime(os.time(), blame.author_time)
-          / (60 * 60 * 24 * 30 * 12)
-        local time_divisions = {
-          { 1, 'years' },
-          { 12, 'months' },
-          { 30, 'days' },
-          { 24, 'hours' },
-          { 60, 'minutes' },
-          { 60, 'seconds' },
-        }
-        local counter = 1
-        local time_division = time_divisions[counter]
-        local time_boundary = time_division[1]
-        local time_postfix = time_division[2]
-        while time < 1 and counter ~= #time_divisions do
-          time_division = time_divisions[counter]
-          time_boundary = time_division[1]
-          time_postfix = time_division[2]
-          time = time * time_boundary
-          counter = counter + 1
-        end
-        local commit_message = blame.commit_message
-        if not blame.committed then
-          author = 'You'
-          commit_message = 'Uncommitted changes'
-          return string.format(' %s • %s', author, commit_message)
-        end
-        local max_commit_message_length = 255
-        if #commit_message > max_commit_message_length then
-          commit_message = commit_message:sub(1, max_commit_message_length) .. '...'
-        end
-        return string.format(
-          ' %s, %s • %s',
-          author,
-          string.format(
-            '%s %s ago',
-            time >= 0 and math.floor(time + 0.5) or math.ceil(time - 0.5),
-            time_postfix
-          ),
-          commit_message
-        )
-      end,
-    },
-  }
+    settings = {
+        live_gutter = {
+            enabled = true,
+        },
+        live_blame = {
+            enabled = true,
+            format = function(blame, git_config)
+                local config_author = git_config['user.name']
+                local author = blame.author
+                if config_author == author then
+                    author = 'You'
+                end
+                local time = os.difftime(os.time(), blame.author_time) / (60 * 60 * 24 * 30 * 12)
+                local time_divisions = {
+                    { 1, 'years' },
+                    { 12, 'months' },
+                    { 30, 'days' },
+                    { 24, 'hours' },
+                    { 60, 'minutes' },
+                    { 60, 'seconds' },
+                }
+                local counter = 1
+                local time_division = time_divisions[counter]
+                local time_boundary = time_division[1]
+                local time_postfix = time_division[2]
+                while time < 1 and counter ~= #time_divisions do
+                    time_division = time_divisions[counter]
+                    time_boundary = time_division[1]
+                    time_postfix = time_division[2]
+                    time = time * time_boundary
+                    counter = counter + 1
+                end
+                local commit_message = blame.commit_message
+                if not blame.committed then
+                    author = 'You'
+                    commit_message = 'Uncommitted changes'
+                    return string.format(' %s • %s', author, commit_message)
+                end
+                local max_commit_message_length = 255
+                if #commit_message > max_commit_message_length then
+                    commit_message = commit_message:sub(1, max_commit_message_length) .. '...'
+                end
+                return string.format(
+                    ' %s, %s • %s',
+                    author,
+                    string.format(
+                        '%s %s ago',
+                        time >= 0 and math.floor(time + 0.5) or math.ceil(time - 0.5),
+                        time_postfix
+                    ),
+                    commit_message
+                )
+            end,
+        },
+    }
 })
 -- end vgit }}}
 
@@ -308,7 +314,7 @@ require('nvim-treesitter.configs').setup({
 -- end treesitter }}}
 
 -- completion/lsp {{{
-vim.o.completeopt = 'menu,menuone,noselect'
+o.completeopt = 'menu,menuone,noselect'
 
 -- Setup nvim-cmp
 local cmp = require('cmp')
@@ -340,46 +346,61 @@ local cmp_kinds = {
     TypeParameter = ' ',
 }
 
+local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 cmp.setup({
-snippet = {},
-formatting = {
-    fields = { 'kind', 'abbr' },
-    format = function(_, vim_item)
-        vim_item.kind = cmp_kinds[vim_item.kind] or ''
-        return vim_item
-    end,
-},
-mapping = {
-    ['<PageUp>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<PageDown>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_next_item()
-        elseif has_words_before() then
-            cmp.complete()
-        else
-            fallback()
-        end
-    end, {'i', 's'}),
-    ['<S-Tab>'] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      end
-    end, { 'i', 's' }),
-    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-    ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-    }),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-},
-sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-}, {
-    { name = 'buffer' },
+    snippet = {},
+    formatting = {
+        fields = { 'kind', 'abbr' },
+        format = function(_, vim_item)
+            vim_item.kind = cmp_kinds[vim_item.kind] or ''
+            return vim_item
+        end,
+    },
+    mapping = {
+        ['<PageUp>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        ['<PageDown>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end, {'i', 's'}),
+        ['<S-Tab>'] = cmp.mapping(function()
+            if cmp.visible() then
+                cmp.select_prev_item()
+            end
+        end, { 'i', 's' }),
+        ['<C-y>'] = cmp.config.disable,
+        ['<C-e>'] = cmp.mapping({
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+        }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    },
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+    }, {
+        { name = 'buffer' },
+    })
 })
+
+cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+        { name = 'cmp_git' },
+    }, {
+        { name = 'buffer' },
+    })
 })
+
+require("cmp_git").setup()
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
