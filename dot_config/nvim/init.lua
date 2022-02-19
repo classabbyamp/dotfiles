@@ -56,7 +56,11 @@ vim.o.showmode = false
 vim.o.incsearch = true
 vim.o.inccommand = 'nosplit'
 
+vim.g.python3_host_prog = '/usr/bin/python'
+
 vim.cmd([[
+    let g:python3_host_prog = "/usr/bin/python"
+
     " Tab colors
     hi TabLineSel ctermbg=0
 
@@ -226,8 +230,13 @@ EOF
 -- end lightline }}}
 
 -- vgit {{{
+vim.o.updatetime = 300
+
 require('vgit').setup({
   settings = {
+    live_gutter = {
+        enabled = true,
+    },
     live_blame = {
       enabled = true,
       format = function(blame, git_config)
@@ -334,9 +343,9 @@ local cmp_kinds = {
 cmp.setup({
 snippet = {},
 formatting = {
-    fields = { "kind", "abbr" },
+    fields = { 'kind', 'abbr' },
     format = function(_, vim_item)
-        vim_item.kind = cmp_kinds[vim_item.kind] or ""
+        vim_item.kind = cmp_kinds[vim_item.kind] or ''
         return vim_item
     end,
 },
@@ -344,6 +353,20 @@ mapping = {
     ['<PageUp>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<PageDown>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.select_next_item()
+        elseif has_words_before() then
+            cmp.complete()
+        else
+            fallback()
+        end
+    end, {'i', 's'}),
+    ['<S-Tab>'] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      end
+    end, { 'i', 's' }),
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<C-e>'] = cmp.mapping({
         i = cmp.mapping.abort(),

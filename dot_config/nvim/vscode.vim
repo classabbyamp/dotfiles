@@ -9,6 +9,8 @@ call plug#begin()
     Plug 'tpope/vim-surround'
 call plug#end()
 
+let g:python3_host_prog = "/usr/bin/python"
+
 set clipboard=unnamedplus
 
 xmap gc  <Plug>VSCodeCommentary
