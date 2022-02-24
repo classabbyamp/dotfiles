@@ -119,6 +119,7 @@ o.termguicolors = true
 
 -- xbps-src templates
 cmd('autocmd BufNewFile,BufRead template :set ft=bash noexpandtab')
+cmd('autocmd BufNewFile,BufRead ~/void-packages/** :VGit toggle_live_blame')
 
 -- python
 g.python3_host_prog = '/usr/bin/python'

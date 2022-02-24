@@ -100,7 +100,7 @@ font-1 = Input Mono:pixelsize=12;2
 font-2 = Noto Color Emoji:scale=8
 font-3 = DejaVu Sans:pixelsize=12;2
 
-modules-left = cpu memory pulseaudio wttr wttr2
+modules-left = cpu memory volume wttr wttr2
 modules-center = bspwm
 modules-right = root home date localtime utctime
 
@@ -327,35 +327,6 @@ format-prefix-foreground = ${colors.foreground-alt}
 
 [module/volume]
 type = internal/pulseaudio
-
-click-middle = pavucontrol &
-format-volume = <label-volume> <bar-volume>
-label-volume = "  "
-label-volume-foreground = ${colors.foreground}
-label-muted = ─────────
-format-muted-prefix = "  │"
-label-muted-foreground = ${colors.foreground}
-format-muted-foreground = ${colors.foreground}
-
-bar-volume-width = 10
-bar-volume-foreground-0 = ${colors.foreground}
-bar-volume-foreground-1 = ${colors.foreground}
-bar-volume-foreground-2 = ${colors.foreground}
-bar-volume-foreground-3 = ${colors.foreground}
-bar-volume-foreground-4 = ${colors.foreground}
-bar-volume-foreground-5 = ${colors.foreground}
-bar-volume-foreground-6 = ${colors.alert}
-bar-volume-gradient = true
-bar-volume-indicator = │
-bar-volume-indicator-font = 2
-bar-volume-empty = ─
-bar-volume-fill-font = 2
-bar-volume-fill = ━
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.secondary}
-
-[module/pulseaudio]
-type = internal/pulseaudio
 use-ui-max = false
 interval = 5
 format-volume = <ramp-volume> <label-volume>
@@ -370,7 +341,7 @@ ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
 
-click-middle = $HOME/scripts/switch-audio-sink.sh &
+click-middle = switch-audio-sink &
 click-right = pavucontrol &
 
 [module/temperature]
