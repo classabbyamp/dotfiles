@@ -82,7 +82,7 @@ cmd([[
     autocmd BufWinLeave * call clearmatches()
 
     " Highlight TODO, FIXME
-    syn match myTodo contained "\<\(TODO\|FIXME\|NOTE\|OPTIMIZE\)"
+    syn match myTodo contained "\<\(TODO\|FIXME\|NOTE\|OPTIMIZE\|XXX\)"
 
     " Mappings
     map <space> <leader>
@@ -118,7 +118,7 @@ cmd('colorscheme onedark')
 o.termguicolors = true
 
 -- xbps-src templates
-cmd('autocmd BufNewFile,BufRead template :set ft=sh')
+cmd('autocmd BufNewFile,BufRead template :set ft=bash noexpandtab')
 
 -- python
 g.python3_host_prog = '/usr/bin/python'
@@ -427,6 +427,11 @@ require('lspconfig').rust_analyzer.setup {
 -- xi nodejs; sudo npm install -g pyright
 require('lspconfig').pyright.setup {
     capabilities = capabilities
+}
+-- sudo npm install -g bash-language-server
+require('lspconfig').bashls.setup {
+    capabilities = capabilities,
+    filetypes = { "bash" },
 }
 
 -- end completion-lsp }}}

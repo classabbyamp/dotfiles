@@ -1,0 +1,87 @@
+/* vim:ft=css: */
+
+configuration {
+    drun {
+        display-name: "";
+    }
+
+    run {
+        display-name: "";
+    }
+
+    window {
+        display-name: "";
+    }
+
+    emoji {
+            display-name: "";
+    }
+
+    calc {
+        display-name: "";
+    }
+}
+
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+
+    bg: #181a1f;
+    bg-alt: #3f4451;
+    fg: #abb2bf;
+    fg-alt: #e6e6e6;
+    fg-selected: #c162de;
+
+    background-color: @bg;
+    text-color: @fg;
+}
+
+window {
+    border-radius: 8px;
+}
+
+mainbox {
+    children: [inputbar, listview];
+}
+
+inputbar {
+    background-color: @bg-alt;
+    text-color: @fg-alt;
+    children: [prompt, entry];
+}
+
+entry {
+    background-color: inherit;
+    text-color: inherit;
+    padding: 12px 3px;
+}
+
+prompt {
+    background-color: inherit;
+    text-color: inherit;
+    padding: 12px;
+}
+
+listview {
+    lines: 8;
+}
+
+element {
+    children: [element-icon, element-text];
+}
+
+element-icon {
+    padding: 10px 10px;
+}
+
+element-text {
+    padding: 10px 0;
+    text-color: @fg;
+}
+
+element-text selected {
+    text-color: @fg-selected;
+}
+

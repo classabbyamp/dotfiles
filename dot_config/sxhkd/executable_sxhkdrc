@@ -8,11 +8,11 @@ alt + Return
 
 # drun
 alt + d
-	rofi -show combi
+	rofi -show drun
 
 # run
 alt + r
-    rofi -show combi -combi-modi run,ssh
+    rofi -show run
 
 # calculator
 alt + c
@@ -20,7 +20,7 @@ alt + c
 
 # emoji
 alt + e
-	rofi -show emoji -matching glob
+	rofi -show emoji
 
 # make sxhkd reload its configuration files:
 alt + Escape

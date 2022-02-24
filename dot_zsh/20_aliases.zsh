@@ -26,6 +26,7 @@ if command -v fd &>/dev/null; then
 fi
 alias gpg="gpg2"
 
+alias xs="./xbps-src"
 function vsrcupdate() {
     git checkout master
     git pull --rebase upstream master
