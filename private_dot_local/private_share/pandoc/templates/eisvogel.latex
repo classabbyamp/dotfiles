@@ -882,6 +882,18 @@ $endif$
 %% end added
 %%
 
+%%
+%% begin custom macros
+%%
+
+\makeatletter
+\DeclareRobustCommand{\unit}[1]{\ensuremath{\,\mathrm{#1}}}
+\makeatother
+
+%%
+%% end custom macros
+%%
+
 \begin{document}
 
 %%
@@ -950,6 +962,12 @@ $endif$
 $if(titlepage-background)$
 $else$
 \textsf{$date$}
+$if(certify)$
+\vskip 3em
+I certify that this submission is my original work and meets \\ the Faculty's Expectation of Originality.
+\vskip 1em
+$$\rule{4cm}{0.15mm} \quad \text{Date:} \; \rule{2cm}{0.15mm} \quad \text{ID:} \; \rule{2cm}{0.15mm}$$
+$endif$
 $endif$
 \end{flushleft}
 \end{titlepage}

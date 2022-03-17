@@ -68,10 +68,10 @@ function precmd_cmd_time() {
             else
                 export ZSH_COMMAND_TIME=$(printf '%ds' $secs)
             fi
-
         fi
-        unset timer
     fi
+    unset timer
+    unset timer_show
 }
 
 function preexec_cmd_time() {

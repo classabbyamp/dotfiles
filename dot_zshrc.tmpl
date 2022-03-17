@@ -12,3 +12,20 @@ for fn in $ZSH_CONFIGS_LOCAL/*.zsh(.N); source $fn
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>/dev/null || true
 
+export USER_LS_COLORS=1
+
+[ -z "$COLORS" ] && [ -e "/etc/colors/DIR_COLORS.256color" ] && \
+    [ "x$(tput colors 2>/dev/null)" = "x256" ] && \
+    COLORS="/etc/colors/DIR_COLORS.256color"
+
+if [ -z "$COLORS" ]; then
+    for colors in "/etc/colors/DIR_COLORS.$TERM" "/etc/colors/DIR_COLORS" ; do
+        [ -e "$colors" ] && COLORS="$colors" && break
+    done
+fi
+
+# Existence of $COLORS already checked above.
+[ -n "$COLORS" ] || return
+
+eval $(dircolors --sh "$COLORS" 2>/dev/null)
+

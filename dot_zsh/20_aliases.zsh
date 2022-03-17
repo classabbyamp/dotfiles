@@ -1,5 +1,10 @@
 # aliases for zsh
 
+alias ll='ls -l --color=auto'
+alias l.='ls -d .* --color=auto'
+alias ls='ls --color=auto'
+alias tree='tree -C'
+
 alias void="neofetch"
 alias xrm="sudo xbps-remove"
 alias ping="ping -c 3"
@@ -8,11 +13,9 @@ alias ping8="ping 8.8.8.8"
 alias c="clear"
 alias ssh="TERM=xterm-256color ssh"
 if command -v nvim &>/dev/null; then
-    alias vim="nvim"
-    alias vi="nvim"
     alias v="nvim"
     alias vimdiff="nvim -d"
-    alias oldvim="/usr/bin/vim"
+    alias vdiff="nvim -d"
 fi
 alias :q="exit"
 alias py="python3"
@@ -27,13 +30,6 @@ fi
 alias gpg="gpg2"
 
 alias xs="./xbps-src"
-function vsrcupdate() {
-    git checkout master
-    git pull --rebase upstream master
-    for md in masterdir*; do
-        ./xbps-src -m $md bootstrap-update
-    done
-}
 
 if [[ "$TERM" == "xterm-kitty" ]]; then
     alias icat="kitty icat --align=left"
