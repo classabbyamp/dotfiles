@@ -1,6 +1,7 @@
 # aliases for zsh
 
 alias ll='ls -l --color=auto'
+alias lh='ls -lh --color=auto'
 alias l.='ls -d .* --color=auto'
 alias ls='ls --color=auto'
 alias tree='tree -C'

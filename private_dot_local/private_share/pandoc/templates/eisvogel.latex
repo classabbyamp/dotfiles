@@ -889,6 +889,12 @@ $endif$
 \makeatletter
 \DeclareRobustCommand{\unit}[1]{\ensuremath{\,\mathrm{#1}}}
 \makeatother
+\makeatletter
+\DeclareRobustCommand{\deg}{\ensuremath{^\circ}}
+\makeatother
+\makeatletter
+\DeclareRobustCommand{\ohm}{\unit{\Omega}}
+\makeatother
 
 %%
 %% end custom macros
