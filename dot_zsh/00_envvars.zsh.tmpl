@@ -35,4 +35,8 @@ path=("/usr/lib/psql13/bin" $path)
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 {{ end }}
 
+{{ if eq .chezmoi.hostname "daedelus" }}
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+{{ end }}
+
 export PATH
