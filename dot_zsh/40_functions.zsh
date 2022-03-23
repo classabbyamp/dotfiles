@@ -51,3 +51,9 @@ if command -v python3 &> /dev/null; then
     }
 fi
 
+if command -v diff &>/dev/null && command -v xbps-query &>/dev/null && command -v xls &>/dev/null; then
+    function pkgdiff() {
+        diff --color -u <(xbps-query -Rf $1) <(xls $1)
+    }
+fi
+
