@@ -8,15 +8,16 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
 
 export PATH="$HOME/.local/bin:$PATH"
 
-if [ -z "$1" ]
-then
-    # Launch bar1 and bar2
-    polybar dp0 &
-    polybar dp2 &
-    polybar dp1 &
-else
-    polybar ob &
-fi
+polybar dp0 &
+polybar dp2 &
+polybar dp1 &
+
+for m in $( bspc query -M --names ); do
+    index=$((index + 1))
+    export P_BSPWM_WINDOW_CMD="tail $HOME/.cache/bspwm_windows_${index}.txt"
+
+    MONITOR=$m polybar --reload wintitles &
+done
 
 echo "Bars launched..."
 

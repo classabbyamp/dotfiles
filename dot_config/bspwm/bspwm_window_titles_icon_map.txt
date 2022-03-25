@@ -1,0 +1,6 @@
+Vivaldi-stable 
+Code 
+kitty 
+dolphin 
+telegram-desktop 
+Fallback 
