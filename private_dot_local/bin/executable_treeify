@@ -2,11 +2,50 @@
 
 from pathlib import PurePath
 from sys import stdin
+from os import getenv
 
 EMPTY    = "    "
 NOCHILD  = "│   "
 CHILD    = "├── "
 ENDCHILD = "└── "
+ANSI     = "\033[{code}m"
+RESET = ANSI.format(code="0")
+
+"""
+def parse_lscolours() -> dict | None:
+    raw = getenv("LS_COLORS")
+    colors = {}
+    if raw:
+        for itm in raw.split(":"):
+            if itm:
+                k, v = itm.split("=")
+                colors[k] = ANSI.format(code=v)
+        return colors
+    else:
+        return None
+"""
+def parse_lscolours():
+    return None
+
+COLOURS = parse_lscolours()
+SPECIAL = ['NULL', 'bd', 'ca', 'cd', 'cl', 'di', 'do', 'ec', 'ex', 'fi', 'lc', 'ln',
+    'mh', 'mi', 'no', 'or', 'ow', 'pi', 'rc', 'rs', 'sg', 'so', 'st', 'su', 'tw',]
+
+# this is heckin slow lmao, disabling for now with line 27
+def colour(fn: str, dir: bool = False, symlink: bool = False) -> str:
+    if COLOURS:
+        c = "no"
+        if symlink:
+            c = "ln"
+        elif dir:
+            c = "di"
+        elif fn not in SPECIAL:
+            for code in COLOURS:
+                if PurePath(fn).match(code):
+                    c = code
+                    break
+        return COLOURS[c] + fn + RESET
+    return fn
 
 class Path:
     def __init__(self, path: str, target: str = None):
@@ -16,10 +55,13 @@ class Path:
     @property
     def parts(self) -> list[str]:
         parts = list(self.path.parts)
+        last_part = parts[-1]
+        parts = [colour(p, dir=True) for p in parts[:-1]]
         if self.target:
-            parts[-1] += f" -> {self.target}"
+            parts.append(f"{colour(last_part, symlink=True)} -> {colour(self.target)}")
+        else:
+            parts.append(colour(last_part))
         return parts
-
 
     def __str__(self):
         if self.target is not None:
