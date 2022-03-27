@@ -42,3 +42,12 @@ if command -v nc &>/dev/null; then
     alias pastebin="nc termbin.com 9999"
 fi
 
+function xrs() {
+    command xrs $@ | grep -v 32bit
+}
+
+function xtree() {
+    xls $@ | treeify
+}
+compdefas xls xtree
+
