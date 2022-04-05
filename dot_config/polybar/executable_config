@@ -237,13 +237,13 @@ click-middle = xdg-open https://alpha.de.repo.voidlinux.org/void-updates/void-up
 
 [module/wttr]
 type = custom/script
-exec = echo M: `curl -s 'wttr.in/YUL?m&format=1' | sed 's/Unknown.\+/?/'`
+exec = echo M: `curl -fs 'wttr.in/YUL?m&format=1' | sed 's/Unknown.\+/?/'`
 click-left = xdg-open https://openweathermap.org/city/6077243 &
 interval = 600
 
 [module/wttr2]
 type = custom/script
-exec = echo S: `curl -s 'wttr.in/YSC?m&format=1' | sed 's/Unknown.\+/?/'`
+exec = echo S: `curl -fs 'wttr.in/YSC?m&format=1' | sed 's/Unknown.\+/?/'`
 click-left = xdg-open https://openweathermap.org/city/6146143 &
 interval = 600
 
