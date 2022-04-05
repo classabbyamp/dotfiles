@@ -1,5 +1,14 @@
 # aliases for zsh
 
+if command -v doas &>/dev/null; then
+    alias sudo="echo use doas, dummy"
+    alias sudoedit="echo use doasedit, dummy"
+    alias doasedit="doas $EDITOR"
+    _sudo=doas
+else
+    _sudo=sudo
+fi
+
 alias ll='ls -l --color=auto'
 alias lh='ls -lh --color=auto'
 alias l.='ls -d .* --color=auto'
@@ -7,7 +16,7 @@ alias ls='ls --color=auto'
 alias tree='tree -C'
 
 alias void="neofetch"
-alias xrm="sudo xbps-remove"
+alias xrm="$_sudo xbps-remove"
 alias ping="ping -c 3"
 alias pingg="ping www.google.com"
 alias ping8="ping 8.8.8.8"
