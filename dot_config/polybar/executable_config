@@ -232,8 +232,8 @@ click-middle = kitty -e xi -u &
 type = custom/script
 interval = 7200
 format-prefix = " "
-exec = curl -f https://alpha.de.repo.voidlinux.org/void-updates/void-updates/updates_dev@kb6.ee.txt 2> /dev/null | cut -d' ' -f 1 | uniq | wc -l
-click-middle = xdg-open https://alpha.de.repo.voidlinux.org/void-updates/void-updates/updates_dev@kb6.ee.txt &
+exec = curl -f https://repo-fi.voidlinux.org/void-updates/void-updates/updates_void@placeviolette.net.txt 2> /dev/null | cut -d' ' -f 1 | uniq | wc -l
+click-middle = xdg-open https://repo-fi.voidlinux.org/void-updates/void-updates/updates_void@placeviolette.net.txt &
 
 [module/wttr]
 type = custom/script
