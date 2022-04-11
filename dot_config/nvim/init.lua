@@ -50,7 +50,7 @@ o.modeline = true
 o.modelines = 5
 o.cursorline = true
 
-o.tw = 120
+o.colorcolumn = '120'
 o.tabstop = 4
 o.shiftwidth = 4
 o.expandtab = true
