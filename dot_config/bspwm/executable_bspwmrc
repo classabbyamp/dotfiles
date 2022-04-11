@@ -18,6 +18,8 @@ nm-tray &
 $HOME/.local/bin/KopiaUI-0.9.4.AppImage &
 $HOME/.local/bin/Notion-Enhanced-2.0.18-1.AppImage &
 
+bspc config external_rules_command $HOME/.config/bspwm/external_rules
+
 bspc monitor DisplayPort-2 -d 1 2 3 4 5
 bspc monitor DisplayPort-0 -d 6 7 8 9 10
 bspc monitor DisplayPort-1 -d 11 12 13 14 15
