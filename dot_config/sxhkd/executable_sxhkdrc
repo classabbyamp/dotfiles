@@ -22,6 +22,10 @@ alt + c
 alt + e
 	rofi -show emoji
 
+# pass
+alt + v
+	rofi-rbw
+
 # make sxhkd reload its configuration files:
 alt + Escape
 	pkill -USR1 -x sxhkd
@@ -37,13 +41,10 @@ alt + shift + super + r
 # screenshot
 Print
 	maim -su | xclip -selection clipboard -t image/png
-# super + Print
-# 	deepin-screen-recorder -s /tmp
 
 # lock session
 super + l
-    sudo zzz
-	# sudo systemctl suspend
+    doas zzz
 
 # volume and music controls
 XF86Audio{Mute,LowerVolume,RaiseVolume}

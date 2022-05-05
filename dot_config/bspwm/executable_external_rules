@@ -15,7 +15,7 @@ consequences=$4
 # fi
 
 case "$class" in
-	pinentry-qt)
+	pinentry*|qalculate*|evolution-alarm-notify)
 		eval "$consequences"
 		[ "$state" ] || echo "state=floating"
 		;;

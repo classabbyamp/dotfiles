@@ -118,8 +118,10 @@ cmd('colorscheme onedark')
 o.termguicolors = true
 
 -- xbps-src templates
-cmd('autocmd BufNewFile,BufRead template :set ft=bash noexpandtab')
+cmd('autocmd BufNewFile,BufRead template :set ft=bash')
+cmd('autocmd BufNewFile,BufRead ~/void-packages/** :set noexpandtab')
 cmd('autocmd BufNewFile,BufRead ~/void-packages/** :VGit toggle_live_blame')
+cmd('autocmd BufNewFile,BufRead ~/projects/void/** :set noexpandtab')
 
 -- python
 g.python3_host_prog = '/usr/bin/python'

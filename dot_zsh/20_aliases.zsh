@@ -16,7 +16,6 @@ alias ls='ls --color=auto'
 alias tree='tree -C'
 
 alias void="neofetch"
-alias xrm="$_sudo xbps-remove"
 alias ping="ping -c 3"
 alias pingg="ping www.google.com"
 alias ping8="ping 8.8.8.8"
@@ -39,20 +38,22 @@ if command -v fd &>/dev/null; then
 fi
 alias gpg="gpg2"
 
-alias xs="./xbps-src"
-
 if [[ "$TERM" == "xterm-kitty" ]]; then
     alias icat="kitty icat --align=left"
     alias isvg="rsvg-convert -az 1.5 | convert -trim -channel RGB -negate - - | icat"
-    alias idot="dot -Tsvg -Efontname=InputMono -Efontcolor='#ffffff' -Ecolor='#ffffff' -Nfontcolor='#ffffff' -Ncolor='#ffffff' -Gbgcolor='#1e1c31' | rsvg-convert -az 1.1 | convert -trim -channel RGB - - | icat"
+    alias idot="dot -Tsvg | rsvg-convert -az 1.1 | convert -trim -channel RGB - - | icat"
 fi
 
 if command -v nc &>/dev/null; then
     alias pastebin="nc termbin.com 9999"
 fi
 
+alias xrm="$_sudo xbps-remove"
+alias xrevdeps="xbps-query -RX"
+alias xs="./xbps-src"
+
 function xrs() {
-    command xrs $@ | grep -v 32bit
+    command xrs $@ | grep -v '\-32bit-' | grep -v '\-dbg-'
 }
 
 function xtree() {

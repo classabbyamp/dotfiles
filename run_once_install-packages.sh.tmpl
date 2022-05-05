@@ -1,8 +1,15 @@
 #!/bin/sh
 
+if command -v sudo >/dev/null; then
+    SUDO=sudo
+elif command -v doas >/dev/null; then
+    SUDO=doas
+else
+    SUDO=su
+fi
 
 {{ if eq .chezmoi.osRelease.id "void" }}
-sudo xbps-install -S \
+$SUDO xbps-install -S \
     xtools zsh neovim python3-neovim fd ripgrep zsh-syntax-highlighting \
     delta neofetch openbsd-netcat git
 
