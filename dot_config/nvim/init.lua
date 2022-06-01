@@ -3,6 +3,7 @@
 local o = vim.o
 local g = vim.g
 local cmd = vim.cmd
+local keymap = vim.keymap
 
 cmd([[
     if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -18,8 +19,7 @@ vim.call('plug#begin')
     Plug 'navarasu/onedark.nvim'
     Plug 'itchyny/lightline.vim'
     -- utilities
-    Plug 'tanvirtin/vgit.nvim'
-        Plug 'nvim-lua/plenary.nvim' -- required by vgit and cmp-git
+    Plug 'lewis6991/gitsigns.nvim'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'Raimondi/delimitMate'
@@ -30,11 +30,13 @@ vim.call('plug#begin')
     Plug('jmcantrell/vim-virtualenv', {['for'] = 'python'})
     -- completion/lsp
     Plug 'neovim/nvim-lspconfig'
+    Plug 'josa42/nvim-lightline-lsp'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'petertriho/cmp-git'
+        Plug 'nvim-lua/plenary.nvim' -- required by cmp-git
     Plug 'hrsh7th/nvim-cmp'
     -- other
     Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
@@ -83,31 +85,25 @@ cmd([[
 
     " Highlight TODO, FIXME
     syn match myTodo contained "\<\(TODO\|FIXME\|NOTE\|OPTIMIZE\|XXX\)"
-
-    " Mappings
-    map <space> <leader>
-    map <F1> <nop>
-    map <c-j> <c-w>j
-    map <c-k> <c-w>k
-    map <c-h> <c-w>h
-    map <c-l> <c-w>l
-    " system clipboard
-    nnoremap <leader>d "+d
-    xnoremap <leader>d "+d
-    nnoremap <leader>D "+D
-    xnoremap <leader>D "+D
-    nnoremap <leader>y "+y
-    xnoremap <leader>y "+y
-    nnoremap <leader>Y "+Y
-    xnoremap <leader>Y "+Y
-    nnoremap <leader>p "+p
-    xnoremap <leader>p "+p
-    nnoremap <leader>P "+P
-    xnoremap <leader>P "+P
-    " exit terminal mode with shift+escape
-    tnoremap <Esc> <C-\><C-n>
-    com Wsudo w !sudo tee %
 ]])
+
+-- Mappings
+keymap.set('', ' ', '<leader>', {remap = true})
+keymap.set('', '<F1>', '', {remap = true})
+keymap.set('', '<c-j>', '<c-w>j', {remap = true})
+keymap.set('', '<c-k>', '<c-w>k', {remap = true})
+keymap.set('', '<c-h>', '<c-w>h', {remap = true})
+keymap.set('', '<c-l>', '<c-w>l', {remap = true})
+-- system clipboard
+keymap.set({'n', 'x'}, '<leader>d', '"+d')
+keymap.set({'n', 'x'}, '<leader>D', '"+D')
+keymap.set({'n', 'x'}, '<leader>y', '"+y')
+keymap.set({'n', 'x'}, '<leader>Y', '"+Y')
+keymap.set({'n', 'x'}, '<leader>p', '"+p')
+keymap.set({'n', 'x'}, '<leader>P', '"+P')
+-- exit terminal mode with shift+escape
+keymap.set('t', '<Esc>', '<C-\\><C-n>')
+cmd('com Ws w !doas tee %')
 
 -- colourscheme
 g.onedark_config = {
@@ -120,11 +116,11 @@ o.termguicolors = true
 -- xbps-src templates
 cmd('autocmd BufNewFile,BufRead template :set ft=bash')
 cmd('autocmd BufNewFile,BufRead ~/void-packages/** :set noexpandtab')
-cmd('autocmd BufNewFile,BufRead ~/void-packages/** :VGit toggle_live_blame')
+cmd('autocmd BufNewFile,BufRead ~/void-packages/** :Gitsigns toggle_current_line_blame')
 cmd('autocmd BufNewFile,BufRead ~/projects/void/** :set noexpandtab')
 
 -- python
-g.python3_host_prog = '/usr/bin/python'
+g.python3_host_prog = '/usr/bin/python3'
 
 -- delimitMate
 g.delimitMate_expand_cr = 1
@@ -154,7 +150,7 @@ g.lightline = {
     },
     active = {
         left = {
-            {'mode', 'paste'},
+            {'mode', 'paste', 'lsp_errors', 'lsp_warnings'},
             {},
             {'relativepath'},
         },
@@ -182,9 +178,9 @@ g.lightline = {
     },
     component = {
         lineinfo = '%p%% %l:%v',
+        gitstatus = '%{get(b:, "gitsigns_status", "")}',
     },
     component_function = {
-        gitstatus = 'LightlineGitStatus',
         relativepath = 'LightlineRelPath',
         fileformat = 'LightlineFileformat',
         filetype = 'LightlineFiletype',
@@ -192,6 +188,9 @@ g.lightline = {
         venv = 'LightlineVenv'
     },
 }
+
+-- g.lightline.lsp.indicator_ok = ''
+vim.call('lightline#lsp#register')
 
 cmd([[
     function! LightlineRelPath()
@@ -202,17 +201,6 @@ cmd([[
         return winwidth(0) > 70 ? readonly . relpath . modified : readonly . filename . modified
     endfunction
 
-    function! LightlineGitStatus()
-        if exists('*FugitiveHead')
-            let branch = FugitiveHead()
-            if branch !=? ''
-                let [a,m,r] = GitGutterGetHunkSummary()
-                return printf('<%s> +%d ~%d -%d', branch, a, m, r)
-            endif
-        endif
-        return ''
-    endfunction
-
     function! LightlineVenv()
         if &ft ==? 'python'
 python3 <<EOF
@@ -221,6 +209,8 @@ v = sys.version.split()[0]
 vim.command("let pyversion = '%s'" % v)
 EOF
             return pyversion . '/' . virtualenv#statusline()
+        else
+            return ''
         endif
     endfunction
 
@@ -239,71 +229,56 @@ EOF
 ]])
 -- end lightline }}}
 
--- vgit {{{
-o.updatetime = 300
+-- gitsigns {{{
+require('gitsigns').setup {
+    current_line_blame = true,
+    current_line_blame_opts = {
+        delay = 500,
+    },
+    on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
 
-require('vgit').setup({
-    settings = {
-        live_gutter = {
-            enabled = true,
-        },
-        live_blame = {
-            enabled = true,
-            format = function(blame, git_config)
-                local config_author = git_config['user.name']
-                local author = blame.author
-                if config_author == author then
-                    author = 'You'
-                end
-                local time = os.difftime(os.time(), blame.author_time) / (60 * 60 * 24 * 30 * 12)
-                local time_divisions = {
-                    { 1, 'years' },
-                    { 12, 'months' },
-                    { 30, 'days' },
-                    { 24, 'hours' },
-                    { 60, 'minutes' },
-                    { 60, 'seconds' },
-                }
-                local counter = 1
-                local time_division = time_divisions[counter]
-                local time_boundary = time_division[1]
-                local time_postfix = time_division[2]
-                while time < 1 and counter ~= #time_divisions do
-                    time_division = time_divisions[counter]
-                    time_boundary = time_division[1]
-                    time_postfix = time_division[2]
-                    time = time * time_boundary
-                    counter = counter + 1
-                end
-                local commit_message = blame.commit_message
-                if not blame.committed then
-                    author = 'You'
-                    commit_message = 'Uncommitted changes'
-                    return string.format(' %s • %s', author, commit_message)
-                end
-                local max_commit_message_length = 255
-                if #commit_message > max_commit_message_length then
-                    commit_message = commit_message:sub(1, max_commit_message_length) .. '...'
-                end
-                return string.format(
-                    ' %s, %s • %s',
-                    author,
-                    string.format(
-                        '%s %s ago',
-                        time >= 0 and math.floor(time + 0.5) or math.ceil(time - 0.5),
-                        time_postfix
-                    ),
-                    commit_message
-                )
-            end,
-        },
-    }
-})
--- end vgit }}}
+        local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+        end, {expr=true})
+
+        map('n', '[c', function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+        end, {expr=true})
+
+        -- Actions
+        map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+        map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+        map('n', '<leader>hS', gs.stage_buffer)
+        map('n', '<leader>hu', gs.undo_stage_hunk)
+        map('n', '<leader>hR', gs.reset_buffer)
+        map('n', '<leader>hp', gs.preview_hunk)
+        map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+        map('n', '<leader>tb', gs.toggle_current_line_blame)
+        map('n', '<leader>hd', gs.diffthis)
+        map('n', '<leader>hD', function() gs.diffthis('~') end)
+        map('n', '<leader>td', gs.toggle_deleted)
+
+        -- Text object
+        map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    end
+}
+-- end gitsigns }}}
 
 -- treesitter {{{
 require('nvim-treesitter.configs').setup({
-    ensure_installed = "maintained",
+    ensure_installed = "all",
     sync_install = false,
     highlight = {
         enable = true,
@@ -386,7 +361,7 @@ cmp.setup({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
         }),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -397,7 +372,7 @@ cmp.setup({
 
 cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
-        { name = 'cmp_git' },
+        { name = 'git' },
     }, {
         { name = 'buffer' },
     })
