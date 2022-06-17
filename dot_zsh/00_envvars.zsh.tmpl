@@ -21,12 +21,13 @@ export GEM_HOME=$HOME/gems
 export LANG=en_US.UTF-8
 export EDITOR='nvim'
 export DIFF='riff'
+export XBPS_DISTDIR=$HOME/void/packages
 
 # rust
 path=("$HOME/.cargo/bin" $path)
 
 # path
-path=("$HOME/.local/bin" '/usr/local/bin' $path)
+path=("$HOME/.local/bin" '/usr/local/bin' '/opt/vscode/bin' $path)
 
 {{ if eq .chezmoi.hostname "daedelus" "prometheus" }}
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)

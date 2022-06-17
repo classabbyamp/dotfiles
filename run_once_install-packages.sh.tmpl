@@ -11,7 +11,7 @@ fi
 {{ if eq .chezmoi.osRelease.id "void" }}
 $SUDO xbps-install -S \
     xtools zsh neovim python3-neovim fd ripgrep zsh-syntax-highlighting \
-    riff neofetch openbsd-netcat git doas jq wget
+    riff neofetch openbsd-netcat git opendoas jq wget
 
 mkdir -p {{.chezmoi.homeDir}}/.local/bin
 xbps-fetch -o {{.chezmoi.homeDir}}/.local/bin/unpatch https://leahneukirchen.org/dotfiles/bin/unpatch
