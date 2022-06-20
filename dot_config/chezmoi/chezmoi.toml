@@ -1,0 +1,6 @@
+[diff]
+    command = "riff"
+
+[merge]
+    command = "nvim"
+    args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]

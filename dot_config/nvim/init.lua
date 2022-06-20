@@ -51,6 +51,7 @@ o.autowrite = true
 o.modeline = true
 o.modelines = 5
 o.cursorline = true
+o.mouse = 'a'
 
 o.colorcolumn = '120'
 o.tabstop = 4
@@ -103,6 +104,7 @@ keymap.set({'n', 'x'}, '<leader>p', '"+p')
 keymap.set({'n', 'x'}, '<leader>P', '"+P')
 -- exit terminal mode with shift+escape
 keymap.set('t', '<Esc>', '<C-\\><C-n>')
+
 cmd('com Ws w !doas tee %')
 
 -- colourscheme

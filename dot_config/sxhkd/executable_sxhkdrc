@@ -16,7 +16,7 @@ alt + r
 
 # calculator
 alt + c
-	rofi -show calc -modi "calc:qalc +u8 -nocurrencies"
+	rofi -show calc -modi calc -no-show-match -no-sort
 
 # emoji
 alt + e
