@@ -119,7 +119,7 @@ o.termguicolors = true
 cmd('autocmd BufNewFile,BufRead template :set ft=bash')
 cmd('autocmd BufNewFile,BufRead ~/void-packages/** :set noexpandtab')
 cmd('autocmd BufNewFile,BufRead ~/void-packages/** :Gitsigns toggle_current_line_blame')
-cmd('autocmd BufNewFile,BufRead ~/projects/void/** :set noexpandtab')
+cmd('autocmd BufNewFile,BufRead ~/void/** :set noexpandtab')
 
 -- python
 g.python3_host_prog = '/usr/bin/python3'

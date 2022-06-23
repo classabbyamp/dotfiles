@@ -1,5 +1,7 @@
 [diff]
     command = "riff"
+    pager = "riff"
+    args = ["--no-pager", "{{ .Destination }}", "{{ .Target }}"]
 
 [merge]
     command = "nvim"
