@@ -25,6 +25,7 @@ vim.call('plug#begin')
     Plug 'Raimondi/delimitMate'
     Plug 'junegunn/vim-easy-align'
     -- filetypes
+    Plug 'alker0/chezmoi.vim'
     Plug('plasticboy/vim-markdown', {['for'] = 'md'})
     Plug('chrisbra/csv.vim', {['for'] = {'csv', 'tsv'}})
     Plug('jmcantrell/vim-virtualenv', {['for'] = 'python'})
@@ -38,6 +39,8 @@ vim.call('plug#begin')
     Plug 'petertriho/cmp-git'
         Plug 'nvim-lua/plenary.nvim' -- required by cmp-git
     Plug 'hrsh7th/nvim-cmp'
+    Plug 'dcampos/nvim-snippy'
+    Plug 'dcampos/cmp-snippy'
     -- other
     Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
     Plug 'p00f/nvim-ts-rainbow'
@@ -72,21 +75,6 @@ o.listchars = 'tab:› ,extends:»,precedes:«,nbsp:␣,trail:·'
 if vim.fn.has("persistent_undo") == 1 then
     o.undofile = true
 end
-
-cmd([[
-    " Tab colors
-    hi TabLineSel ctermbg=0
-
-    highlight ExtraWhitespace ctermbg=0
-    match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
-
-    " Highlight TODO, FIXME
-    syn match myTodo contained "\<\(TODO\|FIXME\|NOTE\|OPTIMIZE\|XXX\)"
-]])
 
 -- Mappings
 keymap.set('', ' ', '<leader>', {remap = true})
@@ -290,11 +278,28 @@ require('nvim-treesitter.configs').setup({
         extended_mode = true,
         max_file_lines = nil,
     },
+    indent = {
+        enable = true
+    },
 })
+cmd[[ hi commentTSWarning cterm=bold ctermfg=14 gui=bold guifg=Orange ]]
 -- end treesitter }}}
 
 -- completion/lsp {{{
 o.completeopt = 'menu,menuone,noselect'
+
+-- Setup snippy
+require('snippy').setup({
+    mappings = {
+        is = {
+            ['<Tab>'] = 'expand_or_advance',
+            ['<S-Tab>'] = 'previous',
+        },
+        nx = {
+            ['<leader>x'] = 'cut_text',
+        },
+    },
+})
 
 -- Setup nvim-cmp
 local cmp = require('cmp')
@@ -332,7 +337,11 @@ local has_words_before = function()
 end
 
 cmp.setup({
-    snippet = {},
+    snippet = {
+        expand = function(args)
+            require('snippy').expand_snippet(args.body)
+        end,
+    },
     formatting = {
         fields = { 'kind', 'abbr' },
         format = function(_, vim_item)
@@ -367,6 +376,7 @@ cmp.setup({
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
+        { name = 'snippy' },
     }, {
         { name = 'buffer' },
     })

@@ -78,7 +78,7 @@ $for(classoption)$
   $classoption$$sep$,
 $endfor$
   ,captions=tableheading
-]{$if(beamer)$$beamer$else$$if(book)$scrbook$else$scrartcl$endif$$endif$}
+]{$if(beamer)$$beamer$$else$$if(book)$scrbook$else$scrartcl$endif$$endif$}
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
@@ -888,12 +888,19 @@ $endif$
 
 \makeatletter
 \DeclareRobustCommand{\unit}[1]{\ensuremath{\,\mathrm{#1}}}
-\makeatother
-\makeatletter
+
 \DeclareRobustCommand{\deg}{\ensuremath{^\circ}}
-\makeatother
-\makeatletter
 \DeclareRobustCommand{\ohm}{\unit{\Omega}}
+
+\DeclareRobustCommand{\xfrm}[1]{\ensuremath{\mathop{\longleftrightarrow}^{\mathcal{#1}}}}
+\DeclareRobustCommand{\fourier}{\xfrm{F}}
+\DeclareRobustCommand{\zed}{\xfrm{Z}}
+\DeclareRobustCommand{\laplace}{\xfrm{L}}
+
+\DeclareRobustCommand{\conj}[1]{{#1}^*}
+
+\DeclareRobustCommand{\ejw}{e^{j\omega}}
+\DeclareRobustCommand{\nejw}{e^{-j\omega}}
 \makeatother
 
 %%

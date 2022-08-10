@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$1" = "-v" ]; then
+    verbose=yes
+    shift
+fi
+
+XBPS_DISTDIR="$(xdistdir 2>/dev/null)"
+env XBPS_UPDATE_CHECK_VERBOSE=$verbose "$XBPS_DISTDIR/xbps-src" update-check "$1"

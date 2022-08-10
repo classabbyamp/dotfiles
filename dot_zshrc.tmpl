@@ -3,6 +3,8 @@
 setopt autocd extendedglob
 unsetopt beep nomatch notify
 
+fpath+="$HOME/.zsh/comp"
+
 # load all the sub-configs from the ZSH_CONFIGS and ZSH_CONFIGS_LOCAL directories
 export ZSH_CONFIGS="$HOME/.zsh"
 export ZSH_CONFIGS_LOCAL="$HOME/.local/share/zsh"
