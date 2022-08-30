@@ -1,0 +1,39 @@
+#!/bin/zsh
+
+set -e
+
+trapcmd=''
+
+pushd -q $(xdistdir 2>/dev/null)
+
+if [ "$(git rev-parse --abbrev-ref HEAD)" = "master" ]; then
+    main=yes
+else
+    unset main
+    trapcmd+='git switch -;'
+fi
+
+if ! $(git diff-index --quiet HEAD &>/dev/null); then
+    git stash push
+    stash=yes
+    trapcmd+=' git stash pop;'
+else
+    unset stash
+fi
+
+trap "$trapcmd" INT TERM
+
+if [ -z "$main" ]; then
+    git switch master
+fi
+git pull --rebase upstream master
+
+for md in masterdir*; do
+    ./xbps-src -m $md bootstrap-update
+done
+
+for arch in hostdir/repocache-*; do
+    ./xbps-src clean-repocache -a ${arch#*repocache-}
+done
+
+eval $trapcmd
