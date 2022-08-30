@@ -1,0 +1,8 @@
+#compdef xupcheck
+
+_xtools
+
+_arguments -s : \
+    '-v[Verbose output]' \
+    '-h[Show usage]' \
+    '*:package:_xtools_all_packages'

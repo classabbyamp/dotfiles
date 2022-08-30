@@ -45,12 +45,13 @@ if [[ "$TERM" == "xterm-kitty" ]]; then
 fi
 
 if command -v nc &>/dev/null; then
-    alias pastebin="nc termbin.com 9999"
+    alias pastebin="curl -F'file=@-' https://0x0.st"
 fi
 
 alias xrm="$_sudo xbps-remove"
 alias xrevdeps="xbps-query -RX"
-alias xs="./xbps-src"
+alias xdeps="xbps-query -Rx"
+alias xs="$(xdistdir)/xbps-src"
 
 function xrs() {
     command xrs $@ | grep -v '\-32bit-' | grep -v '\-dbg-'
