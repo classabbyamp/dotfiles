@@ -1,6 +1,8 @@
 # git aliases for zsh
 # borrowed from oh-my-zsh
 
+alias forkup="git pull --rebase upstream master"
+
 alias g='git'
 
 alias ga='git add'
