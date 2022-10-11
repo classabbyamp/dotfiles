@@ -6,7 +6,7 @@ configuration {
     modi: "drun,run,emoji";
     show-icons: true;
     sidebar-mode: true;
-    font: "Input Mono,FontAwesome 12";
+    font: "Berkeley Mono,FontAwesome 12";
     terminal: "kitty";
     matching: "glob";
 
