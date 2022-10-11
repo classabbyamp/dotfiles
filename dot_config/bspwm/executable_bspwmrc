@@ -9,7 +9,7 @@ $HOME/.screenlayout/default.sh &
 xsetroot -cursor_name left_ptr &
 
 nitrogen --restore &
-/usr/lib/xfce4/notifyd/xfce4-notifyd &
+wired &
 syncthingtray &
 redshift -l 40.8:-74.4 &
 /usr/lib/libexec/kdeconnectd &
