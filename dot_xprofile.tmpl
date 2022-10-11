@@ -2,8 +2,11 @@ export GTK_USE_PORTAL=1
 
 export SAL_USE_VCLPLUGIN=kde5
 
+{{ if eq .chezmoi.hostname "daedelus" }}
+export GPG_TTY=/dev/tty1
+gpg-connect-agent updatestartuptty /bye 2>&1 /dev/null
+{{ end }}
 {{ if eq .chezmoi.hostname "prometheus" }}
 export GPG_TTY=/dev/tty7
 gpg-connect-agent updatestartuptty /bye 2>&1 /dev/null
 {{ end }}
-

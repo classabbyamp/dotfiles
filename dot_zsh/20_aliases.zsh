@@ -36,7 +36,6 @@ fi
 if command -v fd &>/dev/null; then
     alias find="fd"
 fi
-alias gpg="gpg2"
 
 if [[ "$TERM" == "xterm-kitty" ]]; then
     alias icat="kitty icat --align=left"
