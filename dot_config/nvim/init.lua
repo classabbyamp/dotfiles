@@ -24,6 +24,7 @@ vim.call('plug#begin')
     Plug 'tpope/vim-commentary'
     Plug 'Raimondi/delimitMate'
     Plug 'junegunn/vim-easy-align'
+    Plug 'gpanders/editorconfig.nvim'
     -- filetypes
     Plug 'alker0/chezmoi.vim'
     Plug('plasticboy/vim-markdown', {['for'] = 'md'})
