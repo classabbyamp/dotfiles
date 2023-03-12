@@ -19,5 +19,9 @@ case "$class" in
 		eval "$consequences"
 		[ "$state" ] || echo "state=floating"
 		;;
+	audacious)
+		eval "$consequences"
+		echo "sticky=on"
+		;;
 esac
 

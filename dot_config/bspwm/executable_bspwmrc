@@ -30,10 +30,12 @@ bspc rule --add evolution desktop=^2
 
 telegram-desktop &
 hexchat &
-kmail &
-kalendar &
 Discord &
 discord-ptb &
+
+akonadictl start &
+kmail &
+kalendar &
 
 bspc config focus_follows_pointer true
 
