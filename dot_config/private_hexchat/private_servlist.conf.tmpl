@@ -1,0 +1,37 @@
+v=2.16.1
+
+N={{ (rbwFields "libera-a").net.value }}
+U={{ (rbw "libera-a").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "libera-a").net.value }}
+P={{ (rbw "libera-a").data.password }}
+L=7
+E=UTF-8 (Unicode)
+F=77
+D=0
+S={{ (rbwFields "libera-a").url.value }}/{{ (rbwFields "libera-a").port.value }}
+
+N={{ (rbwFields "libera-m").net.value }}-{{ (rbw "libera-m").data.username }}
+U={{ (rbw "libera-m").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "libera-m").net.value }}
+P={{ (rbw "libera-m").data.password }}
+L=7
+E=UTF-8 (Unicode)
+F=77
+D=0
+S={{ (rbwFields "libera-m").url.value }}/{{ (rbwFields "libera-m").port.value }}
+
+N={{ (rbwFields "libera-v").net.value }}
+U={{ (rbw "libera-v").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "libera-v").net.value }}
+P={{ (rbw "libera-v").data.password }}
+L=7
+E=UTF-8 (Unicode)
+F=77
+D=0
+S={{ (rbwFields "libera-v").url.value }}/{{ (rbwFields "libera-v").port.value }}
+
+N={{ (rbwFields "oftc-a").net.value }}
+U={{ (rbw "oftc-a").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "oftc-a").net.value }}
+P={{ (rbw "oftc-a").data.password }}
+L=7
+E=UTF-8 (Unicode)
+F=77
+D=0
+S={{ (rbwFields "oftc-a").url.value }}/{{ (rbwFields "oftc-a").port.value }}
