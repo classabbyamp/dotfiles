@@ -1,0 +1,29 @@
+[user]
+	name = {{ (rbw "git").data.username }}
+	email = {{ (rbwFields "git").email.value }}
+	signingkey = {{ (rbwFields "git").key.value }}
+
+[commit]
+	gpgsign = true
+
+[pull]
+	rebase = true
+
+[rebase]
+	autoSquash = true
+
+[init]
+	defaultBranch = master
+
+[pager]
+	diff = riff
+	show = riff
+
+[interactive]
+	diffFilter = riff
+
+[push]
+	autoSetupRemote = true
+
+[includeIf "gitdir:~/void/"]
+	path = ~/.config/git/voidconfig
