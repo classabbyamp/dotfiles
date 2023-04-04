@@ -43,7 +43,7 @@ vim.call('plug#begin')
     Plug 'dcampos/nvim-snippy'
     Plug 'dcampos/cmp-snippy'
     -- other
-    Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
+    Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdateSync']})
     Plug 'p00f/nvim-ts-rainbow'
 vim.call('plug#end')
 
