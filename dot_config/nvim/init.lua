@@ -19,7 +19,7 @@ vim.call('plug#begin')
     Plug 'navarasu/onedark.nvim'
     Plug 'itchyny/lightline.vim'
     -- utilities
-    Plug 'lewis6991/gitsigns.nvim'
+    Plug('lewis6991/gitsigns.nvim', {['tag'] = '*'})
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'Raimondi/delimitMate'
@@ -109,6 +109,9 @@ cmd('autocmd BufNewFile,BufRead template :set ft=bash')
 cmd('autocmd BufNewFile,BufRead ~/void/packages/** :Gitsigns toggle_current_line_blame')
 cmd('autocmd BufNewFile,BufRead ~/void/packages/srcpkgs/** :LspStop')
 cmd('autocmd BufNewFile,BufRead ~/void/** :set noexpandtab')
+
+-- typst
+cmd('autocmd BufRead,BufNewFile *.typ setlocal filetype=typst')
 
 -- python
 g.python3_host_prog = '/usr/bin/python3'
@@ -268,6 +271,19 @@ require('gitsigns').setup {
 -- end gitsigns }}}
 
 -- treesitter {{{
+local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
+parser_config.typst = {
+  install_info = {
+    url = 'https://github.com/SeniorMars/tree-sitter-typst', -- local path or git repo
+    files = {'src/parser.c', 'src/scanner.c'},
+    -- optional entries:
+    branch = 'main', -- default branch in case of git repo if different from master
+    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  },
+  filetype = 'typst', -- if filetype does not match the parser name
+}
+
 require('nvim-treesitter.configs').setup({
     ensure_installed = "all",
     sync_install = false,
@@ -283,6 +299,7 @@ require('nvim-treesitter.configs').setup({
         enable = true
     },
 })
+
 cmd[[ hi commentTSWarning cterm=bold ctermfg=14 gui=bold guifg=Orange ]]
 -- end treesitter }}}
 
@@ -423,6 +440,11 @@ require('lspconfig').pyright.setup {
 require('lspconfig').bashls.setup {
     capabilities = capabilities,
     filetypes = { "bash" },
+}
+-- xi typst-lsp
+require('lspconfig').typst_lsp.setup{
+    capabilities = capabilities,
+    filetypes = { "typst" },
 }
 
 -- end completion-lsp }}}
