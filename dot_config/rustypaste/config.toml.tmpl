@@ -1,0 +1,10 @@
+[server]
+address = "{{ (rbwFields "pastebin").url.value }}"
+auth_token = "{{ (rbw "pastebin").data.password }}"
+
+[paste]
+oneshot = false
+#expire = "10min"
+
+[style]
+prettify = false
