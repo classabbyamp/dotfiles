@@ -9,10 +9,6 @@ setopt EXTENDED_HISTORY
 setopt HIST_FIND_NO_DUPS
 setopt SHARE_HISTORY
 
-# prompt command time
-ZSH_COMMAND_TIME_MIN=60
-ZSH_COMMAND_TIME_EXCLUDE=(v vim nvim sudoedit doasedit chm chezmoi)
-
 # ruby
 path=("$HOME/.local/share/gem/ruby/3.0.0/bin" $path)
 export GEM_HOME=$HOME/gems
@@ -26,7 +22,7 @@ export XBPS_DISTDIR=$HOME/void/packages
 path=("$HOME/.cargo/bin" $path)
 
 # path
-path=("$HOME/void/xX_tools_Xx" "$HOME/void/xxtools" "$HOME/void/xtools" "$HOME/.local/bin" '/usr/local/bin' '/opt/vscode/bin' $path)
+path=("$HOME/void/xX_tools_Xx" "$HOME/void/xxtools" "$HOME/void/xtools" "$HOME/.local/bin" $path)
 
 {{ if eq .chezmoi.hostname "daedelus" "prometheus" }}
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
