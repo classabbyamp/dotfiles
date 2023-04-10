@@ -24,7 +24,6 @@ vim.call('plug#begin')
     Plug 'tpope/vim-commentary'
     Plug 'Raimondi/delimitMate'
     Plug 'junegunn/vim-easy-align'
-    Plug 'gpanders/editorconfig.nvim'
     -- filetypes
     Plug 'alker0/chezmoi.vim'
     Plug('plasticboy/vim-markdown', {['for'] = 'md'})
@@ -101,17 +100,37 @@ g.onedark_config = {
     style = 'darker',
     transparent = true,
 }
-cmd('colorscheme onedark')
+cmd.colorscheme('onedark')
 o.termguicolors = true
 
 -- xbps-src templates
-cmd('autocmd BufNewFile,BufRead template :set ft=bash')
-cmd('autocmd BufNewFile,BufRead ~/void/packages/** :Gitsigns toggle_current_line_blame')
-cmd('autocmd BufNewFile,BufRead ~/void/packages/srcpkgs/** :LspStop')
-cmd('autocmd BufNewFile,BufRead ~/void/** :set noexpandtab')
+local void_dir = vim.fn.expand('~/void')
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern = {'template'},
+    command = 'set ft=bash',
+})
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern = {void_dir .. '/**'},
+    command = 'set noexpandtab',
+})
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern = {void_dir .. '/**'},
+    command = ':Gitsigns toggle_current_line_blame',
+})
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern = {'*.yml', '*.yaml'},
+    command = 'set expandtab',
+})
 
 -- typst
-cmd('autocmd BufRead,BufNewFile *.typ setlocal filetype=typst')
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern = {'*.typ'},
+    command = 'set ft=typst',
+})
 
 -- python
 g.python3_host_prog = '/usr/bin/python3'
@@ -120,7 +139,6 @@ g.python3_host_prog = '/usr/bin/python3'
 g.delimitMate_expand_cr = 1
 
 -- Markdown
-cmd('au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><CR>')
 g.vim_markdown_folding_disabled = 1
 g.vim_markdown_conceal = 0
 g.vim_markdown_frontmatter = 1
@@ -287,20 +305,15 @@ require('nvim-treesitter.configs').setup({
     },
 })
 
--- local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
--- parser_config.typst = {
---   install_info = {
---     url = 'https://github.com/SeniorMars/tree-sitter-typst', -- local path or git repo
---     files = {'src/parser.c', 'src/scanner.c'},
---     -- optional entries:
---     branch = 'main', -- default branch in case of git repo if different from master
---     generate_requires_npm = true, -- if stand-alone parser without npm dependencies
---     requires_generate_from_grammar = true, -- if folder contains pre-generated src/parser.c
---   },
---   -- filetype = 'typst', -- if filetype does not match the parser name
--- }
-
-cmd[[ hi commentTSWarning cterm=bold ctermfg=14 gui=bold guifg=Orange ]]
+local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
+parser_config.typst = {
+  install_info = {
+    url = 'https://github.com/SeniorMars/tree-sitter-typst',
+    files = {'src/parser.c', 'src/scanner.c'},
+    branch = 'main',
+    requires_generate_from_grammar = false,
+  },
+}
 -- end treesitter }}}
 
 -- completion/lsp {{{
@@ -439,10 +452,23 @@ require('lspconfig').pyright.setup {
 -- sudo npm install -g bash-language-server
 require('lspconfig').bashls.setup {
     capabilities = capabilities,
-    filetypes = { "bash" },
+    filetypes = { "sh", "bash" },
+    on_attach = function(client)
+        local path = vim.fn.expand('%:p')
+        if path:find('^' .. void_dir .. '/packages/srcpkgs') ~= nil then
+            client.config.settings.bashIde.shellcheckArguments = {'-e', 'SC2034', '-e', 'SC2148'}
+        else
+            client.config.settings.bashIde.shellcheckArguments = {}
+        end
+        client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+        return true
+    end,
+    settings = { bashIde = { shellcheckArguments = {} } },
 }
 -- xi typst-lsp
-require('lspconfig').typst_lsp.setup{}
+require('lspconfig').typst_lsp.setup{
+    capabilities = capabilities,
+}
 
 -- end completion-lsp }}}
 
