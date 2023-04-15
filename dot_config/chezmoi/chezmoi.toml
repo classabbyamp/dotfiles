@@ -2,6 +2,7 @@
     command = "riff"
     pager = "riff"
     args = ["--no-pager", "{{ .Destination }}", "{{ .Target }}"]
+    exclude = ["dirs"]
 
 [merge]
     command = "nvim"
