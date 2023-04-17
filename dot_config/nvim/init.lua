@@ -468,6 +468,7 @@ require('lspconfig').bashls.setup {
 -- xi typst-lsp
 require('lspconfig').typst_lsp.setup{
     capabilities = capabilities,
+    filetypes = { "typst" },
 }
 
 -- end completion-lsp }}}
