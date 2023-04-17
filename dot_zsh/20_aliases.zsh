@@ -1,12 +1,16 @@
 # aliases for zsh
 
 if command -v doas &>/dev/null; then
-    alias sudo="echo use doas, dummy"
-    alias sudoedit="echo use doasedit, dummy"
+    alias sudo='echo use doas, dummy #'
+    alias sudoedit='echo use doasedit, dummy #'
     alias doasedit="doas $EDITOR"
     _sudo=doas
 else
     _sudo=sudo
+fi
+
+if command -v bsdtar &>/dev/null; then
+    alias tar='echo use bsdtar, dummy #'
 fi
 
 alias ll='ls -l --color=auto'
