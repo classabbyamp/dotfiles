@@ -12,7 +12,7 @@ nitrogen --restore &
 wired &
 syncthingtray &
 redshift -l 40.8:-74.4 &
-/usr/lib/libexec/kdeconnectd &
+/usr/libexec/kdeconnectd &
 kdeconnect-indicator &
 nm-tray &
 
