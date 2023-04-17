@@ -4,6 +4,7 @@ local o = vim.o
 local g = vim.g
 local cmd = vim.cmd
 local keymap = vim.keymap
+local void_dir = vim.fn.expand('~/void')
 
 cmd([[
     if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -103,17 +104,14 @@ g.onedark_config = {
 cmd.colorscheme('onedark')
 o.termguicolors = true
 
--- xbps-src templates
-local void_dir = vim.fn.expand('~/void')
-
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-    pattern = {'template'},
-    command = 'set ft=bash',
-})
-
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-    pattern = {void_dir .. '/**'},
-    command = 'set noexpandtab',
+-- filetypes
+vim.filetype.add({
+    extension = {
+        typ = 'typst',
+    },
+    pattern = {
+        ['${XBPS_DISTDIR}/srcpkgs/.*/template'] = 'bash',
+    },
 })
 
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
@@ -122,14 +120,13 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
 })
 
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-    pattern = {'*.yml', '*.yaml'},
-    command = 'set expandtab',
+    pattern = {void_dir .. '/**'},
+    callback = function(ev) o.expandtab = false end,
 })
 
--- typst
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-    pattern = {'*.typ'},
-    command = 'set ft=typst',
+    pattern = {'*.yml', '*.yaml'},
+    callback = function(ev) o.expandtab = true end,
 })
 
 -- python
@@ -308,9 +305,12 @@ require('nvim-treesitter.configs').setup({
 local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
 parser_config.typst = {
   install_info = {
-    url = 'https://github.com/SeniorMars/tree-sitter-typst',
-    files = {'src/parser.c', 'src/scanner.c'},
-    branch = 'main',
+    -- url = 'https://github.com/SeniorMars/tree-sitter-typst',
+    -- files = {'src/parser.c', 'src/scanner.c'},
+    -- branch = 'main',
+    url = 'https://github.com/frozolotl/tree-sitter-typst',
+    files = {'src/parser.c', 'src/scanner.cc'},
+    branch = 'master',
     requires_generate_from_grammar = false,
   },
 }
