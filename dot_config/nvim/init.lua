@@ -18,6 +18,8 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin')
     -- looks
     Plug 'navarasu/onedark.nvim'
+    Plug 'navarasu/onedark.nvim'
+    Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
     Plug 'itchyny/lightline.vim'
     -- utilities
     Plug('lewis6991/gitsigns.nvim', {['tag'] = '*'})
@@ -44,7 +46,7 @@ vim.call('plug#begin')
     Plug 'dcampos/cmp-snippy'
     -- other
     Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdateSync']})
-    Plug 'p00f/nvim-ts-rainbow'
+    Plug 'HiPhish/nvim-ts-rainbow2'
 vim.call('plug#end')
 
 o.syntax = 'on'
@@ -101,7 +103,24 @@ g.onedark_config = {
     style = 'darker',
     transparent = true,
 }
-cmd.colorscheme('onedark')
+require('catppuccin').setup({
+    flavour = 'mocha',
+    transparent_background = true,
+    dim_inactive = {
+        enabled = true,
+        shade = 'dark',
+        percentage = 0.15,
+    },
+    integrations = {
+        cmp = true,
+        gitsigns = true,
+        treesitter = true,
+        ts_rainbow2 = true,
+        native_lsp = {enabled = true}
+    }
+})
+
+cmd.colorscheme('catppuccin')
 o.termguicolors = true
 
 -- filetypes
@@ -142,7 +161,7 @@ g.vim_markdown_frontmatter = 1
 
 -- lightline {{{
 g.lightline = {
-    colorscheme = 'one',
+    colorscheme = 'catppuccin',
     mode_map = {
         ['__'] = '-',
         ['n']  = 'N',
@@ -294,8 +313,8 @@ require('nvim-treesitter.configs').setup({
     },
     rainbow = {
         enable = true,
-        extended_mode = true,
-        max_file_lines = nil,
+        query = 'rainbow-parens',
+        strategy = require('ts-rainbow').strategy.global
     },
     indent = {
         enable = true
