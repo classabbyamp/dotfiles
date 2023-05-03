@@ -2,7 +2,6 @@
 
 sxhkd &
 pipewire &
-pipewire-pulse &
 lxqt-policykit-agent &
 setxkbmap -layout ca -model pc105 -option caps:swapescape &
 $HOME/.screenlayout/default.sh &
