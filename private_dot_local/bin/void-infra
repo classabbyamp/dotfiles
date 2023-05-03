@@ -1,0 +1,42 @@
+#!/bin/bash
+
+export NETAUTH_ENTITY="$(rbw get --raw netauth.voidlinux.org | jq -r .data.username)"
+export NOMAD_ADDR=https://nomad.s.voidlinux.org
+export VAULT_ADDR=https://vault.s.voidlinux.org
+export CONSUL_HTTP_ADDR=https://consul.s.voidlinux.org
+export LOKI_ADDR=https://loki.s.voidlinux.org
+export NOMAD_NAMESPACE='*'
+
+vnetpass() {
+    rbw get --raw netauth.voidlinux.org | jq -r .data.password
+}
+
+vlogin() {
+    printf '%s' "$(vnetpass)" | vault login -method=ldap username="$NETAUTH_ENTITY" password=-
+}
+
+ntok() {
+    if ! nomad acl token self -token "$(jq -r .data.secret_id < ~/.nomad-token)" > /dev/null 2>&1 ; then
+        vault read -format json nomad/creds/apps-admin > ~/.nomad-token
+    fi
+
+    NOMAD_TOKEN=$(jq -r .data.secret_id < ~/.nomad-token)
+    export NOMAD_TOKEN
+}
+
+nkeepalive() {
+    ntok
+
+    while vault lease renew "$(jq -r .lease_id < ~/.nomad-token)" > /dev/null 2>&1 ; do
+        sleep 300
+    done
+}
+
+ctok() {
+    if ! consul acl token read -id "$(jq -r .data.accessor < ~/.consul-token)" > /dev/null 2>&1 ; then
+        vault read -format json consul/creds/root > ~/.consul-token
+    fi
+
+    CONSUL_HTTP_TOKEN=$(jq -r .data.token < ~/.consul-token)
+    export CONSUL_HTTP_TOKEN
+}
