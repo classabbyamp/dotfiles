@@ -464,11 +464,11 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 require('lspconfig').rust_analyzer.setup {
     capabilities = capabilities
 }
--- xi nodejs; sudo npm install -g pyright
+-- xi pyright
 require('lspconfig').pyright.setup {
     capabilities = capabilities
 }
--- sudo npm install -g bash-language-server
+-- xi bash-language-server
 require('lspconfig').bashls.setup {
     capabilities = capabilities,
     filetypes = { "sh", "bash" },
