@@ -1,10 +1,10 @@
 #!/bin/bash
 
 export NETAUTH_ENTITY="$(rbw get --raw netauth.voidlinux.org | jq -r .data.username)"
-export NOMAD_ADDR=https://nomad.s.voidlinux.org
-export VAULT_ADDR=https://vault.s.voidlinux.org
-export CONSUL_HTTP_ADDR=https://consul.s.voidlinux.org
-export LOKI_ADDR=https://loki.s.voidlinux.org
+export NOMAD_ADDR=https://nomad.voidlinux.org
+export VAULT_ADDR=https://vault.voidlinux.org
+export CONSUL_HTTP_ADDR=https://consul.voidlinux.org
+export LOKI_ADDR=https://loki.voidlinux.org
 export NOMAD_NAMESPACE='*'
 
 vnetpass() {
