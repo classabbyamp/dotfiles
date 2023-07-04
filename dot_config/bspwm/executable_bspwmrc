@@ -1,7 +1,6 @@
 #! /bin/sh
 
 sxhkd &
-pipewire &
 lxqt-policykit-agent &
 setxkbmap -layout ca -model pc105 -option caps:swapescape &
 $HOME/.screenlayout/default.sh &
@@ -21,20 +20,19 @@ bspc monitor DisplayPort-2 -d 1 2 3 4 5
 bspc monitor DisplayPort-0 -d 6 7 8 9 10
 bspc monitor DisplayPort-1 -d 11 12 13 14 15
 
-bspc rule --add discord desktop=^11
-bspc rule --add discord-ptb desktop=^12
-bspc rule --add telegram-desktop desktop=^5
 bspc rule --add hexchat desktop=^4
-bspc rule --add evolution desktop=^2
-
-telegram-desktop &
 hexchat &
+bspc rule --add telegram-desktop desktop=^5
+telegram-desktop &
+bspc rule --add discord desktop=^11
 Discord &
+bspc rule --add discord-ptb desktop=^12
 discord-ptb &
 
 akonadictl start &
+bspc rule --add kmail desktop=^2
 kmail &
-kalendar &
+# kalendar &
 
 bspc config focus_follows_pointer true
 
