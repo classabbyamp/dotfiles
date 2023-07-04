@@ -1,5 +1,5 @@
 # environment variables for zsh
-local pathadds
+export SVDIR=~/.config/service
 
 # history
 HISTFILE=~/.zsh_history
@@ -8,10 +8,6 @@ SAVEHIST=1000000000
 setopt EXTENDED_HISTORY
 setopt HIST_FIND_NO_DUPS
 setopt SHARE_HISTORY
-
-# ruby
-path=("$HOME/.local/share/gem/ruby/3.0.0/bin" $path)
-export GEM_HOME=$HOME/gems
 
 # other
 export EDITOR='nvim'
