@@ -22,7 +22,7 @@ vim.call('plug#begin')
     Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
     Plug 'itchyny/lightline.vim'
     -- utilities
-    Plug('lewis6991/gitsigns.nvim', {['tag'] = '*'})
+    Plug('lewis6991/gitsigns.nvim')
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'Raimondi/delimitMate'
@@ -131,11 +131,6 @@ vim.filetype.add({
     pattern = {
         ['${XBPS_DISTDIR}/srcpkgs/.*/template'] = 'bash',
     },
-})
-
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-    pattern = {void_dir .. '/**'},
-    command = ':Gitsigns toggle_current_line_blame',
 })
 
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
