@@ -14,6 +14,10 @@ export EDITOR='nvim'
 export DIFF='riff'
 export XBPS_DISTDIR=$HOME/void/packages
 
+# ruby
+path=("$HOME/.local/share/gem/ruby/3.0.0/bin" $path)
+export GEM_HOME=$HOME/gems
+
 # rust
 path=("$HOME/.cargo/bin" $path)
 
