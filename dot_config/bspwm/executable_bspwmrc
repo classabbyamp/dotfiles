@@ -1,5 +1,7 @@
 #! /bin/sh
 
+dbus-update-activation-environment DISPLAY XAUTHORITY
+
 sxhkd &
 lxqt-policykit-agent &
 setxkbmap -layout ca -model pc105 -option caps:swapescape &
@@ -10,6 +12,7 @@ nitrogen --restore &
 wired &
 syncthingtray &
 redshift -l 40.8:-74.4 &
+kwalletd5 &
 /usr/libexec/kdeconnectd &
 kdeconnect-indicator &
 nm-tray &
@@ -20,6 +23,8 @@ bspc monitor DisplayPort-2 -d 1 2 3 4 5
 bspc monitor DisplayPort-0 -d 6 7 8 9 10
 bspc monitor DisplayPort-1 -d 11 12 13 14 15
 
+bspc rule --add thunderbird desktop=^2
+thunderbird &
 bspc rule --add hexchat desktop=^4
 hexchat &
 bspc rule --add telegram-desktop desktop=^5
@@ -28,11 +33,6 @@ bspc rule --add discord desktop=^11
 Discord &
 bspc rule --add discord-ptb desktop=^12
 discord-ptb &
-
-akonadictl start &
-bspc rule --add kmail desktop=^2
-kmail &
-# kalendar &
 
 bspc config focus_follows_pointer true
 
