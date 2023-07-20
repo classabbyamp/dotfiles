@@ -1,0 +1,5 @@
+#!/bin/sh
+
+[ -r ./conf ] && . ./conf
+
+exec chpst -C "$HOME" dbus-daemon --session --nofork --nopidfile --address="$DBUS_SESSION_BUS_ADDRESS" $OPTS
