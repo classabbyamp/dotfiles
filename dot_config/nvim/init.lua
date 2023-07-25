@@ -480,9 +480,27 @@ require('lspconfig').bashls.setup {
     settings = { bashIde = { shellcheckArguments = {} } },
 }
 -- xi typst-lsp
-require('lspconfig').typst_lsp.setup{
+require('lspconfig').typst_lsp.setup {
     capabilities = capabilities,
     filetypes = { "typst" },
+}
+-- xi lua-language-server
+require('lspconfig').lua_ls.setup {
+    settings = {
+        Lua = {
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim', 'awesome'},
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
 }
 
 -- end completion-lsp }}}
