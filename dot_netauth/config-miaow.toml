@@ -1,0 +1,6 @@
+[core]
+    home = "/var/lib/netauth"
+    server = "netauth.miaow.io"
+    port = 1729
+[tls]
+    certificate = "keys/tls-miaow.pem"

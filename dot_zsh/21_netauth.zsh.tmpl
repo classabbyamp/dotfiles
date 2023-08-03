@@ -1,0 +1,9 @@
+function vnetauth() {
+    env NETAUTH_ENTITY="{{ (rbw "netauth.voidlinux.org").data.username }}" NETAUTH_SECRET="$(rbw get netauth.voidlinux.org)" \
+        netauth --config "$HOME/.netauth/config-void.toml" "$@"
+}
+
+function mnetauth() {
+    env NETAUTH_ENTITY="{{ (rbw "netauth.miaow.io").data.username }}" NETAUTH_SECRET="$(rbw get netauth.miaow.io)" \
+        netauth --config "$HOME/.netauth/config-miaow.toml" "$@"
+}

@@ -65,4 +65,3 @@ function xtree() {
     xls $@ | treeify
 }
 compdefas xls xtree
-
