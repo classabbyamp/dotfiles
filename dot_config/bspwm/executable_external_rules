@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 wid=$1
 class=$2
@@ -15,13 +15,33 @@ consequences=$4
 # fi
 
 case "$class" in
-	pinentry*|qalculate*|evolution-alarm-notify)
+	pinentry*|qalculate*)
 		eval "$consequences"
 		[ "$state" ] || echo "state=floating"
 		;;
 	audacious)
 		eval "$consequences"
 		echo "sticky=on"
+		;;
+	Thunderbird)
+		eval "$consequences"
+		echo "desktop=^2"
+		;;
+	Hexchat|hexchat)
+		eval "$consequences"
+		echo "desktop=^4"
+		;;
+	TelegramDesktop|telegram-desktop)
+		eval "$consequences"
+		echo "desktop=^5"
+		;;
+	discord)
+		eval "$consequences"
+		eval "$(xprop -id "$wid" _NET_WM_PID | awk '{ print "bin=$(readlink /proc/" $3 "/exe)"; exit }')"
+		case "${bin##*/}" in
+			Discord) echo "desktop=^11" ;;
+			DiscordPTB) echo "desktop=^12" ;;
+		esac
 		;;
 esac
 

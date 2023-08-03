@@ -1,11 +1,11 @@
-#! /bin/sh
+#!/bin/sh
 
 dbus-update-activation-environment DISPLAY XAUTHORITY
 
 sxhkd &
 lxqt-policykit-agent &
 setxkbmap -layout ca -model pc105 -option caps:swapescape &
-$HOME/.screenlayout/default.sh &
+"$HOME/.screenlayout/default.sh" &
 xsetroot -cursor_name left_ptr &
 
 nitrogen --restore &
@@ -17,21 +17,16 @@ kwalletd5 &
 kdeconnect-indicator &
 nm-tray &
 
-bspc config external_rules_command $HOME/.config/bspwm/external_rules
+bspc config external_rules_command "$HOME/.config/bspwm/external_rules"
 
 bspc monitor DisplayPort-2 -d 1 2 3 4 5
 bspc monitor DisplayPort-0 -d 6 7 8 9 10
 bspc monitor DisplayPort-1 -d 11 12 13 14 15
 
-bspc rule --add thunderbird desktop=^2
 thunderbird &
-bspc rule --add hexchat desktop=^4
 hexchat &
-bspc rule --add telegram-desktop desktop=^5
 telegram-desktop &
-bspc rule --add discord desktop=^11
 Discord &
-bspc rule --add discord-ptb desktop=^12
 discord-ptb &
 
 bspc config focus_follows_pointer true
@@ -45,8 +40,7 @@ bspc config split_ratio          0.5
 bspc config borderless_monocle   false
 bspc config gapless_monocle      false
 
-while pgrep -u $UID -f bspwm_window_titles >/dev/null; do pkill -f bspwm_window_titles; done
-$HOME/.config/bspwm/bspwm_window_titles -p &
+while pgrep -u "$(id -u)" -f bspwm_window_titles >/dev/null; do pkill -f bspwm_window_titles; done
+"$HOME/.config/bspwm/bspwm_window_titles" -p &
 
-sleep 60 & $HOME/.config/polybar/launch.sh &
-
+"$HOME/.config/polybar/launch.sh" &
