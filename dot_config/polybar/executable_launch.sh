@@ -12,12 +12,14 @@ polybar -r dp0 &
 polybar -r dp2 &
 polybar -r dp1 &
 
-for m in $( bspc query -M --names ); do
-    index=$((index + 1))
-    export P_BSPWM_WINDOW_CMD="tail $HOME/.cache/bspwm_windows_${index}.txt"
+if bspc query 2>/dev/null; then
+    for m in $( bspc query -M --names ); do
+        index=$((index + 1))
+        export P_BSPWM_WINDOW_CMD="tail $HOME/.cache/bspwm_windows_${index}.txt"
 
-    MONITOR=$m polybar -r wintitles &
-done
+        MONITOR=$m polybar -r wintitles &
+    done
+fi
 
 echo "Bars launched..."
 
