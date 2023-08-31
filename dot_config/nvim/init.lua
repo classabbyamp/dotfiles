@@ -127,6 +127,7 @@ o.termguicolors = true
 vim.filetype.add({
     extension = {
         typ = 'typst',
+        nomad = 'hcl',
     },
     pattern = {
         ['${XBPS_DISTDIR}/srcpkgs/.*/template'] = 'bash',
@@ -316,18 +317,18 @@ require('nvim-treesitter.configs').setup({
     },
 })
 
-local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
-parser_config.typst = {
-  install_info = {
-    -- url = 'https://github.com/SeniorMars/tree-sitter-typst',
-    -- files = {'src/parser.c', 'src/scanner.c'},
-    -- branch = 'main',
-    url = 'https://github.com/frozolotl/tree-sitter-typst',
-    files = {'src/parser.c', 'src/scanner.cc'},
-    branch = 'master',
-    requires_generate_from_grammar = false,
-  },
-}
+-- local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
+-- parser_config.typst = {
+--   install_info = {
+--     -- url = 'https://github.com/SeniorMars/tree-sitter-typst',
+--     -- files = {'src/parser.c', 'src/scanner.c'},
+--     -- branch = 'main',
+--     url = 'https://github.com/frozolotl/tree-sitter-typst',
+--     files = {'src/parser.c', 'src/scanner.cc'},
+--     branch = 'master',
+--     requires_generate_from_grammar = false,
+--   },
+-- }
 -- end treesitter }}}
 
 -- completion/lsp {{{
@@ -483,6 +484,9 @@ require('lspconfig').bashls.setup {
 require('lspconfig').typst_lsp.setup {
     capabilities = capabilities,
     filetypes = { "typst" },
+    settings = {
+        exportPdf = "onSave",
+    },
 }
 -- xi lua-language-server
 require('lspconfig').lua_ls.setup {
