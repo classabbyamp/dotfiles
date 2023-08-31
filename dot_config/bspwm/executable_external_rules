@@ -19,6 +19,11 @@ case "$class" in
 		eval "$consequences"
 		[ "$state" ] || echo "state=floating"
 		;;
+	MATLAB*)
+		eval "$consequences"
+		[ "$state" ] || echo "state=floating"
+		# xdotool windowmove $wid 50% 50%
+		;;
 	audacious)
 		eval "$consequences"
 		echo "sticky=on"
