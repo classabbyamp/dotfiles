@@ -1,2 +1,2 @@
 #!/bin/sh
-exec syncthing serve --no-browser
+exec chpst -e "$TURNSTILE_ENV_DIR" syncthing serve --no-browser
