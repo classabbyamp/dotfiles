@@ -1,9 +1,0 @@
-#!/bin/sh
-
-case "$1" in
-    -v) verbose=yes; shift ;;
-    -h|'') echo "usage: xupcheck [-v] <pkgname...>"; exit 0 ;;
-esac
-
-XBPS_DISTDIR="$(xdistdir 2>/dev/null)"
-echo "$@" | xargs -n1 -P$(nproc) env XBPS_UPDATE_CHECK_VERBOSE=$verbose "$XBPS_DISTDIR/xbps-src" update-check
