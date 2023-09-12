@@ -184,9 +184,8 @@ for_window [class="(?i)telegram-?desktop"] move container to workspace $ws5
 ### Startup {{{
 
 # utils
-exec_always --no-startup-id dbus-update-activation-environment DISPLAY XAUTHORITY QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM_THEME
-exec_always --no-startup-id turnstile-update-runit-env DISPLAY XAUTHORITY QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM_THEME
-# exec_always --no-startup-id setxkbmap -layout ca -model pc105 -option caps:swapescape
+exec_always --no-startup-id dbus-update-activation-environment DISPLAY XAUTHORITY QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM_THEME XDG_SEAT XDG_SEAT_PATH XDG_SESSION_PATH XDG_VTNR XDG_SESSION_TYPE LANG
+exec_always --no-startup-id turnstile-update-runit-env DISPLAY XAUTHORITY QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM_THEME XDG_SEAT XDG_SEAT_PATH XDG_SESSION_PATH XDG_VTNR XDG_SESSION_TYPE LANG
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id autotiling -l 4
 
