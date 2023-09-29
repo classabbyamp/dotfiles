@@ -6,6 +6,9 @@ local cmd = vim.cmd
 local keymap = vim.keymap
 local void_dir = vim.fn.expand('~/void')
 
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+
 cmd([[
     if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
         silent execute '!curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -22,16 +25,19 @@ vim.call('plug#begin')
     Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
     Plug 'itchyny/lightline.vim'
     -- utilities
-    Plug('lewis6991/gitsigns.nvim')
+    Plug 'lewis6991/gitsigns.nvim'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'Raimondi/delimitMate'
     Plug 'junegunn/vim-easy-align'
+    Plug 'nvim-tree/nvim-tree.lua'
+        Plug 'nvim-tree/nvim-web-devicons'
     -- filetypes
     Plug 'alker0/chezmoi.vim'
     Plug('plasticboy/vim-markdown', {['for'] = 'md'})
     Plug('chrisbra/csv.vim', {['for'] = {'csv', 'tsv'}})
     Plug('jmcantrell/vim-virtualenv', {['for'] = 'python'})
+    Plug('kaarmu/typst.vim', {['for'] = 'typst'})
     -- completion/lsp
     Plug 'neovim/nvim-lspconfig'
     Plug 'josa42/nvim-lightline-lsp'
@@ -86,6 +92,7 @@ keymap.set('', '<c-j>', '<c-w>j', {remap = true})
 keymap.set('', '<c-k>', '<c-w>k', {remap = true})
 keymap.set('', '<c-h>', '<c-w>h', {remap = true})
 keymap.set('', '<c-l>', '<c-w>l', {remap = true})
+keymap.set('', '<c-n>', ':NvimTreeToggle<CR>', {remap = true})
 -- system clipboard
 keymap.set({'n', 'x'}, '<leader>d', '"+d')
 keymap.set({'n', 'x'}, '<leader>D', '"+D')
@@ -136,12 +143,12 @@ vim.filetype.add({
 
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
     pattern = {void_dir .. '/**'},
-    callback = function(ev) o.expandtab = false end,
+    callback = function() o.expandtab = false end,
 })
 
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
     pattern = {'*.yml', '*.yaml'},
-    callback = function(ev) o.expandtab = true end,
+    callback = function() o.expandtab = true end,
 })
 
 -- python
@@ -154,6 +161,9 @@ g.delimitMate_expand_cr = 1
 g.vim_markdown_folding_disabled = 1
 g.vim_markdown_conceal = 0
 g.vim_markdown_frontmatter = 1
+
+-- Tree
+require('nvim-tree').setup()
 
 -- lightline {{{
 g.lightline = {
@@ -480,13 +490,33 @@ require('lspconfig').bashls.setup {
     end,
     settings = { bashIde = { shellcheckArguments = {} } },
 }
+
+local function dirname(path)
+    local strip_dir_pat = '/([^/]+)$'
+    local strip_sep_pat = '/$'
+    if not path or #path == 0 then
+        return
+    end
+    local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
+    if #result == 0 then
+        if vim.loop.os_uname().version:match 'Windows' then
+            return path:sub(1, 2):upper()
+        else
+            return '/'
+        end
+    end
+    return result
+end
+
 -- xi typst-lsp
 require('lspconfig').typst_lsp.setup {
     capabilities = capabilities,
-    filetypes = { "typst" },
     settings = {
         exportPdf = "onSave",
     },
+    root_dir = function(fname)
+        return require('lspconfig.util').find_git_ancestor(fname) or dirname(fname)
+    end
 }
 -- xi lua-language-server
 require('lspconfig').lua_ls.setup {
