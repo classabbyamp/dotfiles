@@ -3,7 +3,7 @@
 @theme "colours"
 
 configuration {
-    modi: "drun,run,emoji";
+    modi: "drun,run,emoji:rofimoji";
     show-icons: true;
     sidebar-mode: true;
     font: "Berkeley Mono,FontAwesome 12";
