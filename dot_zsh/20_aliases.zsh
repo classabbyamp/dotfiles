@@ -47,8 +47,12 @@ if [[ "$TERM" == "xterm-kitty" ]]; then
     alias idot="dot -Tsvg | rsvg-convert -az 1.1 | convert -trim -channel RGB - - | icat"
 fi
 
-if command -v nc &>/dev/null; then
+if command -v curl &>/dev/null; then
     alias pastebin="curl -F'file=@-' https://0x0.st"
+fi
+
+if command -v tailscale &>/dev/null; then
+    alias tsc="tailscale"
 fi
 
 alias xrm="$_sudo xbps-remove"
