@@ -1,12 +1,10 @@
 # i3 config file (v4)
 
-### Looks {{{
+### Looks
 
 font pango:Berkeley Mono 10
 
-gaps outer 8
 gaps inner 8
-smart_gaps inverse_outer
 
 for_window [all] title_window_icon padding 5
 title_align center
@@ -16,9 +14,8 @@ default_border normal 2
 # colours
 include ~/.config/i3/colors
 
-### }}}
 
-### Keybinds {{{
+### Keybinds
 
 set $mod   Mod1
 set $super Mod4
@@ -101,6 +98,7 @@ set $ws14 "14: E"
 set $ws15 "15: F"
 
 # bind workspace to output
+{{ if eq .chezmoi.hostname "prometheus" }}
 workspace $ws1  output DisplayPort-2
 workspace $ws2  output DisplayPort-2
 workspace $ws3  output DisplayPort-2
@@ -116,6 +114,23 @@ workspace $ws12 output DisplayPort-1
 workspace $ws13 output DisplayPort-1
 workspace $ws14 output DisplayPort-1
 workspace $ws15 output DisplayPort-1
+{{ else if eq .chezmoi.hostname "daedelus" }}
+workspace $ws1  output primary
+workspace $ws2  output primary
+workspace $ws3  output primary
+workspace $ws4  output primary
+workspace $ws5  output primary
+workspace $ws6  output primary
+workspace $ws7  output primary
+workspace $ws8  output primary
+workspace $ws9  output primary
+workspace $ws10 output primary
+workspace $ws11 output nonprimary
+workspace $ws12 output nonprimary
+workspace $ws13 output nonprimary
+workspace $ws14 output nonprimary
+workspace $ws15 output nonprimary
+{{ end }}
 
 # switch to workspace
 bindsym $mod+1  workspace number $ws1
@@ -163,25 +178,35 @@ bindsym $mod+e exec --no-startup-id rofi -show emoji
 # screenshot
 bindsym Print exec --no-startup-id "maim -su | xclip -selection clipboard -t image/png"
 
-# sleep
-bindsym $super+l exec doas zzz
+# lock
+bindsym $super+l exec i3lock -e -c 181825 -p default
+bindsym $super+Shift+l exec "i3lock -e -c 181825 -p default && doas zzz"
 
-### }}}
+# fn keys
+bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ 5%-
+bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume @DEFAULT_SINK@ 5%+
+bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -d intel_backlight set 5%-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -d intel_backlight set 5%+
 
-### Window rules {{{
+### Window rules
 
 for_window [class="pinentry"] floating enable
 for_window [class="qalculate"] floating enable
 for_window [class="MATLAB"] floating enable
+{{ if eq .chezmoi.hostname "prometheus" }}
 for_window [class="Thunderbird"] move container to workspace $ws2
 for_window [class="(?i)hexchat"] move container to workspace $ws4
 for_window [class="(?i)telegram-?desktop"] move container to workspace $ws5
-# doesn't work with both ptb and normal discord (same class)
-# for_window [class="discord"] move container to workspace $ws11
+{{ else if eq .chezmoi.hostname "daedelus" }}
+for_window [class="(?i)hexchat"] move container to workspace $ws4
+for_window [class="(?i)telegram-?desktop"] move container to workspace $ws5
+for_window [class="discord"] move container to workspace $ws5
+for_window [class="Thunderbird"] move container to workspace $ws6
+{{ end }}
 
-### }}}
-
-### Startup {{{
+### Startup
 
 # utils
 exec_always --no-startup-id dbus-update-activation-environment DISPLAY XAUTHORITY QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM_THEME XDG_SEAT XDG_SEAT_PATH XDG_SESSION_PATH XDG_VTNR XDG_SESSION_TYPE LANG
@@ -191,13 +216,17 @@ exec_always --no-startup-id autotiling -l 4
 
 # background
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id wired --run
+exec --no-startup-id kwalletd5
+exec --no-startup-id lxqt-policykit-agent
+exec --no-startup-id syncthingtray
+exec --no-startup-id nm-applet
 
 # foreground
 exec thunderbird
 exec hexchat
 exec telegram-desktop
 exec Discord
+{{ if eq .chezmoi.hostname "prometheus" }}
 exec discord-ptb
-
-### }}}
-
+{{ end }}
