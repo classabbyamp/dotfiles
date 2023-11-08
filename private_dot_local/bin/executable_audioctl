@@ -1,0 +1,84 @@
+#!/bin/sh
+
+set -eu
+
+ICON_VOL_UP="/usr/share/icons/breeze-dark/status/22/audio-volume-high.svg"
+ICON_VOL_DN="/usr/share/icons/breeze-dark/status/22/audio-volume-low.svg"
+ICON_VOL_ON="/usr/share/icons/breeze-dark/status/22/audio-volume-medium.svg"
+ICON_VOL_MT="/usr/share/icons/breeze-dark/status/22/audio-volume-muted.svg"
+ICON_MIC_ON="/usr/share/icons/breeze-dark/status/22/mic-on.svg"
+ICON_MIC_MT="/usr/share/icons/breeze-dark/status/22/mic-off.svg"
+
+get_volume() {
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2 | tr -d .
+}
+
+set_volume() {
+    percent="$1" dir="$2"
+    case "$dir" in
+        "+") icon="$ICON_VOL_UP" ;;
+        "-") icon="$ICON_VOL_DN" ;;
+        *)   return ;;
+    esac
+
+    if is_mute; then
+        disable_mute SINK q
+    fi
+
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ "${percent}%${dir}"
+    notify-send -h int:value:"$(get_volume)" \
+        -h "string:wired-tag:volume" -i "$icon" "Volume"
+}
+
+is_mute() {
+    dev="${1:-SINK}"
+    wpctl get-volume "@DEFAULT_AUDIO_$dev@" | grep -q MUTED
+}
+
+enable_mute() {
+    dev="${1:-SINK}"
+    case "$dev" in
+        SINK)   icon="$ICON_VOL_MT" ;;
+        SOURCE) icon="$ICON_MIC_MT" ;;
+        *)      return ;;
+    esac
+
+    wpctl set-mute "@DEFAULT_AUDIO_$dev@" 1
+    notify-send \
+        -h "string:wired-tag:volume" -i "$icon" "Volume Muted"
+}
+
+disable_mute() {
+    dev="${1:-SINK}" quiet="${2:-}"
+    case "$dev" in
+        SINK)   icon="$ICON_VOL_ON" ;;
+        SOURCE) icon="$ICON_MIC_ON" ;;
+        *)      return ;;
+    esac
+
+    wpctl set-mute "@DEFAULT_AUDIO_$dev@" 0
+    if [ -z "$quiet" ]; then
+        notify-send -h int:value:"$(get_volume)" \
+            -h "string:wired-tag:volume" -i "$icon" "Volume Unmuted"
+    fi
+}
+
+case "$1" in
+    vol-up) set_volume "${2:-5}" "+" ;;
+    vol-down) set_volume "${2:-5}" "-" ;;
+    toggle-mute)
+        if is_mute SINK; then
+            disable_mute SINK
+        else
+            enable_mute SINK
+        fi
+        ;;
+    toggle-mic)
+        if is_mute SOURCE; then
+            disable_mute SOURCE
+        else
+            enable_mute SOURCE
+        fi
+        ;;
+    switch-sink)  ;;
+esac
