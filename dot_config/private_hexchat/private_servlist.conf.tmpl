@@ -35,3 +35,13 @@ E=UTF-8 (Unicode)
 F=77
 D=0
 S={{ (rbwFields "oftc-a").url.value }}/{{ (rbwFields "oftc-a").port.value }}
+
+N={{ (rbwFields "snoonet-a").net.value }}
+U={{ (rbw "snoonet-a").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "snoonet-a").net.value }}
+P={{ (rbw "snoonet-a").data.password }}
+L=7
+E=UTF-8 (Unicode)
+F=69
+D=0
+S={{ (rbwFields "snoonet-a").url.value }}/{{ (rbwFields "snoonet-a").port.value }}
+
