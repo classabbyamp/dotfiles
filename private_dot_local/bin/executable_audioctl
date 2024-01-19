@@ -38,28 +38,28 @@ is_mute() {
 enable_mute() {
     dev="${1:-SINK}"
     case "$dev" in
-        SINK)   icon="$ICON_VOL_MT" ;;
-        SOURCE) icon="$ICON_MIC_MT" ;;
+        SINK)   icon="$ICON_VOL_MT" name="Volume" ;;
+        SOURCE) icon="$ICON_MIC_MT" name="Microphone" ;;
         *)      return ;;
     esac
 
     wpctl set-mute "@DEFAULT_AUDIO_$dev@" 1
     notify-send \
-        -h "string:wired-tag:volume" -i "$icon" "Volume Muted"
+        -h "string:wired-tag:volume" -i "$icon" "$name Muted"
 }
 
 disable_mute() {
     dev="${1:-SINK}" quiet="${2:-}"
     case "$dev" in
-        SINK)   icon="$ICON_VOL_ON" ;;
-        SOURCE) icon="$ICON_MIC_ON" ;;
+        SINK)   icon="$ICON_VOL_ON" name="Volume" ;;
+        SOURCE) icon="$ICON_MIC_ON" name="Microphone" ;;
         *)      return ;;
     esac
 
     wpctl set-mute "@DEFAULT_AUDIO_$dev@" 0
     if [ -z "$quiet" ]; then
         notify-send -h int:value:"$(get_volume)" \
-            -h "string:wired-tag:volume" -i "$icon" "Volume Unmuted"
+            -h "string:wired-tag:volume" -i "$icon" "$name Unmuted"
     fi
 }
 
