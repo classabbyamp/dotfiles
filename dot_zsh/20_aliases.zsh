@@ -26,7 +26,7 @@ alias ping8="ping 8.8.8.8"
 alias c="clear"
 alias ssh="TERM=xterm-256color ssh"
 if command -v nvim &>/dev/null; then
-    alias v="nvim"
+    alias v="nvim -p"
     alias vimdiff="nvim -d"
     alias vdiff="nvim -d"
 fi
