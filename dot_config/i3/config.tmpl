@@ -213,6 +213,7 @@ exec_always --no-startup-id dbus-update-activation-environment DISPLAY XAUTHORIT
 exec_always --no-startup-id turnstile-update-runit-env DISPLAY XAUTHORITY QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM_THEME XDG_SEAT XDG_SEAT_PATH XDG_SESSION_PATH XDG_VTNR XDG_SESSION_TYPE LANG
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id autotiling -l 4
+exec_always --no-startup-id picom
 
 # background
 exec --no-startup-id nitrogen --restore
