@@ -5,6 +5,7 @@
 
 [commit]
 	gpgsign = true
+	verbose = true
 
 [pull]
 	rebase = true
@@ -25,6 +26,9 @@
 
 [push]
 	autoSetupRemote = true
+
+[alias]
+	wt = worktree
 
 [includeIf "gitdir:~/void/"]
 	path = ~/.config/git/voidconfig
