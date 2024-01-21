@@ -20,11 +20,11 @@ return {
     },
     'tpope/vim-surround',
     'tpope/vim-commentary',
-    -- TODO: replace with
-    -- https://github.com/windwp/nvim-autopairs
-    -- https://github.com/abecodes/tabout.nvim
-    'Raimondi/delimitMate',
-    'junegunn/vim-easy-align',
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true,
+    },
     {
         'nvim-tree/nvim-tree.lua',
         dependencies = 'nvim-tree/nvim-web-devicons',
@@ -35,8 +35,12 @@ return {
     },
     -- filetypes
     'alker0/chezmoi.vim',
-    { 'plasticboy/vim-markdown', ft = 'md' },
-    { 'chrisbra/csv.vim', ft = {'csv', 'tsv'} },
+    {
+        'cameron-wags/rainbow_csv.nvim',
+        ft = { 'csv', 'tsv', 'csv_semicolon', 'csv_whitespace', 'csv_pipe', 'rfc_csv', 'rfc_semicolon', },
+        cmd = { 'RainbowDelim', 'RainbowDelimSimple', 'RainbowDelimQuoted', 'RainbowMultiDelim' },
+        config = true,
+    },
     { 'kaarmu/typst.vim', ft = 'typst' },
     -- completion/lsp/lint
     {
@@ -84,9 +88,25 @@ return {
     -- treesitter
     {
         'nvim-treesitter/nvim-treesitter',
-        -- TODO: https://github.com/hiphish/rainbow-delimiters.nvim
-	    dependencies = 'HiPhish/nvim-ts-rainbow2',
         build = ':TSUpdate',
         config = require('cfg.treesitter'),
+    },
+    {
+        'hiphish/rainbow-delimiters.nvim',
+        config = function()
+            require('rainbow-delimiters.setup').setup({
+                strategy = { [''] = require('rainbow-delimiters').strategy['global'], },
+                query = { [''] = 'rainbow-delimiters', },
+                highlight = {
+                    'RainbowDelimiterRed',
+                    'RainbowDelimiterYellow',
+                    'RainbowDelimiterBlue',
+                    'RainbowDelimiterOrange',
+                    'RainbowDelimiterGreen',
+                    'RainbowDelimiterViolet',
+                    'RainbowDelimiterCyan',
+                },
+            })
+        end,
     },
 }

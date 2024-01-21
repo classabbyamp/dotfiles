@@ -7,11 +7,6 @@ return function()
         highlight = {
             enable = true,
         },
-        rainbow = {
-            enable = true,
-            query = 'rainbow-parens',
-            strategy = require('ts-rainbow').strategy.global
-        },
         indent = {
             enable = true
         },

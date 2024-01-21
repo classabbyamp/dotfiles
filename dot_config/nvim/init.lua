@@ -1,20 +1,27 @@
 local o = vim.o
-local opt = vim.opt
 local g = vim.g
+local opt = vim.opt
 local cmd = vim.cmd
 local api = vim.api
 local keymap = vim.keymap
-local void_dir = vim.fn.expand('~/void')
+local autocmd = vim.api.nvim_create_autocmd
 
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 
-api.nvim_create_autocmd('ColorScheme', {
+-- better todo comment colouring
+autocmd('ColorScheme', {
     callback = function()
         -- don't let semantic highlights fuck up the custom highlight
         api.nvim_set_hl(0, '@lsp.type.comment', {})
-        -- oranj
-        api.nvim_set_hl(0, '@text.todo.comment', { fg = '#FF4F00', bold = true })
+        -- BUG ERROR FIXME(you): lol
+        api.nvim_set_hl(0, '@comment.error.comment', { fg = '#c8102e', bold = true })
+        -- TODO WIP
+        api.nvim_set_hl(0, '@comment.todo.comment', { fg = '#ff4f00', bold = true })
+        -- FIX HACK WARNING WARN
+        api.nvim_set_hl(0, '@comment.warning.comment', { fg = '#ffd100', bold = true })
+        -- XXX NOTE INFO DOCS PERF TEST: idk #10
+        api.nvim_set_hl(0, '@comment.note.comment', { fg = '#0072ce', bold = true })
     end
 })
 
@@ -80,7 +87,7 @@ g.python3_host_prog = '/usr/bin/python3'
 
 -- Mappings
 keymap.set('', ' ', '<leader>', {remap = true})
-keymap.set('', '<F1>', '', {remap = true})
+-- better split navigation
 keymap.set('', '<c-j>', '<c-w>j', {remap = true})
 keymap.set('', '<c-k>', '<c-w>k', {remap = true})
 keymap.set('', '<c-h>', '<c-w>h', {remap = true})
@@ -94,9 +101,15 @@ keymap.set({'n', 'x'}, '<leader>p', '"+p')
 keymap.set({'n', 'x'}, '<leader>P', '"+P')
 -- exit terminal mode with shift+escape
 keymap.set('t', '<Esc>', '<C-\\><C-n>')
+-- rename symbol
+keymap.set('', '<F2>', vim.lsp.buf.rename)
+-- navigate diagnostics
+vim.keymap.set('n', '<F1>', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 
 -- TODO: fixme
-cmd('com Ws w !doas tee %')
+-- cmd('com Ws w !doas tee %')
 
 -- filetypes
 vim.filetype.add({
@@ -116,18 +129,18 @@ vim.filetype.add({
 
 vim.treesitter.language.register('bash', 'srcpkg')
 
-api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
-    pattern = {void_dir .. '/**'},
+autocmd({'BufNewFile', 'BufRead'}, {
+    pattern = {vim.fn.expand('~/void') .. '/**'},
     callback = function() o.expandtab = false end,
 })
 
-api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+autocmd({'BufNewFile', 'BufRead'}, {
     pattern = {'*.yml', '*.yaml'},
     callback = function() o.expandtab = true end,
 })
 
 -- create parent dirs if they don't already exist
-api.nvim_create_autocmd({'BufWritePre', 'FileWritePre'}, {
+autocmd({'BufWritePre', 'FileWritePre'}, {
     callback = function(ev)
         if ev.match:match("^%w%w+://") then return end
         local file = vim.loop.fs_realpath(ev.match) or ev.match
@@ -135,10 +148,13 @@ api.nvim_create_autocmd({'BufWritePre', 'FileWritePre'}, {
     end
 })
 
--- delimitMate
-g.delimitMate_expand_cr = 1
+-- borders for floating windows
+local float_border = { border = 'single' }
 
--- Markdown
-g.vim_markdown_folding_disabled = 1
-g.vim_markdown_conceal = 0
-g.vim_markdown_frontmatter = 1
+vim.diagnostic.config({ float = float_border })
+
+require('lspconfig.ui.windows').default_options = float_border
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float_border)
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float_border)
