@@ -18,6 +18,17 @@ local mode_map = {
   ['MORE'] = 'M',
 }
 
+local function loc()
+    local cur = vim.fn.line('.')
+    local col = vim.fn.virtcol('.')
+    local total = vim.fn.line('$')
+    local pct = 0
+    if cur ~= 1 then
+        pct = math.floor(cur / total * 100)
+    end
+    return string.format('%d:%d %d%%%%', cur, col, pct)
+end
+
 return {
     options = {
         component_separators = '',
@@ -33,7 +44,7 @@ return {
             {'encoding', fmt = function(s) return s == 'utf-8' and '' or s end },
         },
         lualine_y = { 'diff' },
-        lualine_z = { {'progress', padding = { left = 1, right = 0 } }, 'location' },
+        lualine_z = { loc },
     },
     extensions = { 'nvim-tree', }
 }
