@@ -116,6 +116,7 @@ vim.filetype.add({
     extension = {
         typ = 'typst',
         nomad = 'hcl',
+        bats = 'bash',
     },
     filename = {
         ['template'] = function(_, bufnr)

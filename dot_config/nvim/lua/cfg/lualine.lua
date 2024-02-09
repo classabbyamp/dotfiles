@@ -46,5 +46,5 @@ return {
         lualine_y = { 'diff' },
         lualine_z = { loc },
     },
-    extensions = { 'nvim-tree', }
+    extensions = { 'man', 'nvim-tree', }
 }

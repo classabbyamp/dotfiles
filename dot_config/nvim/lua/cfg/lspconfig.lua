@@ -17,7 +17,7 @@ return function()
         filetypes = { "sh", "bash" },
         on_attach = function(client)
             local path = vim.fn.expand('%:p')
-            if path:find('^' .. void_dir .. '/packages/srcpkgs') ~= nil then
+            if path:find('^' .. vim.fn.expand('~/void') .. '/packages/srcpkgs') ~= nil then
                 client.config.settings.bashIde.shellcheckArguments = {'-e', 'SC2034', '-e', 'SC2148', '-e', 'SC2317'}
             else
                 client.config.settings.bashIde.shellcheckArguments = {}

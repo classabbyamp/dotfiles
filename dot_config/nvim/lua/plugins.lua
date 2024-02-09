@@ -19,7 +19,11 @@ return {
         config = require('cfg.gitsigns'),
     },
     'tpope/vim-surround',
-    'tpope/vim-commentary',
+    {
+        'numToStr/Comment.nvim',
+        lazy = false,
+        config = true,
+    },
     {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
@@ -28,6 +32,7 @@ return {
     {
         'nvim-tree/nvim-tree.lua',
         dependencies = 'nvim-tree/nvim-web-devicons',
+        lazy = false,
         keys = {
             {'<c-n>', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree'},
         },

@@ -89,6 +89,7 @@ return function()
 
     -- Use buffer source for '/'
     cmp.setup.cmdline('/', {
+        mapping = cmp.mapping.preset.cmdline(),
         sources = {
             { name = 'buffer' }
         }
@@ -96,10 +97,13 @@ return function()
 
     -- Use cmdline & path source for ':'
     cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
             { name = 'path' }
         }, {
-            { name = 'cmdline' }
+            {
+                name = 'cmdline',
+            }
         })
     })
 
