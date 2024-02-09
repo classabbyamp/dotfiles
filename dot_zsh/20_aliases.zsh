@@ -17,7 +17,7 @@ alias ll='ls -l --color=auto'
 alias lh='ls -lh --color=auto'
 alias l.='ls -d .* --color=auto'
 alias ls='ls --color=auto'
-alias tree='tree -C'
+alias treeify='tree --noreport --fflinks --fromfile .'
 
 alias void="neofetch"
 alias ping="ping -c 3"
@@ -64,8 +64,3 @@ alias xcl="xchangelog"
 function xrs() {
     command xrs $@ | grep -v '\-32bit-' | grep -v '\-dbg-'
 }
-
-function xtree() {
-    xls $@ | treeify
-}
-compdefas xls xtree
