@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -eu
+
+ICON_BRI_UP="/usr/share/icons/breeze-dark/actions/22/high-brightness.svg"
+ICON_BRI_DN="/usr/share/icons/breeze-dark/actions/22/low-brightness.svg"
+
+get_brightness() {
+    brightnessctl -d intel_backlight get
+}
+
+get_max() {
+    brightnessctl -d intel_backlight max
+}
+
+set_brightness() {
+    percent="$1" dir="$2"
+    case "$dir" in
+        "+") icon="$ICON_BRI_UP" ;;
+        "-") icon="$ICON_BRI_DN" ;;
+        *)   return ;;
+    esac
+
+    brightnessctl -q -d intel_backlight set "${percent}%${dir}"
+    notify-send -h int:value:"$(( 100 * $(get_brightness) / $(get_max) ))" \
+        -h "string:wired-tag:brightness" -i "$icon" "Brightness"
+}
+
+case "$1" in
+    up) set_brightness "${2:-5}" "+" ;;
+    down) set_brightness "${2:-5}" "-" ;;
+esac
