@@ -18,14 +18,14 @@ F=69
 D=0
 S={{ (rbwFields "libera-m").url.value }}/{{ (rbwFields "libera-m").port.value }}
 
-N={{ (rbwFields "libera-v").net.value }}
-U={{ (rbw "libera-v").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "libera-v").net.value }}
-P={{ (rbw "libera-v").data.password }}
+N={{ (rbwFields "libera-c").net.value }}
+U={{ (rbw "libera-c").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "libera-c").net.value }}
+P={{ (rbw "libera-c").data.password }}
 L=7
 E=UTF-8 (Unicode)
 F=77
 D=0
-S={{ (rbwFields "libera-v").url.value }}/{{ (rbwFields "libera-v").port.value }}
+S={{ (rbwFields "libera-c").url.value }}/{{ (rbwFields "libera-c").port.value }}
 
 N={{ (rbwFields "oftc-a").net.value }}
 U={{ (rbw "oftc-a").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "oftc-a").net.value }}
@@ -45,3 +45,10 @@ F=69
 D=0
 S={{ (rbwFields "snoonet-a").url.value }}/{{ (rbwFields "snoonet-a").port.value }}
 
+N=pine64
+U={{ (rbw "pine64").data.username }}@{{ .chezmoi.hostname }}/{{ (rbwFields "pine64").net.value }}
+P={{ (rbw "pine64").data.password }}
+E=UTF-8 (Unicode)
+F=77
+D=0
+S={{ (rbwFields "pine64").url.value }}/{{ (rbwFields "pine64").port.value }}
