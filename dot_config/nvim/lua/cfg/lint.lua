@@ -10,18 +10,20 @@ return function()
         stdin = false,
         ignore_exitcode = true,
         parser = require('lint.parser').from_pattern(
-            '([^:]+):([0-9]+): (.+)',
-            { 'file', 'lnum', 'message' },
-            { error = vim.diagnostic.severity.ERROR },
+            '([^:]+):([^:]+):([0-9]+): (.+)',
+            { 'file', 'severity', 'lnum', 'message' },
+            {
+                error = vim.diagnostic.severity.ERROR,
+                warning = vim.diagnostic.severity.WARN,
+            },
             {
                 lnum = 1,
                 col = 1,
-                severity = 'error',
             }
         ),
     }
 
-    vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
         callback = function()
             require('lint').try_lint()
         end,
