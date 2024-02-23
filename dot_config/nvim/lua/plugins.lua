@@ -33,10 +33,7 @@ return {
         'nvim-tree/nvim-tree.lua',
         dependencies = 'nvim-tree/nvim-web-devicons',
         lazy = false,
-        keys = {
-            {'<c-n>', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree'},
-        },
-        config = true,
+        config = require('cfg.tree'),
     },
     -- filetypes
     'alker0/chezmoi.vim',
