@@ -1,18 +1,19 @@
 return function()
     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local lspcfg = require('lspconfig')
 
     -- xi rust-analyzer
-    require('lspconfig').rust_analyzer.setup {
+    lspcfg.rust_analyzer.setup {
         capabilities = capabilities
     }
 
     -- xi pyright
-    require('lspconfig').pyright.setup {
+    lspcfg.pyright.setup {
         capabilities = capabilities
     }
 
     -- xi bash-language-server
-    require('lspconfig').bashls.setup {
+    lspcfg.bashls.setup {
         capabilities = capabilities,
         filetypes = { "sh", "bash" },
         on_attach = function(client)
@@ -46,7 +47,7 @@ return function()
     end
 
     -- xi typst-lsp
-    require('lspconfig').typst_lsp.setup {
+    lspcfg.typst_lsp.setup {
         capabilities = capabilities,
         settings = {
             exportPdf = "onSave",
@@ -57,7 +58,7 @@ return function()
     }
 
     -- xi lua-language-server
-    require('lspconfig').lua_ls.setup {
+    lspcfg.lua_ls.setup {
         settings = {
             Lua = {
                 diagnostics = {
