@@ -3,7 +3,14 @@
 setopt autocd extendedglob interactive_comments
 unsetopt beep nomatch notify
 
-fpath=("$HOME/.zsh/comp" "$HOME/void/xX_tools_Xx" "$HOME/void/xtools" $fpath)
+fpath=(
+    "$HOME/.zsh/comp"
+    "$HOME/void/xX_tools_Xx"
+    "$HOME/void/xtools"
+    $fpath
+)
+
+[ -f "/usr/bin/vagrant" ] && fpath=(/usr/lib/vagrant/gems/vagrant-*/contrib/zsh $fpath)
 
 # load all the sub-configs from the ZSH_CONFIGS and ZSH_CONFIGS_LOCAL directories
 export ZSH_CONFIGS="$HOME/.zsh"

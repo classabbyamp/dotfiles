@@ -60,3 +60,6 @@ autoload -U +X bashcompinit && bashcompinit
 
 autoload -Uz compinit && compinit
 
+for cmd in nomad packer terraform vault; do
+    [ -f "/usr/bin/$cmd" ] && complete -o nospace -C "/usr/bin/$cmd" "$cmd"
+done
