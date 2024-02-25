@@ -1,7 +1,6 @@
 local o = vim.o
 local g = vim.g
 local opt = vim.opt
-local cmd = vim.cmd
 local api = vim.api
 local keymap = vim.keymap
 local autocmd = vim.api.nvim_create_autocmd

@@ -36,7 +36,11 @@ return {
         config = require('cfg.tree'),
     },
     -- filetypes
-    'alker0/chezmoi.vim',
+    {
+        'xvzc/chezmoi.nvim',
+        dependencies = 'nvim-lua/plenary.nvim',
+        config = require('cfg.chezmoi'),
+    },
     {
         'cameron-wags/rainbow_csv.nvim',
         ft = { 'csv', 'tsv', 'csv_semicolon', 'csv_whitespace', 'csv_pipe', 'rfc_csv', 'rfc_semicolon', },
