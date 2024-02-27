@@ -115,6 +115,7 @@ vim.filetype.add({
     extension = {
         typ = 'typst',
         nomad = 'hcl',
+        tf = 'hcl',
         bats = 'bash',
     },
     filename = {

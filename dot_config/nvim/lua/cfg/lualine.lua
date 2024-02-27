@@ -35,16 +35,31 @@ return {
         section_separators = '',
     },
     sections = {
-        lualine_a = { {'mode', fmt = function(s) return mode_map[s] or s end} },
+        lualine_a = { { 'mode', fmt = function(s) return mode_map[s] or s end } },
         lualine_b = { 'diagnostics' },
-        lualine_c = { {'filename', path = 1} },
+        lualine_c = { { 'filename', path = 1 } },
         lualine_x = {
-            {'filetype', icons_enabled = false},
-            {'fileformat', icons_enabled = false, fmt = function(s) return s == 'unix' and '' or s end },
-            {'encoding', fmt = function(s) return s == 'utf-8' and '' or s end },
+            { 'filetype', icons_enabled = true },
+            { 'fileformat', icons_enabled = false, fmt = function(s) return s == 'unix' and '' or s end },
+            { 'encoding', fmt = function(s) return s == 'utf-8' and '' or s end },
         },
         lualine_y = { 'diff' },
         lualine_z = { loc },
     },
-    extensions = { 'man', 'nvim-tree', }
+    extensions = { 'man', 'nvim-tree', 'lazy' },
+    tabline = {
+        lualine_a = {},
+        lualine_b = { {
+            'tabs',
+            max_length = vim.o.columns,
+            mode = 1,
+            path = 1,
+            show_modified_status = true,
+            symbols = { modified = '', },
+        } },
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+    }
 }

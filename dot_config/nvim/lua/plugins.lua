@@ -8,15 +8,20 @@ return {
         config = require('cfg.colorscheme'),
     },
     {
+        'nvim-tree/nvim-web-devicons',
+        lazy = false,
+        config = require('cfg.devicons'),
+    },
+    {
         'nvim-lualine/lualine.nvim',
         dependencies = 'nvim-tree/nvim-web-devicons',
-        config = require('cfg.lualine'),
+        opts = require('cfg.lualine'),
     },
     -- utilities
     {
         'lewis6991/gitsigns.nvim',
         dependencies = 'nvim-lua/plenary.nvim',
-        config = require('cfg.gitsigns'),
+        opts = require('cfg.gitsigns'),
     },
     'tpope/vim-surround',
     {
@@ -68,7 +73,7 @@ return {
         'dcampos/cmp-snippy',
         dependencies = {
             'dcampos/nvim-snippy',
-            config = {
+            opts = {
                 mappings = {
                     is = {
                         ['<Tab>'] = 'expand_or_advance',
