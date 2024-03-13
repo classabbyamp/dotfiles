@@ -75,4 +75,9 @@ return function()
             },
         },
     }
+
+    -- xi clang-tools-extra17 Bear
+    require('lspconfig').clangd.setup {
+        capabilities = capabilities,
+    }
 end
