@@ -20,16 +20,21 @@
 [pager]
 	diff = riff
 	show = riff
+	log = riff
 
 [interactive]
-	diffFilter = riff
+	diffFilter = riff --color=on
 
 [push]
 	autoSetupRemote = true
+	gpgSign = if-asked
 
 [alias]
 	wt = worktree
 	backport = cherry-pick -x
+
+[tag]
+	gpgSign = true
 
 [includeIf "gitdir:~/void/"]
 	path = ~/.config/git/voidconfig
