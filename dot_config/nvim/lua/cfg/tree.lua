@@ -17,12 +17,6 @@ return function()
                 }
             }
         },
-        modified = {
-            enable = true,
-        },
-        diagnostics = {
-            enable = true,
-        },
     })
 
     vim.keymap.set('n', '<c-n>', function() require('nvim-tree.api').tree.toggle({ find_file = true }) end)

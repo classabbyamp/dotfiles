@@ -9,5 +9,5 @@ return function()
             }
         }
     })
-    require("nvim-web-devicons").filetypes["srcpkg"] = "void"
+    require("nvim-web-devicons").set_icon_by_filetype({srcpkg = "void"})
 end
