@@ -1,0 +1,10 @@
+# i3 config file (v4)
+# vim:ft=i3config
+
+# target                title                  bg                     text                     indicator               border
+client.focused          {{ .colors.bg_light }} {{ .colors.bg_light }} {{ .colors.fg }}         {{ .colors.accent }}    {{ .colors.accent }}
+client.focused_inactive {{ .colors.bg_light }} {{ .colors.bg_light }} {{ .colors.fg }}         {{ .colors.bg_light }}  {{ .colors.bg_light }}
+client.unfocused        {{ .colors.bg_light }} {{ .colors.bg_light }} {{ .colors.fg }}         {{ .colors.bg_light }}  {{ .colors.bg_light }}
+client.urgent           {{ .colors.bg_light }} {{ .colors.bg_light }} {{ .colors.normal.red }} {{ .colors.selection }} {{ .colors.normal.red }}
+client.placeholder      {{ .colors.bg_light }} {{ .colors.bg_light }} {{ .colors.fg }}         {{ .colors.selection }} {{ .colors.selection }}
+client.background       {{ .colors.bg_light }}

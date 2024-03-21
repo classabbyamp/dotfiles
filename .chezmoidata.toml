@@ -1,0 +1,37 @@
+[colors]
+bg = "#11111b"
+fg = "#cdd6f4"
+bg_light = "#181825"
+accent = "#cba6f7"
+selection = "#45475b"
+cursorline = "#2a2b3d"
+
+[colors.normal]
+black = "#2f2f4d"
+red = "#f26d99"
+green = "#9cd17d"
+yellow = "#faa570"
+blue = "#89b4fa"
+magenta = "#cba6f7"
+cyan = "#8dd8eb"
+white = "#c6c6c6"
+
+[colors.bright]
+black = "#505085"
+red = "#ffa6c8"
+green = "#cdebbc"
+yellow = "#ffc8a8"
+blue = "#bdddff"
+magenta = "#ebccff"
+cyan = "#c7f4ff"
+white = "#fdfdfd"
+
+[colors.faint]
+black = "#292933"
+red = "#a64c66"
+green = "#638550"
+yellow = "#ad734e"
+blue = "#5f7dad"
+magenta = "#8c72ab"
+cyan = "#5f919e"
+white = "#999999"

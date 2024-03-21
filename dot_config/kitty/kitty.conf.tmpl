@@ -1,0 +1,93 @@
+# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
+
+# font
+font_family        Berkeley Mono Variable
+bold_font          auto
+italic_font        auto
+bold_italic_font   auto
+font_size          11.0
+disable_ligatures  always
+
+# See https://github.com/ryanoasis/nerd-fonts/wiki/Glyph-Sets-and-Code-Points
+# Seti-UI + Custom
+symbol_map U+E5FA-U+E6B1 Symbols Nerd Font
+# Devicons
+symbol_map U+E700-U+E7C5 Symbols Nerd Font
+# Font Awesome
+symbol_map U+F000-U+F2E0 Symbols Nerd Font
+# Font Awesome Extension
+symbol_map U+E200-U+E2A9 Symbols Nerd Font
+# Material Design Icons
+symbol_map U+F0001-U+F1AF0 Symbols Nerd Font
+# Weather
+symbol_map U+E300-U+E3E3 Symbols Nerd Font
+# Octicons
+symbol_map U+F400-U+F532,U+2665,U+26A1 Symbols Nerd Font
+# Powerline Symbols
+symbol_map U+E0A0-U+E0A2,U+E0B0-U+E0B3 Symbols Nerd Font
+# Powerline Extra Symbols
+symbol_map U+E0A3,U+E0B4-U+E0C8,U+E0CA,U+E0CC-U+E0D4 Symbols Nerd Font
+# IEC Power Symbols
+symbol_map U+23FB-U+23FE,U+2b58 Symbols Nerd Font
+# Font Logos
+symbol_map U+F300-U+F372 Symbols Nerd Font
+# Pomicons
+symbol_map U+E000-U+E00A Symbols Nerd Font
+# Codicons
+symbol_map U+EA60-U+EBEB Symbols Nerd Font
+# Additional
+symbol_map U+E276C-U+E2771,U+2500-U+259F Symbols Nerd Font
+
+enabled_layouts  fat, grid, tall, splits, vertical, horizontal
+
+tab_bar_min_tabs     2
+tab_bar_edge         bottom
+tab_bar_style        powerline
+tab_powerline_style  slanted
+tab_title_template   {title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}
+
+map ctrl+tab        next_tab
+map ctrl+shift+tab  previous_tab
+
+scrollback_lines   1000000
+enable_audio_bell  no
+cursor_shape       block
+shell_integration  no-cursor
+
+foreground               {{ .colors.fg        }}
+background               {{ .colors.bg        }}
+selection_foreground     {{ .colors.fg        }}
+selection_background     {{ .colors.selection }}
+
+cursor                   {{ .colors.fg }}
+cursor_text_color        {{ .colors.bg }}
+
+url_color                {{ .colors.accent }}
+
+active_border_color      {{ .colors.accent     }}
+inactive_border_color    {{ .colors.bg_light   }}
+bell_border_color        {{ .colors.normal.red }}
+
+active_tab_foreground    {{ .colors.bg_light }}
+active_tab_background    {{ .colors.accent   }}
+inactive_tab_foreground  {{ .colors.fg       }}
+inactive_tab_background  {{ .colors.bg_light }}
+tab_bar_background       {{ .colors.bg_light }}
+
+color0   {{ .colors.normal.black   }}
+color1   {{ .colors.normal.red     }}
+color2   {{ .colors.normal.green   }}
+color3   {{ .colors.normal.yellow  }}
+color4   {{ .colors.normal.blue    }}
+color5   {{ .colors.normal.magenta }}
+color6   {{ .colors.normal.cyan    }}
+color7   {{ .colors.normal.white   }}
+
+color8   {{ .colors.bright.black   }}
+color9   {{ .colors.bright.red     }}
+color10  {{ .colors.bright.green   }}
+color11  {{ .colors.bright.yellow  }}
+color12  {{ .colors.bright.blue    }}
+color13  {{ .colors.bright.magenta }}
+color14  {{ .colors.bright.cyan    }}
+color15  {{ .colors.bright.white   }}

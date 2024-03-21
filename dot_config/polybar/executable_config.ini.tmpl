@@ -1,9 +1,17 @@
+[colors]
+ background = {{ .colors.bg_light }}
+ foreground = {{ .colors.fg }}
+ alert = {{ .colors.normal.red }}
+ accent = {{ .colors.accent }}
+ green = {{ .colors.normal.green }}
+ grey = {{ .colors.faint.white }}
+
 [bar/base]
 width = 100%
 fixed-center = true
 wm-restack = i3
-background = ${colors.mantle}
-foreground = ${colors.text}
+background = ${colors.background}
+foreground = ${colors.foreground}
 line-size = 2
 line-color = #eff1f5
 padding-left = 2
@@ -51,7 +59,7 @@ interval = 25
 mount-0 = /home
 label-mounted =  %percentage_used%%
 label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.subtext0}
+label-unmounted-foreground = ${colors.grey}
 
 [module/root]
 type = internal/fs
@@ -59,7 +67,7 @@ interval = 25
 mount-0 = /
 label-mounted =  %percentage_used%%
 label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.subtext0}
+label-unmounted-foreground = ${colors.grey}
 
 [module/i3]
 type = internal/i3
@@ -71,9 +79,9 @@ label-focused = "%index%"
 label-visible = "%index%"
 label-unfocused = "%index%"
 label-urgent = "%index%"
-label-focused-overline = ${colors.mauve}
-label-visible-overline = ${colors.mauve}
-label-urgent-overline = ${colors.red}
+label-focused-overline = ${colors.accent}
+label-visible-overline = ${colors.accent}
+label-urgent-overline = ${colors.alert}
 label-focused-padding = 1
 label-unfocused-padding = 1
 label-visible-padding = 1
@@ -84,14 +92,14 @@ label-mode-padding = 1
 type = internal/cpu
 interval = 2
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 label = %percentage%%
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = "󰍛 "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 label = %percentage_used%%
 
 [module/eth]
@@ -111,7 +119,7 @@ type = internal/date
 interval = 5
 date = "%a %Y-%m-%d"
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 label = %date%
 
 [module/localtime]
@@ -119,7 +127,7 @@ type = internal/date
 interval = 5
 time = %H:%M
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 label = %time%
 
 [module/utctime]
@@ -127,14 +135,14 @@ type = custom/script
 exec = TZ=Etc/UTC date +"%H:%Mz"
 interval = 5
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 
 [module/austime]
 type = custom/script
 exec = TZ=Australia/Brisbane date +"%H:%Ma"
 interval = 5
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 
 [module/volume]
 type = internal/pulseaudio
@@ -159,7 +167,6 @@ screenchange-reload = true
 [global/wm]
 margin-top = 0
 margin-bottom = 0
-include-file = $HOME/.config/polybar/colors.ini
 
 [module/pkg]
 type = custom/script
@@ -205,12 +212,12 @@ format-full = <ramp-capacity> <label-full>
 format-low = <ramp-capacity> <label-low>
 
 format-charging-foreground = ${colors.green}
-format-low-foreground = ${colors.red}
-format-low-overline = ${colors.red}
+format-low-foreground = ${colors.alert}
+format-low-overline = ${colors.alert}
 
 [module/tray]
 type = internal/tray
-tray-foreground = ${colors.text}
+tray-foreground = ${colors.foreground}
 tray-spacing = 6px
 
 ; vim:ft=dosini

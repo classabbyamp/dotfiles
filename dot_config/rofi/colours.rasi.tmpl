@@ -28,18 +28,19 @@ configuration {
     padding: 0;
     spacing: 0;
 
-    bg: #181a1f;
-    bg-alt: #3f4451;
-    fg: #abb2bf;
-    fg-alt: #e6e6e6;
-    fg-selected: #c162de;
+    bg: {{ .colors.bg }};
+    bg-alt: {{ .colors.bg_light }};
+    bg-selected: {{ .colors.cursorline }};
+    fg: {{ .colors.fg }};
+    fg-alt: {{ .colors.fg }};
+    fg-selected: {{ .colors.accent }};
 
     background-color: @bg;
     text-color: @fg;
 }
 
 window {
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 mainbox {
@@ -76,6 +77,10 @@ element-icon {
     padding: 10px 10px;
 }
 
+element-icon selected {
+    background-color: @bg-selected;
+}
+
 element-text {
     padding: 10px 0;
     text-color: @fg;
@@ -83,5 +88,6 @@ element-text {
 
 element-text selected {
     text-color: @fg-selected;
+    background-color: @bg-selected;
 }
 
