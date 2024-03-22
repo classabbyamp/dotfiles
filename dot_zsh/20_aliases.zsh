@@ -58,7 +58,6 @@ fi
 alias xrm="$_sudo xbps-remove"
 alias xrevdeps="xbps-query -RX"
 alias xdeps="xbps-query -Rx"
-alias xs="$(xdistdir)/xbps-src"
 alias xcl="xchangelog"
 
 function xrs() {

@@ -1,0 +1,3 @@
+#!/bin/sh
+XBPS_DISTDIR="$(xdistdir)" || exit 123
+exec "$XBPS_DISTDIR/xbps-src" "$@"
