@@ -1,0 +1,6 @@
+#compdef xunpatch
+
+_arguments -s : \
+    "-n[Don't edit]" \
+    '-p[number of path prefix components to strip (default: 3)]:number:' \
+    '*:files:_files'
