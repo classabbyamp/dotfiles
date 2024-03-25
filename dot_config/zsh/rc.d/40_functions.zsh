@@ -7,7 +7,7 @@ if command -v xev &>/dev/null; then
 fi
 
 function lnsv() {
-    ln -s /etc/sv/$1 /var/service
+    "$_sudo" ln -s /etc/sv/$1 /var/service
 }
 
 if command -v gs &> /dev/null; then

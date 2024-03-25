@@ -1,16 +1,10 @@
 # aliases for zsh
 
 if command -v doas &>/dev/null; then
-    alias sudo='echo use doas, dummy #'
-    alias sudoedit='echo use doasedit, dummy #'
     alias doasedit="doas $EDITOR"
     _sudo=doas
 else
     _sudo=sudo
-fi
-
-if command -v bsdtar &>/dev/null; then
-    alias tar='echo use bsdtar, dummy #'
 fi
 
 alias ll='ls -l --color=auto'
@@ -18,6 +12,8 @@ alias lh='ls -lh --color=auto'
 alias l.='ls -d .* --color=auto'
 alias ls='ls --color=auto'
 alias treeify='tree --noreport --fflinks --fromfile .'
+
+alias ip='ip --color=auto'
 
 alias void="neofetch"
 alias ping="ping -c 3"
@@ -32,14 +28,7 @@ if command -v nvim &>/dev/null; then
 fi
 alias :q="exit"
 alias py="python3"
-alias woman="man"
 alias chm="chezmoi"
-if command -v rg &>/dev/null; then
-    alias grep="rg"
-fi
-if command -v fd &>/dev/null; then
-    alias find="fd"
-fi
 
 if [[ "$TERM" == "xterm-kitty" ]]; then
     alias icat="kitty icat --align=left"
@@ -47,19 +36,49 @@ if [[ "$TERM" == "xterm-kitty" ]]; then
     alias idot="dot -Tsvg | rsvg-convert -az 1.1 | convert -trim -channel RGB - - | icat"
 fi
 
-if command -v curl &>/dev/null; then
-    alias pastebin="curl -F'file=@-' https://0x0.st"
-fi
-
-if command -v tailscale &>/dev/null; then
-    alias tsc="tailscale"
-fi
-
 alias xrm="$_sudo xbps-remove"
 alias xrevdeps="xbps-query -RX"
 alias xdeps="xbps-query -Rx"
-alias xcl="xchangelog"
+alias xchl="xchangelog"
 
 function xrs() {
     command xrs $@ | grep -v '\-32bit-' | grep -v '\-dbg-'
 }
+
+alias forkup="git pull --rebase upstream master"
+
+alias g='git'
+
+alias ga='git add'
+
+alias gb='git branch'
+
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gcam='git commit -a -m'
+alias gcb='git switch -c'
+alias gcl='git clone --recursive'
+alias gco='git switch'
+
+alias gd='git diff'
+
+alias gf='git fetch'
+alias gfa='git fetch --all --prune'
+
+alias glog='git log --oneline --decorate --graph'
+
+alias gl='git pull'
+alias gp='git push'
+
+alias gr='git remote'
+alias grv='git remote -v'
+
+alias grb='git rebase'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias grbi='git rebase -i'
+alias grbm='git rebase master'
+alias grbs='git rebase --skip'
+
+alias gss='git status -s'
+alias gst='git status'

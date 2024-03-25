@@ -2,7 +2,7 @@
 export SVDIR=~/.config/service
 
 # history
-HISTFILE=~/.zsh_history
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh_history"
 HISTSIZE=1000000000
 SAVEHIST=1000000000
 setopt EXTENDED_HISTORY
@@ -12,18 +12,18 @@ setopt SHARE_HISTORY
 # other
 export EDITOR='nvim -p'
 export DIFF='riff'
-export XBPS_DISTDIR=$HOME/void/packages
+export XBPS_DISTDIR="$HOME/void/packages"
+export USER_LS_COLORS=1
 
 # ruby
-path=("$HOME/.local/share/gem/ruby/3.0.0/bin" $path)
-export GEM_HOME=$HOME/gems
+export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gems"
 
 # rust
 path=("$HOME/.cargo/bin" $path)
 export CARGO_TERM_COLOR=always
 
 # path
-path=("$HOME/void/xX_tools_Xx" "$HOME/void/xxtools" "$HOME/void/xtools" "$HOME/.local/bin" $path)
+path=("$HOME/void/"*tools* "$HOME/.local/bin" $path)
 
 {{ if eq .chezmoi.hostname "daedelus" "prometheus" }}
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)

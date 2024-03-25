@@ -1,0 +1,8 @@
+# vim: set ft=zsh:
+
+setopt autocd extendedglob interactive_comments
+unsetopt beep nomatch notify
+
+for fn in "$ZDOTDIR"/rc.d/*.zsh(.N); source "$fn"
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &>/dev/null || true

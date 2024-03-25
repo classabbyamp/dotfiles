@@ -55,6 +55,20 @@ bindkey -M emacs "^I" expand-or-complete-with-dots
 bindkey -M viins "^I" expand-or-complete-with-dots
 bindkey -M vicmd "^I" expand-or-complete-with-dots
 
+compdefas () {
+  if (($+_comps[$1])); then
+    compdef $_comps[$1] ${^@[2,-1]}=$1
+  fi
+}
+
+fpath=(
+    "$ZDOTDIR/comp"
+    "$HOME/void/"*tools*
+    $fpath
+)
+
+[ -f "/usr/bin/vagrant" ] && fpath=(/usr/lib/vagrant/gems/vagrant-*/contrib/zsh $fpath)
+
 # automatically load bash completion functions
 autoload -U +X bashcompinit && bashcompinit
 
