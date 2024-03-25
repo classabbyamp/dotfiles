@@ -25,8 +25,4 @@ export CARGO_TERM_COLOR=always
 # path
 path=("$HOME/void/"*tools* "$HOME/.local/bin" $path)
 
-{{ if eq .chezmoi.hostname "daedelus" "prometheus" }}
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-{{ end }}
-
 export PATH
