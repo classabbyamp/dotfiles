@@ -190,8 +190,14 @@ click-left = kitty --hold -d /home/abi/void/packages -e xcheckmypkgs &
 type = internal/battery
 full-at = 99
 low-at = 15
+{{- if eq .chezmoi.hostname "daedelus" }}
 battery = BAT0
 adapter = AC
+{{- end }}
+{{- if eq .chezmoi.hostname "void-x13s" }}
+battery = qcom-battmgr-bat
+adapter = qcom-battmgr-usb
+{{- end }}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
