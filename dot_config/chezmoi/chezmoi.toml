@@ -1,9 +1,0 @@
-[diff]
-    command = "riff"
-    pager = "riff"
-    args = ["--no-pager", "{{ .Destination }}", "{{ .Target }}"]
-    exclude = ["dirs"]
-
-[merge]
-    command = "nvim"
-    args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
