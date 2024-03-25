@@ -8,11 +8,11 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
 
 export PATH="$HOME/.local/bin:$HOME/void/xtools:$PATH"
 
-{{ if eq .chezmoi.hostname "prometheus" }}
+{{ if eq .machineInfo.kind "desktop" }}
 polybar -r dp0 &
 polybar -r dp2 &
 polybar -r dp1 &
-{{ else if eq .chezmoi.hostname "daedelus" }}
+{{ else if eq .machineInfo.kind "laptop" }}
 polybar -r laptop &
 {{ end }}
 

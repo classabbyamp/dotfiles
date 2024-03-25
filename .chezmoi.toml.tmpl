@@ -1,3 +1,9 @@
+{{- $choices := list "desktop" "laptop" "server" -}}
+{{- $machinekind := promptChoiceOnce . "machinekind" "What type of machine are you on" $choices -}}
+
+[data.machineInfo]
+    kind = {{ $machinekind | quote }}
+
 [diff]
     command = "riff"
     pager = "riff"

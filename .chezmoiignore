@@ -1,1 +1,15 @@
 README.md
+{{- if eq .machineInfo.kind "server" }}
+.Xresources
+.xprofile
+.config/*
+!.config/git
+!.config/lscolours
+!.config/nvim
+!.config/htop
+!.config/tmux
+!.config/rustypaste
+!.config/zsh
+.local/share/typst
+.netauth
+{{- end }}

@@ -98,7 +98,7 @@ set $ws14 "14: E"
 set $ws15 "15: F"
 
 # bind workspace to output
-{{ if eq .chezmoi.hostname "prometheus" }}
+{{ if eq .machineInfo.kind "desktop" }}
 workspace $ws1  output DisplayPort-2
 workspace $ws2  output DisplayPort-2
 workspace $ws3  output DisplayPort-2
@@ -114,7 +114,7 @@ workspace $ws12 output DisplayPort-1
 workspace $ws13 output DisplayPort-1
 workspace $ws14 output DisplayPort-1
 workspace $ws15 output DisplayPort-1
-{{ else if eq .chezmoi.hostname "daedelus" }}
+{{ else if eq .machineInfo.kind "laptop" }}
 workspace $ws1  output primary
 workspace $ws2  output primary
 workspace $ws3  output primary
@@ -195,11 +195,11 @@ bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.local/bin/brightctl up
 for_window [class="pinentry"] floating enable
 for_window [class="qalculate"] floating enable
 for_window [class="MATLAB"] floating enable
-{{ if eq .chezmoi.hostname "prometheus" }}
+{{ if eq .machineInfo.kind "desktop" }}
 for_window [class="Thunderbird"] move container to workspace $ws2
 for_window [class="(?i)hexchat"] move container to workspace $ws4
 for_window [class="(?i)telegram-?desktop"] move container to workspace $ws5
-{{ else if eq .chezmoi.hostname "daedelus" }}
+{{ else if eq .machineInfo.kind "laptop" }}
 for_window [class="(?i)hexchat"] move container to workspace $ws4
 for_window [class="(?i)telegram-?desktop"] move container to workspace $ws5
 for_window [class="discord"] move container to workspace $ws5
@@ -228,6 +228,6 @@ exec thunderbird
 exec hexchat
 exec telegram-desktop
 exec Discord
-{{ if eq .chezmoi.hostname "prometheus" }}
+{{ if eq .machineInfo.kind "desktop" }}
 exec discord-ptb
 {{ end }}
