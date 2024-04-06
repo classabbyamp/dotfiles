@@ -1,10 +1,10 @@
 [colors]
- background = {{ .colors.bg_light }}
- foreground = {{ .colors.fg }}
- alert = {{ .colors.normal.red }}
- accent = {{ .colors.accent }}
- green = {{ .colors.normal.green }}
- grey = {{ .colors.faint.white }}
+background = {{ .colors.bg_light }}
+foreground = {{ .colors.fg }}
+alert = {{ .colors.normal.red }}
+accent = {{ .colors.accent }}
+green = {{ .colors.normal.green }}
+grey = {{ .colors.faint.white }}
 
 [bar/base]
 width = 100%
@@ -17,7 +17,7 @@ line-color = #eff1f5
 padding-left = 2
 padding-right = 2
 font-0 = Berkeley Mono:size=12;2
-font-1 = Symbols Nerd Font:size=12;2
+font-1 = Symbols Nerd Font:size=14;2
 height = 25
 module-margin-left = 1
 module-margin-right = 1
@@ -42,14 +42,14 @@ modules-right = date localtime utctime
 [bar/dp0]
 inherit = bar/base
 monitor = ${env:MONITOR:DisplayPort-0}
-modules-left = cpu memory volume
+modules-left = cpu memory volume weather
 modules-center = i3
 modules-right = root home date localtime utctime austime
 
 [bar/laptop]
 inherit = bar/base
 monitor = ${env:MONITOR:eDP-1}
-modules-left = tray battery
+modules-left = tray battery weather
 modules-center = i3
 modules-right = pkg date localtime utctime
 
@@ -185,6 +185,11 @@ format-prefix = " "
 env-XBPS_DISTDIR = "${env:XBPS_DISTDIR:/home/abi/void/packages}"
 exec = xcheckmypkgs 2>/dev/null | grep -v checking | cut -d' ' -f 1 | uniq | wc -l
 click-left = kitty --hold -d /home/abi/void/packages -e xcheckmypkgs &
+
+[module/weather]
+type = custom/script
+interval = 1000
+exec = wttr
 
 [module/battery]
 type = internal/battery

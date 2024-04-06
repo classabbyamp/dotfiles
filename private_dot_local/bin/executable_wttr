@@ -1,0 +1,76 @@
+#!/usr/bin/python3
+
+try:
+    import httpx
+except ImportError:
+    print("missing httpx")
+    raise SystemExit(1)
+
+LOCATION_URL = "https://location.services.mozilla.com/v1/geolocate?key=geoclue"
+METEO_URL = "https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lng}&current=temperature_2m,apparent_temperature,weather_code&timezone=auto"
+
+def get_location() -> tuple[float, float] | None:
+    try:
+        r = httpx.get(LOCATION_URL)
+    except httpx.RequestError as e:
+        print(f"An error occurred while requesting {e.request.url!r}")
+        return None
+    except httpx.HTTPStatusError as e:
+        print(f"Error response {e.response.status_code} while requesting {e.request.url!r}")
+        return None
+    j = r.json()
+    try:
+        return (j["location"]["lat"], j["location"]["lng"])
+    except KeyError:
+        return None
+
+def wmo2sym(code: int) -> str:
+    match code:
+        case 0:  # Clear sky
+            return ""
+        case 1 | 2:  # Mainly clear, partly cloudy
+            return ""
+        case 3:  # overcast
+            return "󰖐"
+        case 45 | 48:  # Fog and depositing rime fog
+            return ""
+        case 51 | 53 | 55:  # Drizzle: Light, moderate, and dense intensity
+            return ""
+        case 56 | 57:  # Freezing Drizzle: Light and dense intensity
+            return ""
+        case 61 | 63 | 65:  # Rain: Slight, moderate and heavy intensity
+            return ""
+        case 66 | 67:  # Freezing Rain: Light and heavy intensity
+            return ""
+        case 71 | 73 | 75 | 77:  # Snow fall: Slight, moderate, and heavy intensity, Snow grains
+            return ""
+        case 80 | 81 | 82:  # Rain showers: Slight, moderate, and violent
+            return ""
+        case 85 | 86:  # Snow showers slight and heavy
+            return ""
+        case 95:  # Thunderstorm: Slight or moderate
+            return ""
+        case 96 | 99:  # Thunderstorm with slight and heavy hail
+            return ""
+        case _:
+            return "󰨹"
+
+def get_condx(loc: tuple[float, float]) -> str:
+    try:
+        r = httpx.get(METEO_URL.format(lat=loc[0], lng=loc[1]))
+    except httpx.RequestError as e:
+        print(f"An error occurred while requesting {e.request.url!r}")
+        raise SystemExit(1)
+    except httpx.HTTPStatusError as e:
+        print(f"Error response {e.response.status_code} while requesting {e.request.url!r}")
+        raise SystemExit(1)
+    j = r.json()
+    if "current" in j:
+        c = j["current"]
+        return f"{wmo2sym(c["weather_code"])} {c["temperature_2m"]}° ({c["apparent_temperature"]}°)"
+    return ""
+
+
+if __name__ == "__main__":
+    if (loc := get_location()) is not None:
+        print(get_condx(loc))
