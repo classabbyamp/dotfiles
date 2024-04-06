@@ -106,6 +106,7 @@ keymap.set('', '<F2>', vim.lsp.buf.rename)
 vim.keymap.set('n', '<F1>', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, { silent = true, noremap = true })
 
 -- TODO: fixme
 -- cmd('com Ws w !doas tee %')
