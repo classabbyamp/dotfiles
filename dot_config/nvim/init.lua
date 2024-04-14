@@ -100,13 +100,16 @@ keymap.set({'n', 'x'}, '<leader>p', '"+p')
 keymap.set({'n', 'x'}, '<leader>P', '"+P')
 -- exit terminal mode with shift+escape
 keymap.set('t', '<Esc>', '<C-\\><C-n>')
--- rename symbol
-keymap.set('', '<F2>', vim.lsp.buf.rename)
--- navigate diagnostics
-vim.keymap.set('n', '<F1>', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', 'K', vim.lsp.buf.hover, { silent = true, noremap = true })
+-- lsp
+keymap.set('n', '<F1>', vim.diagnostic.open_float)
+keymap.set('n', '<F2>', vim.lsp.buf.rename)
+keymap.set('n', '<F3>', vim.lsp.buf.code_action)
+keymap.set('n', '[d', vim.diagnostic.goto_prev)
+keymap.set('n', ']d', vim.diagnostic.goto_next)
+keymap.set('n', 'K', vim.lsp.buf.hover, { silent = true, noremap = true })
+keymap.set('n', 'gD', vim.lsp.buf.declaration)
+keymap.set('n', 'gd', vim.lsp.buf.definition)
+keymap.set('n', 'gr', vim.lsp.buf.references)
 
 -- TODO: fixme
 -- cmd('com Ws w !doas tee %')
@@ -118,6 +121,8 @@ vim.filetype.add({
         nomad = 'hcl',
         tf = 'hcl',
         bats = 'bash',
+        qml = 'qml',
+        qbs = 'qml',
     },
     filename = {
         ['template'] = function(_, bufnr)

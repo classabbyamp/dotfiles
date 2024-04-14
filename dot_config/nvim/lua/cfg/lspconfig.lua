@@ -12,6 +12,16 @@ return function()
         capabilities = capabilities
     }
 
+    -- xi ruff
+    lspcfg.ruff.setup {
+        capabilities = capabilities
+    }
+
+    -- xi qt6-declarative-tools
+    lspcfg.qmlls.setup {
+        capabilities = capabilities
+    }
+
     -- xi bash-language-server
     lspcfg.bashls.setup {
         capabilities = capabilities,
