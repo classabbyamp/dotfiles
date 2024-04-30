@@ -33,7 +33,7 @@ for f; do
     $EDITOR "$f" >/dev/tty
 done
 
-TMPFILE="$(mktemp -t "$0.XXXXXX.patch")"
+TMPFILE="$(mktemp -t "$(basename "$0").XXXXXX.patch")"
 
 trap cleanup EXIT TERM INT
 
