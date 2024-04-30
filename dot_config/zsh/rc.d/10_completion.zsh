@@ -55,7 +55,7 @@ bindkey -M emacs "^I" expand-or-complete-with-dots
 bindkey -M viins "^I" expand-or-complete-with-dots
 bindkey -M vicmd "^I" expand-or-complete-with-dots
 
-compdefas () {
+compdefas() {
   if (($+_comps[$1])); then
     compdef $_comps[$1] ${^@[2,-1]}=$1
   fi
@@ -77,3 +77,5 @@ autoload -Uz compinit && compinit
 for cmd in nomad packer terraform vault; do
     [ -f "/usr/bin/$cmd" ] && complete -o nospace -C "/usr/bin/$cmd" "$cmd"
 done
+
+compdefas xbps-src xs

@@ -12,15 +12,19 @@ if [[ $UID -eq 0 ]]; then
     user_symbol='#'
 else
     user_colour='5'
+    if [[ "$TERM" = linux ]]; then
+        user_symbol='$'
+    else
 {{ if eq .chezmoi.hostname "feoh" }}
-    user_symbol='ᚠ'
+        user_symbol='ᚠ'
 {{ else if eq .chezmoi.hostname "ur" }}
-    user_symbol='ᚢ'
+        user_symbol='ᚢ'
 {{ else if eq .chezmoi.hostname "apollo" }}
-    user_symbol='☉'
+        user_symbol='☉'
 {{ else }}
-    user_symbol='🐾'
+        user_symbol='🐾'
 {{ end }}
+    fi
 fi
 
 local user_host="%B%F{$user_colour}%n%b%F{6}@%m%f"

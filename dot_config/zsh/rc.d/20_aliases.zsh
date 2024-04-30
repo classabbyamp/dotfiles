@@ -65,7 +65,7 @@ alias gd='git diff'
 alias gf='git fetch'
 alias gfa='git fetch --all --prune'
 
-alias glog='git log --oneline --decorate --graph'
+alias glog='git log --graph --date=short --pretty="%C(auto)[%cd] %h%d %s (%aN <%aE>)"'
 
 alias gl='git pull'
 alias gp='git push'
@@ -82,3 +82,5 @@ alias grbs='git rebase --skip'
 
 alias gss='git status -s'
 alias gst='git status'
+
+alias gsh='git show'
