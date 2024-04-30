@@ -56,7 +56,7 @@ o.confirm = true
 
 o.undofile = true
 
-o.modeline = false
+o.modeline = true
 
 o.mouse = 'ar'
 
