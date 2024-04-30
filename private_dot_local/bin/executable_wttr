@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 
+from sys import stderr
+
 try:
     import httpx
 except ImportError:
-    print("missing httpx")
+    print("missing httpx", file=stderr)
     raise SystemExit(1)
 
 LOCATION_URL = "https://location.services.mozilla.com/v1/geolocate?key=geoclue"
@@ -13,10 +15,10 @@ def get_location() -> tuple[float, float] | None:
     try:
         r = httpx.get(LOCATION_URL)
     except httpx.RequestError as e:
-        print(f"An error occurred while requesting {e.request.url!r}")
+        print(f"An error occurred while requesting {e.request.url!r}", stderr)
         return None
     except httpx.HTTPStatusError as e:
-        print(f"Error response {e.response.status_code} while requesting {e.request.url!r}")
+        print(f"Error response {e.response.status_code} while requesting {e.request.url!r}", stderr)
         return None
     j = r.json()
     try:
@@ -59,10 +61,10 @@ def get_condx(loc: tuple[float, float]) -> str:
     try:
         r = httpx.get(METEO_URL.format(lat=loc[0], lng=loc[1]))
     except httpx.RequestError as e:
-        print(f"An error occurred while requesting {e.request.url!r}")
+        print(f"An error occurred while requesting {e.request.url!r}: {e}", stderr)
         raise SystemExit(1)
     except httpx.HTTPStatusError as e:
-        print(f"Error response {e.response.status_code} while requesting {e.request.url!r}")
+        print(f"Error response {e.response.status_code} while requesting {e.request.url!r}", stderr)
         raise SystemExit(1)
     j = r.json()
     if "current" in j:
