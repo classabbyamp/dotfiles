@@ -13,7 +13,8 @@ alias l.='ls -d .* --color=auto'
 alias ls='ls --color=auto'
 alias treeify='tree --noreport --fflinks --fromfile .'
 
-alias ip='ip --color=auto'
+alias ip='ip --color=auto --brief'
+alias ipv='command ip --color=auto'
 
 alias void="neofetch"
 alias ping="ping -c 3"
