@@ -25,11 +25,6 @@ return {
     },
     'tpope/vim-surround',
     {
-        'numToStr/Comment.nvim',
-        lazy = false,
-        config = true,
-    },
-    {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = true,

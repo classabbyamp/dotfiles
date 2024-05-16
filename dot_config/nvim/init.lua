@@ -25,7 +25,7 @@ autocmd('ColorScheme', {
 })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -35,9 +35,9 @@ if not vim.loop.fs_stat(lazypath) then
         lazypath,
     })
 end
-vim.opt.rtp:prepend(lazypath)
+opt.rtp = opt.rtp ^ lazypath
 
-require('lazy').setup('plugins')
+require('lazy').setup(require('plugins'))
 
 o.syntax = 'on'
 o.number = true
@@ -82,8 +82,6 @@ opt.listchars = {
     trail = '·',
 }
 
-g.python3_host_prog = '/usr/bin/python3'
-
 -- Mappings
 keymap.set('', ' ', '<leader>', {remap = true})
 -- better split navigation
@@ -111,9 +109,6 @@ keymap.set('n', 'gD', vim.lsp.buf.declaration)
 keymap.set('n', 'gd', vim.lsp.buf.definition)
 keymap.set('n', 'gr', vim.lsp.buf.references)
 
--- TODO: fixme
--- cmd('com Ws w !doas tee %')
-
 -- filetypes
 vim.filetype.add({
     extension = {
@@ -121,13 +116,11 @@ vim.filetype.add({
         nomad = 'hcl',
         tf = 'hcl',
         bats = 'bash',
-        qml = 'qml',
-        qbs = 'qml',
     },
     filename = {
         ['template'] = function(_, bufnr)
-            local line = vim.filetype.getlines(bufnr, 1):lower()
-            if line:find('^# template file for') then
+            local line = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ''
+            if vim.regex('\\c^# template file for'):match_str(line) ~= nil then
                 return 'srcpkg'
             end
         end
@@ -136,21 +129,11 @@ vim.filetype.add({
 
 vim.treesitter.language.register('bash', 'srcpkg')
 
-autocmd({'BufNewFile', 'BufRead'}, {
-    pattern = {vim.fn.expand('~/void') .. '/**'},
-    callback = function() o.expandtab = false end,
-})
-
-autocmd({'BufNewFile', 'BufRead'}, {
-    pattern = {'*.yml', '*.yaml'},
-    callback = function() o.expandtab = true end,
-})
-
 -- create parent dirs if they don't already exist
 autocmd({'BufWritePre', 'FileWritePre'}, {
     callback = function(ev)
         if ev.match:match("^%w%w+://") then return end
-        local file = vim.loop.fs_realpath(ev.match) or ev.match
+        local file = vim.uv.fs_realpath(ev.match) or ev.match
         vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
     end
 })

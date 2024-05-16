@@ -47,7 +47,7 @@ return function()
         end
         local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
         if #result == 0 then
-            if vim.loop.os_uname().version:match 'Windows' then
+            if vim.uv.os_uname().version:match 'Windows' then
                 return path:sub(1, 2):upper()
             else
                 return '/'
