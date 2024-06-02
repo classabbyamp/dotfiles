@@ -38,16 +38,21 @@ symbol_map U+EA60-U+EBEB Symbols Nerd Font
 # Additional
 symbol_map U+E276C-U+E2771,U+2500-U+259F Symbols Nerd Font
 
-enabled_layouts  fat, grid, tall, splits, vertical, horizontal
+enabled_layouts  fat, fat:bias=75;full_size=1;mirrored=false, tall, tall:bias=75;full_size=1;mirrored=false
 
 tab_bar_min_tabs     2
 tab_bar_edge         bottom
-tab_bar_style        powerline
-tab_powerline_style  slanted
+tab_bar_style        fade
+tab_fade             1
 tab_title_template   {title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}
 
+map ctrl+shift+p    next_layout
 map ctrl+tab        next_tab
 map ctrl+shift+tab  previous_tab
+map ctrl+shift+h    neighboring_window left
+map ctrl+shift+j    neighboring_window down
+map ctrl+shift+k    neighboring_window up
+map ctrl+shift+l    neighboring_window right
 
 scrollback_lines   1000000
 enable_audio_bell  no

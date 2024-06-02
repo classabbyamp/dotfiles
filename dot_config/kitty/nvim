@@ -1,0 +1,3 @@
+layout fat:bias=75;full_size=1;mirrored=false
+launch zsh -i -c nvim
+launch zsh
