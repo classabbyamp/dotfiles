@@ -1,6 +1,10 @@
 return function()
     require('nvim-treesitter.configs').setup {
+        {{ if eq .machineInfo.kind "server" -}}
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+        {{ else -}}
         ensure_installed = 'all',
+        {{ end -}}
         ignore_install = {},
         auto_install = false,
         sync_install = false,

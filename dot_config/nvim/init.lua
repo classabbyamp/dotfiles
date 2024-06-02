@@ -108,6 +108,11 @@ keymap.set('n', 'K', vim.lsp.buf.hover, { silent = true, noremap = true })
 keymap.set('n', 'gD', vim.lsp.buf.declaration)
 keymap.set('n', 'gd', vim.lsp.buf.definition)
 keymap.set('n', 'gr', vim.lsp.buf.references)
+-- telescope
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, {})
+vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, {})
+vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, {})
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, {})
 
 -- filetypes
 vim.filetype.add({

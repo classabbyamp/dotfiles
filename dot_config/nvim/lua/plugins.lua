@@ -35,6 +35,12 @@ return {
         lazy = false,
         config = require('cfg.tree'),
     },
+    {
+        'nvim-telescope/telescope.nvim',
+        dependencies = 'nvim-lua/plenary.nvim',
+        -- config = require('cfg.telescope'),
+        config = true,
+    },
     -- filetypes
     {
         'xvzc/chezmoi.nvim',
