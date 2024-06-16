@@ -10,8 +10,10 @@ return function()
         stdin = false,
         ignore_exitcode = true,
         parser = require('lint.parser').from_pattern(
-            '([^:]+):([^:]+):([0-9]+): (.+)',
-            { 'file', 'severity', 'lnum', 'message' },
+            -- '([^:]+):([^:]+):([0-9]+): (.+)',
+            -- { 'file', 'severity', 'lnum', 'message' },
+            '([^:]+):([0-9]+): (.+)',
+            { 'file', 'lnum', 'message' },
             {
                 error = vim.diagnostic.severity.ERROR,
                 warning = vim.diagnostic.severity.WARN,
