@@ -197,6 +197,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.local/bin/brightctl up
 
 for_window [class="pinentry"] floating enable
 for_window [class="qalculate"] floating enable
+for_window [class="qemu"] floating enable
 for_window [class="MATLAB"] floating enable
 {{ if eq .machineInfo.kind "desktop" }}
 for_window [class="Thunderbird"] move container to workspace $ws2
