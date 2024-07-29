@@ -17,7 +17,7 @@ vlogin() {
 
 ntok() {
     if ! nomad acl token self -token "$(jq -r .data.secret_id < ~/.nomad-token)" > /dev/null 2>&1 ; then
-        vault read -format json nomad/creds/apps-admin > ~/.nomad-token
+        vault read -format json nomad/creds/management > ~/.nomad-token
     fi
 
     NOMAD_TOKEN=$(jq -r .data.secret_id < ~/.nomad-token)
