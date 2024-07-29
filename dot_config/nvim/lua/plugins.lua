@@ -54,6 +54,12 @@ return {
         config = true,
     },
     { 'kaarmu/typst.vim', ft = 'typst' },
+    {
+        'saecki/crates.nvim',
+        tag = 'stable',
+        event = { "BufRead Cargo.toml" },
+        config = require('cfg.crates'),
+    },
     -- completion/lsp/lint
     {
         'mfussenegger/nvim-lint',
