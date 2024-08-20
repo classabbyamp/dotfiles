@@ -41,6 +41,10 @@ return {
         -- config = require('cfg.telescope'),
         config = true,
     },
+    {
+        'brenoprata10/nvim-highlight-colors',
+        config = require('cfg.highlightcolors'),
+    },
     -- filetypes
     {
         'xvzc/chezmoi.nvim',
