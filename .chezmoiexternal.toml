@@ -4,6 +4,18 @@
     refreshPeriod = "168h"
     executable = true
 
+[".local/bin/sediff"]
+    type = "file"
+    url = "https://leahneukirchen.org/dotfiles/bin/sediff"
+    refreshPeriod = "168h"
+    executable = true
+
+[".local/bin/diffed"]
+    type = "file"
+    url = "https://leahneukirchen.org/dotfiles/bin/diffed"
+    refreshPeriod = "168h"
+    executable = true
+
 [".local/bin/git-merge-pr"]
     type = "file"
     url = "https://raw.githubusercontent.com/leahneukirchen/git-merge-pr/master/git-merge-pr"
