@@ -153,3 +153,5 @@ require('lspconfig.ui.windows').default_options = float_border
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float_border)
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float_border)
+
+require('dynlms')
