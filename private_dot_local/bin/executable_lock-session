@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -e "/dev/fd/${XSS_SLEEP_LOCK_FD:--1}" ]; then
+    kill_locker() {
+        pkill -xu $EUID "$@" betterlockscreen
+    }
+
+    trap kill_locker TERM INT
+
+    # we have to make sure the locker does not inherit a copy of the lock fd
+    betterlockscreen -l dim --off 30 {XSS_SLEEP_LOCK_FD}<&- &
+
+    # now close our fd (only remaining copy) to indicate we're ready to sleep
+    exec {XSS_SLEEP_LOCK_FD}<&-
+
+    while kill_locker -0; do
+        sleep 0.5
+    done
+else
+    trap 'kill %%' TERM INT
+    betterlockscreen -l dim --off 30
+    wait
+fi

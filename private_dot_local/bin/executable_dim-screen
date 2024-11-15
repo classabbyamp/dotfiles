@@ -1,0 +1,30 @@
+#!/bin/sh
+
+interfaces="ddcci10 ddcci11 ddcci12"
+min_brightness=0
+fade_time=100
+fade_steps=1
+
+get_brightness() {
+    xbacklight -get
+}
+
+set_brightness() {
+    for iface in $interfaces; do
+        xbacklight -ctrl "$iface" -steps 1 -set "$1"
+    done
+}
+
+fade_brightness() {
+    for iface in $interfaces; do
+        xbacklight -ctrl "$iface" -time $fade_time -steps $fade_steps -set "$1" &
+    done
+    wait
+}
+
+trap 'exit 0' TERM INT
+trap "set_brightness $(get_brightness)" EXIT
+fade_brightness "$min_brightness"
+pause &
+wait
+

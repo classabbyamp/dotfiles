@@ -182,8 +182,8 @@ bindsym $mod+e exec --no-startup-id rofi -show emoji
 bindsym Print exec --no-startup-id "maim -su | xclip -selection clipboard -t image/png"
 
 # lock
-bindsym $super+l exec i3lock -e -c 181825 -p default
-bindsym $super+Shift+l exec "i3lock -e -c 181825 -p default && doas zzz"
+bindsym $super+l exec loginctl lock-session
+bindsym $super+Shift+l exec loginctl suspend
 
 # fn keys
 bindsym XF86AudioMute exec --no-startup-id $HOME/.local/bin/audioctl toggle-mute
@@ -218,8 +218,10 @@ exec_always --no-startup-id turnstile-update-runit-env DISPLAY XAUTHORITY QT_QPA
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id autotiling -l 4
 exec_always --no-startup-id picom
+exec_always --no-startup-id xss-lock -l -n $HOME/.local/bin/dim-screen -- $HOME/.local/bin/lock-session
 
 # background
+exec --no-startup-id xset 600 60
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id wired --run
 exec --no-startup-id kwalletd5
