@@ -8,6 +8,7 @@ ICON_VOL_ON="/usr/share/icons/breeze-dark/status/22/audio-volume-medium.svg"
 ICON_VOL_MT="/usr/share/icons/breeze-dark/status/22/audio-volume-muted.svg"
 ICON_MIC_ON="/usr/share/icons/breeze-dark/status/22/mic-on.svg"
 ICON_MIC_MT="/usr/share/icons/breeze-dark/status/22/mic-off.svg"
+ICON_CARD="/usr/share/icons/breeze-dark/devices/22/audio-card.svg"
 
 get_volume() {
     wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2 | tr -d .
@@ -63,6 +64,38 @@ disable_mute() {
     fi
 }
 
+get_default_sink() {
+    wpctl inspect @DEFAULT_AUDIO_SINK@ | grep -Po 'id \K\d+'
+}
+
+get_sinks() {
+    pw-dump | jq -r '.[] | select(
+    .type == "PipeWire:Interface:Node" and
+    .info.props."media.class" == "Audio/Sink"
+  ) |
+  {id, type, name: (
+    .info.name //
+    (.info.props | (
+      ."application.name" //
+      ."node.description")
+    ) //
+    .type)
+  } |
+  "\(.id):\(.name | gsub(":"; "\\:"))"'
+}
+
+get_next_sink() {
+    get_sinks | grep -Pv "(^$(get_default_sink):|HDMI)" | sort -u | head -1
+}
+
+set_sink() {
+    id="${1%%:*}"
+    name="${1#*:}"
+    wpctl set-default "$id"
+    notify-send \
+        -h "string:wired-tag:volume" -i "$ICON_CARD" "Default Sink Changed" "$name"
+}
+
 case "$1" in
     vol-up) set_volume "${2:-5}" "+" ;;
     vol-down) set_volume "${2:-5}" "-" ;;
@@ -80,5 +113,5 @@ case "$1" in
             enable_mute SOURCE
         fi
         ;;
-    switch-sink)  ;;
+    switch-sink) set_sink "$(get_next_sink)" ;;
 esac
