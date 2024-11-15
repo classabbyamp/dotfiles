@@ -50,6 +50,8 @@ alias forkup="git pull --rebase upstream master"
 
 alias g='git'
 
+alias gcd='cd "$(git rev-parse --show-toplevel)"'
+
 alias ga='git add'
 
 alias gb='git branch'
