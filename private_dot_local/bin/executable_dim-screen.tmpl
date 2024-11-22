@@ -1,6 +1,10 @@
 #!/bin/sh
 
+{{ if eq .chezmoi.hostname "prometheus" }}
 interfaces="ddcci10 ddcci11 ddcci12"
+{{ else if eq .chezmoi.hostname "daedelus" }}
+interfaces="intel_backlight"
+{{ end }}
 min_brightness=0
 fade_time=100
 fade_steps=1
