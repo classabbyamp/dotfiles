@@ -1,0 +1,2 @@
+#!/bin/sh
+exec vlogger -t snooze-daily-$(id -u) -p daemon

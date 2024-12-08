@@ -1,0 +1,4 @@
+#!/bin/sh
+mkdir -p "$XDG_RUNTIME_DIR"/snooze
+exec snooze -s 1d -t "$XDG_RUNTIME_DIR"/snooze/daily -- sh -c \
+	"test -d $HOME/.config/cron.daily && run-parts --lsbsysinit $HOME/.config/cron.daily; : > $XDG_RUNTIME_DIR/snooze/daily"
