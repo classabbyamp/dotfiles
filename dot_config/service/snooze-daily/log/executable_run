@@ -1,2 +1,2 @@
 #!/bin/sh
-exec vlogger -t snooze-daily-$(id -u) -p daemon
+exec ts '%Y-%m-%d %H:%M:%.S%z' >> "$HOME/.local/log/snooze-daily.log"
