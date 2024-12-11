@@ -221,6 +221,7 @@ exec_always --no-startup-id picom
 exec_always --no-startup-id xss-lock -l -n $HOME/.local/bin/dim-screen -- $HOME/.local/bin/lock-session
 
 # background
+exec --no-startup-id $HOME/.screenlayout/default.sh
 exec --no-startup-id xset 600 60
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id wired --run
