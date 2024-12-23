@@ -1,0 +1,38 @@
+#!/bin/sh
+
+usage () {
+	cat <<-'EOF'
+	logtail [LOG...] - show service logs conveniently
+
+	Without arguments, show current logs of all services, uniquely.
+	With arguments, show all logs of mentioned services
+	EOF
+}
+
+if [ "$(id -u)" -eq 0 ]; then
+	LOGDIR="/var/log/rsyslog"
+else
+	LOGDIR="$HOME/.local/log"
+fi
+
+if [ $# = 0 ]; then
+	cat "$LOGDIR"/*.log | sort -u
+	tail -Fq -n0 "$LOGDIR"/*.log | uniq
+else
+	old=
+	cur=
+	for log; do
+		case "$log" in
+			-*) usage; exit 1;;
+		esac
+		if [ -f "$LOGDIR/$log.log" ]; then
+			old="$old $LOGDIR/$log.log.*.gz"
+			cur="$cur $LOGDIR/$log.log"
+		else
+			echo "no logs for $log" 1>&2
+			exit 1
+		fi
+	done
+	zcat $old | cat - $cur | sort
+	tail -Fq -n0 $cur
+fi
