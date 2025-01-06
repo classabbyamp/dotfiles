@@ -15,7 +15,7 @@ else
 	LOGDIR="$HOME/.local/log"
 fi
 
-if [ $# = 0 ]; then
+if [ $# -eq 0 ]; then
 	cat "$LOGDIR"/*.log | sort -u
 	tail -Fq -n0 "$LOGDIR"/*.log | uniq
 else
