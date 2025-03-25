@@ -44,7 +44,8 @@ tab_bar_min_tabs     2
 tab_bar_edge         bottom
 tab_bar_style        fade
 tab_fade             1
-tab_title_template   {title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}
+tab_title_template   {bell_symbol}{fmt.fg.color1}{tab.last_focused_progress_percent}{fmt.fg.tab}{title}{' [{}]'.format(num_windows) if num_windows > 1 else ''}
+active_tab_title_template   {bell_symbol}{tab.last_focused_progress_percent}{title}{' [{}]'.format(num_windows) if num_windows > 1 else ''}
 
 map ctrl+shift+p    next_layout
 map ctrl+tab        next_tab
