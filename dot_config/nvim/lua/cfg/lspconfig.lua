@@ -56,15 +56,14 @@ return function()
         return result
     end
 
-    -- xi typst-lsp
-    lspcfg.typst_lsp.setup {
+    -- xi tinymist
+    lspcfg.tinymist.setup {
         capabilities = capabilities,
         settings = {
-            exportPdf = "onSave",
-        },
-        root_dir = function(fname)
-            return require('lspconfig.util').find_git_ancestor(fname) or dirname(fname)
-        end
+            formatterMode = "typstyle",
+            exportPdf = "onDocumentHasTitle",
+            rootPath = "-",
+        }
     }
 
     -- xi lua-language-server
