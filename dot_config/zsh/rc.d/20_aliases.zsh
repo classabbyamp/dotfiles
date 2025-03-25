@@ -26,6 +26,7 @@ if command -v nvim &>/dev/null; then
     alias v="nvim -p"
     alias vimdiff="nvim -d"
     alias vdiff="nvim -d"
+    alias vpatch="nvim -c 'set patchmode=.orig' -p"
 fi
 alias :q="exit"
 alias py="python3"
