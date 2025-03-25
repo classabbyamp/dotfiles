@@ -114,4 +114,5 @@ case "$1" in
         fi
         ;;
     switch-sink) set_sink "$(get_next_sink)" ;;
+    list-sinks) get_sinks ;;
 esac
