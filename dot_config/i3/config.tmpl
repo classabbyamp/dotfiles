@@ -202,10 +202,10 @@ for_window [class="MATLAB"] floating enable
 {{ if eq .machineInfo.kind "desktop" }}
 for_window [class="Thunderbird"] move container to workspace $ws2
 for_window [class="(?i)hexchat"] move container to workspace $ws4
-for_window [class="(?i)telegram-?desktop"] move container to workspace $ws5
+for_window [class="(?i)signal"] move container to workspace $ws5
 {{ else if eq .machineInfo.kind "laptop" }}
 for_window [class="(?i)hexchat"] move container to workspace $ws4
-for_window [class="(?i)telegram-?desktop"] move container to workspace $ws5
+for_window [class="(?i)signal"] move container to workspace $ws5
 for_window [class="discord"] move container to workspace $ws5
 for_window [class="Thunderbird"] move container to workspace $ws6
 {{ end }}
@@ -233,7 +233,7 @@ exec --no-startup-id nm-applet
 # foreground
 exec thunderbird
 exec hexchat
-exec telegram-desktop
+exec signal-desktop
 exec Discord
 {{ if eq .machineInfo.kind "desktop" }}
 exec discord-ptb
