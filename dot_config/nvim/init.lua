@@ -84,6 +84,8 @@ opt.listchars = {
     trail = '·',
 }
 
+vim.g.clipboard = 'osc52'
+
 -- Mappings
 keymap.set('', ' ', '<leader>', {remap = true})
 -- better split navigation
@@ -148,7 +150,11 @@ autocmd({'BufWritePre', 'FileWritePre'}, {
 -- borders for floating windows
 local float_border = { border = 'single' }
 
-vim.diagnostic.config({ float = float_border })
+vim.diagnostic.config({
+    float = float_border,
+    virtual_text = true,
+    virtual_lines = { current_line = true },
+})
 
 require('lspconfig.ui.windows').default_options = float_border
 
