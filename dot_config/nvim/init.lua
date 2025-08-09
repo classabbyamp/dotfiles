@@ -21,6 +21,9 @@ autocmd('ColorScheme', {
         api.nvim_set_hl(0, '@comment.warning.comment', { fg = '#ffd100', bold = true })
         -- XXX NOTE INFO DOCS PERF TEST: idk #10
         api.nvim_set_hl(0, '@comment.note.comment', { fg = '#0072ce', bold = true })
+        if g.neovide then
+            api.nvim_set_hl(0, 'Normal', { fg = '#cdd6f4', bg = '#11111b' })
+        end
     end
 })
 
@@ -83,8 +86,6 @@ opt.listchars = {
     multispace = '·',
     trail = '·',
 }
-
-vim.g.clipboard = 'osc52'
 
 -- Mappings
 keymap.set('', ' ', '<leader>', {remap = true})
@@ -155,6 +156,12 @@ vim.diagnostic.config({
     virtual_text = true,
     virtual_lines = { current_line = true },
 })
+
+if g.neovide then
+    o.guifont = "Berkeley Mono,Symbols Nerd Font,Noto Color Emoji:h10"
+else
+    vim.g.clipboard = 'osc52'
+end
 
 require('lspconfig.ui.windows').default_options = float_border
 

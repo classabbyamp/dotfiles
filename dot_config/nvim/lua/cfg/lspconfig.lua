@@ -39,23 +39,6 @@ return function()
         settings = { bashIde = { shellcheckArguments = {} } },
     }
 
-    local function dirname(path)
-        local strip_dir_pat = '/([^/]+)$'
-        local strip_sep_pat = '/$'
-        if not path or #path == 0 then
-            return
-        end
-        local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
-        if #result == 0 then
-            if vim.uv.os_uname().version:match 'Windows' then
-                return path:sub(1, 2):upper()
-            else
-                return '/'
-            end
-        end
-        return result
-    end
-
     -- xi tinymist
     lspcfg.tinymist.setup {
         capabilities = capabilities,
@@ -87,6 +70,11 @@ return function()
 
     -- xi clang-tools-extra Bear
     require('lspconfig').clangd.setup {
+        capabilities = capabilities,
+    }
+
+    -- xi gopls
+    require('lspconfig').gopls.setup {
         capabilities = capabilities,
     }
 end
