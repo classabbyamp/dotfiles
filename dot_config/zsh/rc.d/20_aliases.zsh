@@ -1,7 +1,6 @@
 # aliases for zsh
 
 if command -v doas &>/dev/null; then
-    alias doasedit="doas $EDITOR"
     _sudo=doas
 else
     _sudo=sudo
