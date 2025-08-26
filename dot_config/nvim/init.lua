@@ -135,6 +135,14 @@ vim.filetype.add({
             end
         end
     },
+    pattern = {
+        ['.*'] = function(_, bufnr)
+            local line = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ''
+            if vim.regex('\\c^#!ipxe'):match_str(line) ~= nil then
+                return 'ipxe'
+            end
+        end
+    },
 })
 
 vim.treesitter.language.register('bash', 'srcpkg')
