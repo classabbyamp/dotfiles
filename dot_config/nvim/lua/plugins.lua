@@ -43,7 +43,7 @@ return {
     },
     {
         'brenoprata10/nvim-highlight-colors',
-        config = require('cfg.highlightcolors'),
+        opts = require('cfg.highlightcolors'),
     },
     -- filetypes
     {
@@ -62,7 +62,7 @@ return {
         'saecki/crates.nvim',
         tag = 'stable',
         event = { "BufRead Cargo.toml" },
-        config = require('cfg.crates'),
+        opts = require('cfg.crates'),
     },
     -- completion/lsp/lint
     {

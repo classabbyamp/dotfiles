@@ -42,7 +42,12 @@ if not vim.uv.fs_stat(lazypath) then
 end
 opt.rtp = opt.rtp ^ lazypath
 
-require('lazy').setup(require('plugins'))
+require('lazy').setup({
+    spec = {
+        { import = "plugins" },
+    },
+    rocks = { enabled = false },
+})
 
 o.syntax = 'on'
 o.number = true
