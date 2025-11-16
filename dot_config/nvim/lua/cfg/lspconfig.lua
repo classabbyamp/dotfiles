@@ -1,30 +1,21 @@
 return function()
-    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-    local lspcfg = require('lspconfig')
 
     -- xi rust-analyzer
-    lspcfg.rust_analyzer.setup {
-        capabilities = capabilities
-    }
-
+    vim.lsp.enable('rust_analyzer')
     -- xi pyright
-    lspcfg.pyright.setup {
-        capabilities = capabilities
-    }
-
+    vim.lsp.enable('pyright')
     -- xi ruff
-    lspcfg.ruff.setup {
-        capabilities = capabilities
-    }
-
+    vim.lsp.enable('ruff')
     -- xi qt6-declarative-tools
-    lspcfg.qmlls.setup {
-        capabilities = capabilities
-    }
+    vim.lsp.enable('qmlls')
+    -- xi clang-tools-extra Bear
+    vim.lsp.enable('clangd')
+    -- xi gopls
+    vim.lsp.enable('gopls')
 
     -- xi bash-language-server
-    lspcfg.bashls.setup {
-        capabilities = capabilities,
+    vim.lsp.enable('bashls')
+    vim.lsp.config('bashls', {
         filetypes = { "sh", "bash" },
         on_attach = function(client)
             local path = vim.fn.expand('%:p')
@@ -37,20 +28,21 @@ return function()
             return true
         end,
         settings = { bashIde = { shellcheckArguments = {} } },
-    }
+    })
 
     -- xi tinymist
-    lspcfg.tinymist.setup {
-        capabilities = capabilities,
+    vim.lsp.enable('tinymist')
+    vim.lsp.config('tinymist', {
         settings = {
             formatterMode = "typstyle",
             exportPdf = "onDocumentHasTitle",
             rootPath = "-",
         }
-    }
+    })
 
     -- xi lua-language-server
-    lspcfg.lua_ls.setup {
+    vim.lsp.enable('lua_ls')
+    vim.lsp.config('lua_ls', {
         settings = {
             Lua = {
                 diagnostics = {
@@ -66,15 +58,5 @@ return function()
                 },
             },
         },
-    }
-
-    -- xi clang-tools-extra Bear
-    require('lspconfig').clangd.setup {
-        capabilities = capabilities,
-    }
-
-    -- xi gopls
-    require('lspconfig').gopls.setup {
-        capabilities = capabilities,
-    }
+    })
 end
