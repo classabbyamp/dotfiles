@@ -5,7 +5,9 @@ return function()
     -- xi pyright
     vim.lsp.enable('pyright')
     -- xi ruff
-    vim.lsp.enable('ruff')
+    -- vim.lsp.enable('ruff')
+    -- xi ty
+    vim.lsp.enable('ty')
     -- xi qt6-declarative-tools
     vim.lsp.enable('qmlls')
     -- xi clang-tools-extra Bear
